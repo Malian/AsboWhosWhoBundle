@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="asbo_whoswho.validator.anno" class="Asbo\WhosWhoBundle\Validator\AnnoValidator">
+            <argument type="service" id="asbo_whoswho.util.anno.manipulator" />
+            <tag name="validator.constraint_validator" alias="asbo_whoswho_anno_validator" />
+        </service>
+    </services>
+</container>

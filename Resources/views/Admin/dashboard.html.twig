@@ -1,0 +1,35 @@
+{#
+
+This file is part of the ASBO package.
+
+(c) De Ron Malian <deronmalian@gmail.com>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends 'AsboWhosWhoBundle::layout_admin.html.twig' %}
+
+{% block title %}{{ "asbo_admin_dashboard"|trans({}, 'SonataWhosWhoBundle') }}{% endblock%}
+{% block breadcrumb %} {{ parent() }} <li class="active"><span class="divider">-</span>Dashboard</li>{% endblock %}
+
+
+
+{% block content %}
+    <div class="row-fluid">
+        <div class="span6">
+            {{ sonata_block_render({ 'type': 'sonata.admin.block.admin_list', 'settings': {'groups': ["asbo_whoswho"]}}) }}
+        </div>
+        <div class="span6">
+            {% for block in blocks %}
+                {% if block.position == 'right' %}
+                    {{ sonata_block_render({ 'type': block.type, 'settings': block.settings}) }}
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="span6">
+
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{
+    "name": "asbo/whoswho-bundle",
+    "type": "symfony-bundle",
+    "description": "A bundle to add specific profile to user",
+    "keywords": ["asbo", "bundle"],
+    "homepage": "http://www.asbo.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "De Ron Malian",
+            "email": "deronmalian@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "symfony/framework-bundle": ">=2.1,<2.2-dev",
+        "sensio/framework-extra-bundle": "*",
+        "doctrine/doctrine-bundle": "*",
+        "doctrine/orm": "*",
+        "symfony/form": "~2.1",
+        "symfony/security-bundle": "~2.1",
+        "symfony/validator": "~2.1",
+        "symfony/locale": "~2.1",
+        "lexik/form-filter-bundle": "1.2.*",
+        "symfony/twig-bundle": "*",
+        "asbo/resource-bundle": "*"
+    },
+    "require-dev": {
+        "fzaninotto/faker": "*",
+        "atoum/atoum": "dev-master"
+    },
+    "autoload": {
+        "psr-0": { "Asbo\\WhosWhoBundle": "" }
+    },
+    "minimum-stability": "dev",
+    "target-dir": "Asbo/WhosWhoBundle"
+}

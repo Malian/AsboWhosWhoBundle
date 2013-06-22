@@ -1,0 +1,91 @@
+Asbo\WhosWhoBundle\Entity\Fra:
+    fra{1..10}:
+        firstname: <fr_FR:firstName()>
+        lastname: <fr_FR:lastName()>
+        nickname: <userName()>
+        gender: <numberBetween(0, 1)>
+        bornAt: <dateTimeBetween('-17000 days', 'now')>
+        bornIn: <state()>
+        diedAt: 1%? <dateTimeBetween($bornAt, 'now')>
+        type: <numberBetween(0, 3)>
+        status: <numberBetween(0, 10)>
+        anno: <numberBetween(0, 26)>
+        pontif: <numberBetween(0, 1)>
+
+Asbo\WhosWhoBundle\Entity\Email:
+    email{1..10}:
+        email: <email()>
+        type: <numberBetween(0, 3)>
+        fra: @fra<current()>
+        principal: 1
+
+Asbo\WhosWhoBundle\Entity\Phone:
+    phone{1..10}:
+        number: <fr_FR:phoneNumber()>
+        type: <numberBetween(0, 5)>
+        country: <countryCode()>
+        fra: @fra<current()>
+        principal: 1
+
+Asbo\WhosWhoBundle\Entity\Address:
+    address{1..10}:
+        address: <fr_FR:address()>
+        locality: <fr_FR:city()>
+        lat: <latitude()>
+        lng: <longitude()>
+        country: <countryCode()>
+        type: <numberBetween(0, 5)>
+        fra: @fra<current()>
+        principal: 1
+
+Asbo\WhosWhoBundle\Entity\Diploma:
+    diploma{1..10}:
+        name: <fr_FR:sentence()>
+        institution: <fr_FR:company()>
+        specialty: <fr_FR:word()>
+        graduatedAt: 50%? <dateTimeBetween('-25 years', 'now')>
+        fra: @fra<current()>
+
+Asbo\WhosWhoBundle\Entity\Rank:
+    rank{1..10}:
+        name: <fr_FR:sentence()>
+        fra: @fra<current()>
+
+Asbo\WhosWhoBundle\Entity\Job:
+    rank{1..10}:
+        company: <fr_FR:company()>
+        sector: <fr_FR:word()>
+        position: <fr_FR:catchPhrase()>
+        dateBegin: <dateTimeBetween('-25 years', 'now')>
+        dateEnd: <dateTimeBetween($dateBegin, 'now')>
+        fra: @fra<current()>
+
+Asbo\WhosWhoBundle\Entity\ExternalPost:
+    externalPost{1..10}:
+        where: <fr_FR:company()>
+        position: <fr_FR:catchPhrase()>
+        dateBegin: <dateTimeBetween('-25 years', 'now')>
+        dateEnd: <dateTimeBetween($dateBegin, 'now')>
+        fra: @fra<current()>
+
+Asbo\WhosWhoBundle\Entity\Family:
+    family{1..5}:
+        firstname: <firstname()>
+        lastname: <lastname()>
+        date: <dateTimeBetween('-25 years', 'now')>
+        type: <numberBetween(0, 4)>
+        fra: @fra*
+        link: 20%? @fra*
+
+Asbo\WhosWhoBundle\Entity\Post:
+    post{1..30}:
+        name: <fr_FR:word()>
+        type: <numberBetween(0, 5)>
+        denier: <numberBetween(0, 4)>
+        monogramme: <monogramme()>
+
+Asbo\WhosWhoBundle\Entity\FraHasPost:
+    fraHasPost{1..10}:
+        anno: <numberBetween(0, 25)>
+        fra: @fra<current()>
+        post: @post*

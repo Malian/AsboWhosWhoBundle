@@ -1,0 +1,9 @@
+<?php
+
+use \mageekguy\atoum;
+
+$report = $script->addDefaultReport();
+
+$runner->setBootstrapFile(__DIR__.'/Tests/.bootstrap.atoum.php');
+
+$script->addTestAllDirectory(__DIR__ . '/Tests/Units');

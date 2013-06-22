@@ -1,0 +1,9 @@
+{% extends 'SonataAdminBundle:CRUD:list_date.html.twig' %}
+
+{% block field %}
+    {%- if value is empty -%}
+        {{ "current"|trans({}, 'AsboWhosWhoBundle') }}
+    {%- else -%}
+        {{ value|format_date }}
+    {%- endif -%}
+{% endblock %}
