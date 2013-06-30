@@ -1,0 +1,32 @@
+asbo_whoswho_list:
+    pattern: /
+    defaults:
+        _controller: asbo.controller.frontend.fra:listAction
+        _method: GET|POST
+
+asbo_whoswho_fra_show:
+    pattern: /fra/{slug}
+    defaults:
+        _controller: asbo.controller.frontend.fra:showAction
+        _method: GET
+
+asbo_whoswho_fra_edit:
+    pattern: /fra/{slug}/edit
+    defaults:
+        _controller: asbo.controller.frontend.fra:editAction
+        _method: GET|POST
+
+asbo_whoswho_comites:
+    pattern: /comites
+    defaults:
+        _controller: asbo.controller.frontend.comite:listAction
+        _method: GET
+
+asbo_whoswho_comite_anno:
+    pattern: /comite/{anno}
+    requirements:
+        anno: \d+
+    defaults:
+        _controller: asbo.controller.frontend.comite:annoAction
+        _method: GET
+            template: AsboWebBundle:Frontend/WhosWho/Comite:anno.html.twig

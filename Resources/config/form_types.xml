@@ -16,7 +16,7 @@
 
     <services>
 
-        <service id="form.type.gmap_address" class="%form.type.gmap_address.class%">
+        <service id="form.type.gmap_address" class="%asbo.whoswho.model.gmap_Address.class%">
             <tag name="form.type" alias="gmap_address" />
         </service>
 
