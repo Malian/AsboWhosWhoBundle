@@ -97,7 +97,7 @@ class FraAdmin extends Admin
             ->add('getTypeCode', 'text', array('sortable' => 'type'))
             ->add('getStatusCode')
             ->add('pontif', null, array('editable' => true))
-            ->add('_action', 'actions');
+            ->add('_action', 'actions', array('actions' => array()));
     }
 
     /**
