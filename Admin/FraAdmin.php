@@ -96,8 +96,7 @@ class FraAdmin extends Admin
             ->add('anno', null, array('template' => 'AsboWhosWhoBundle:Admin:list_anno.html.twig'))
             ->add('getTypeCode', 'text', array('sortable' => 'type'))
             ->add('getStatusCode')
-            ->add('pontif', null, array('editable' => true))
-            ->add('_action', 'actions', array());
+            ->add('pontif', null, array('editable' => true));
     }
 
     /**
