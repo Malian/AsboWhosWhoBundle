@@ -50,7 +50,7 @@ class Job
     /**
      * @var string
      *
-     * @ORM\Column(name="position", type="string", length=50, nullable=false)
+     * @ORM\Column(name="position", type="string", length=150, nullable=false)
      * @Assert\NotBlank()
      * @Assert\NotNull()
      */
