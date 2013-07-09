@@ -29,6 +29,7 @@
     },
     "require-dev": {
         "fzaninotto/faker": "*",
+        "nelmio/alice": "dev-master",  
         "atoum/atoum": "dev-master",
         "behat/behat":                       "2.4.*",
         "behat/gherkin":                     "*",
