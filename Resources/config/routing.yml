@@ -29,4 +29,3 @@ asbo_whoswho_comite_anno:
     defaults:
         _controller: asbo.controller.frontend.comite:annoAction
         _method: GET
-            template: AsboWebBundle:Frontend/WhosWho/Comite:anno.html.twig
