@@ -12,32 +12,20 @@
         }
     ],
     "require": {
-        "php": ">=5.4",
-        "symfony/framework-bundle": ">=2.1,<2.4",
-        "sensio/framework-extra-bundle": "*",
-        "jms/security-extra-bundle": "1.5.*",
-        "doctrine/doctrine-bundle": "*",
-        "doctrine/orm": "*",
-        "symfony/form": "~2.1",
-        "symfony/security-bundle": "~2.1",
-        "symfony/validator": "~2.1",
-        "symfony/locale": "~2.1",
-        "lexik/form-filter-bundle": "1.2.*",
-        "symfony/twig-bundle": "*",
-        "asbo/resource-bundle": "*",
-        "stof/doctrine-extensions-bundle": "*"
+        "php":                              ">=5.4",
+        "symfony/symfony":                  ">=2.1,<2.4",
+        "symfony/framework-bundle":         ">=2.1,<2.4",
+        "symfony/twig-bundle":              ">=2.1, <2.4",
+        "sensio/framework-extra-bundle":    ">=2.1, <2.4",
+        "jms/security-extra-bundle":        "1.5.*",
+        "doctrine/doctrine-bundle":         "1.2.*",
+        "lexik/form-filter-bundle":         "1.2.*",
+        "stof/doctrine-extensions-bundle":  "1.1.*",
+        "nelmio/alice":                     "1.4.*",
+        "asbo/resource-bundle":             "dev-master"
     },
     "require-dev": {
-        "fzaninotto/faker": "*",
-        "nelmio/alice": "dev-master",  
-        "atoum/atoum": "dev-master",
-        "behat/behat":                       "2.4.*",
-        "behat/gherkin":                     "*",
-        "behat/symfony2-extension":          "*",
-        "behat/mink-extension":              "*",
-        "behat/mink-browserkit-driver":      "*",
-        "behat/mink-selenium2-driver":       "*",
-        "symfony/monolog-bundle":            "2.2.*"
+        "atoum/atoum":                   "dev-master"
     },
     "autoload": {
         "psr-0": { "Asbo\\WhosWhoBundle": "" }
