@@ -8,7 +8,7 @@
         {% for fra  in fras  %}
         <tr>
             <td>
-                {{ fra.lastname }}
+                <a href="{{ path('asbo_whoswho_fra_show', { 'slug': fra.slug } ) }}">{{ fra.lastname }}</a>
             </td>
             <td>
                 {{ fra.firstname }}
