@@ -18,7 +18,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Asbo\WhosWhoBundle\Entity\Fra;
 use Asbo\WhosWhoBundle\Filter\FraFilterType;
 use JMS\SecurityExtraBundle\Annotation\Secure;
-use FOS\UserBundle\Model\UserInterface;
 use Asbo\ResourceBundle\Controller\ResourceController;
 
 /**
