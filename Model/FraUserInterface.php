@@ -11,7 +11,10 @@
 
 namespace Asbo\WhosWhoBundle\Model;
 
-interface FraUserInterface
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
+
+interface FraUserInterface extends UserInterface, EquatableInterface
 {
     public function __toString();
 }

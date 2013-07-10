@@ -13,7 +13,10 @@ namespace Asbo\WhosWhoBundle\Security;
 
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Asbo\WhosWhoBundle\Entity\Fra;
+use Asbo\WhosWhoBundle\Entity\FraHasUser;
 
 /**
  * Voter
@@ -71,10 +74,10 @@ class OwnerVoter implements VoterInterface
      * @param  mixed   $user
      * @return boolean
      */
-    protected function isOwner(Fra $fra, $user)
+    protected function isOwner(FraHasUser $fra, $user)
     {
-        if ($fra->getUser() instanceof UserInterface && $user instanceof EquatableInterface) {
-            return $user->isEqualTo($fra->getUser());
+        if ($fra->getUser() instanceof EquatableInterface && $user instanceof UserInterface) {
+            return $fra->getUser()->isEqualTo($user);
         }
 
         return $fra->getUser() === $user;
