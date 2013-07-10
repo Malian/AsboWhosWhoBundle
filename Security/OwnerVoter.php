@@ -34,7 +34,7 @@ class OwnerVoter implements VoterInterface
      */
     public function supportsClass($class)
     {
-        return $class instanceof Asbo\WhosWhoBundle\Entity\Fra;
+        return $class instanceof \Asbo\WhosWhoBundle\Entity\Fra;
     }
  
     /**
