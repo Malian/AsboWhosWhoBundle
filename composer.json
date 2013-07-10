@@ -15,6 +15,7 @@
         "php": ">=5.4",
         "symfony/framework-bundle": ">=2.1,<2.4",
         "sensio/framework-extra-bundle": "*",
+        "jms/security-extra-bundle": "1.5.*",
         "doctrine/doctrine-bundle": "*",
         "doctrine/orm": "*",
         "symfony/form": "~2.1",
@@ -23,11 +24,20 @@
         "symfony/locale": "~2.1",
         "lexik/form-filter-bundle": "1.2.*",
         "symfony/twig-bundle": "*",
-        "asbo/resource-bundle": "*"
+        "asbo/resource-bundle": "*",
+        "stof/doctrine-extensions-bundle": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "*",
-        "atoum/atoum": "dev-master"
+        "nelmio/alice": "dev-master",  
+        "atoum/atoum": "dev-master",
+        "behat/behat":                       "2.4.*",
+        "behat/gherkin":                     "*",
+        "behat/symfony2-extension":          "*",
+        "behat/mink-extension":              "*",
+        "behat/mink-browserkit-driver":      "*",
+        "behat/mink-selenium2-driver":       "*",
+        "symfony/monolog-bundle":            "2.2.*"
     },
     "autoload": {
         "psr-0": { "Asbo\\WhosWhoBundle": "" }

@@ -37,7 +37,11 @@ class AsboWhosWhoExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
         $loader->load('controller.xml');
-        $loader->load('admin.xml');
+
+        if (false === $config['test']) {
+            $loader->load('admin.xml');
+        }
+
         $loader->load('form_types.xml');
         $loader->load('twig.xml');
         $loader->load('util.xml');

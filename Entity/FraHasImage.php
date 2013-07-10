@@ -46,7 +46,7 @@ class FraHasImage
     /**
      * @var Asbo\UserBundle\Entity\User $user
      *
-     * @ORM\ManyToOne(targetEntity="Asbo\CoreBundle\Entity\Media", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Asbo\WhosWhoBundle\Model\FraImageInterface", cascade={"persist"})
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */

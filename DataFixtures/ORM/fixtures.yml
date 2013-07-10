@@ -40,7 +40,7 @@ Asbo\WhosWhoBundle\Entity\Address:
 
 Asbo\WhosWhoBundle\Entity\Diploma:
     diploma{1..10}:
-        name: <fr_FR:sentence()>
+        name: <fr_FR:word()>
         institution: <fr_FR:company()>
         specialty: <fr_FR:word()>
         graduatedAt: 50%? <dateTimeBetween('-25 years', 'now')>

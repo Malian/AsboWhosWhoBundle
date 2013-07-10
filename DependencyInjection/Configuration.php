@@ -50,6 +50,9 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                     ->end()
+                    ->booleanNode('test')
+                        ->defaultValue(false)
+                    ->end()
                 ->end();
 
         return $treeBuilder;
