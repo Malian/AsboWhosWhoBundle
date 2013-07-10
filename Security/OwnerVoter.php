@@ -10,12 +10,13 @@
  */
 
 namespace Asbo\WhosWhoBundle\Security;
- 
+
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
- 
+use Asbo\WhosWhoBundle\Entity\Fra;
+
 /**
- * Voter 
+ * Voter
  *
  * @author De Ron Malian <deronmalian@gmail.com>
  */
@@ -28,39 +29,54 @@ class OwnerVoter implements VoterInterface
     {
         return 1 === preg_match('/^ROLE_WHOSWHO_FRA/', $attribute);
     }
- 
+
     /**
      * @inheritdoc
      */
     public function supportsClass($class)
     {
-        return $class instanceof \Asbo\WhosWhoBundle\Entity\Fra;
+        return $class instanceof Fra;
     }
- 
+
     /**
      * @inheritdoc
      */
     public function vote(TokenInterface $token, $object, array $attributes)
     {
-        $vote = VoterInterface::ACCESS_ABSTAIN;
- 
+        $vote = self::ACCESS_ABSTAIN;
+
         foreach ($attributes as $attribute) {
 
-            if (false === $this->supportsAttribute($attribute) or
-                false === $this->supportsClass($object)) {
+            if (!$this->supportsAttribute($attribute) or !$this->supportsClass($object)) {
                 continue;
             }
- 
-            $user = $token->getUser();
-            $vote = VoterInterface::ACCESS_DENIED;
- 
+
+            $vote = self::ACCESS_DENIED;
+
             foreach ($object->getFraHasUsers() as $link) {
-                if ($link->getUser()->isUser($user)) {
-                    return VoterInterface::ACCESS_GRANTED;
+                if ($this->isOwner($link, $token->getUser())) {
+                    $vote = self::ACCESS_GRANTED;
+                    break;
                 }
             }
         }
 
         return $vote;
+    }
+
+    /**
+     * Verifies that the user is the owner
+     *
+     * @param  Fra     $fra
+     * @param  mixed   $user
+     * @return boolean
+     */
+    protected function isOwner(Fra $fra, $user)
+    {
+        if ($fra->getUser() instanceof UserInterface && $user instanceof EquatableInterface) {
+            return $user->isEqualTo($fra->getUser());
+        }
+
+        return $fra->getUser() === $user;
     }
 }
