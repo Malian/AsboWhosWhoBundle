@@ -11,6 +11,7 @@
         <parameter key="asbo_whoswho.fra_has_post_manager.class">Asbo\WhosWhoBundle\Entity\FraHasPostManager</parameter>
         <parameter key="asbo_whoswho.routing.urlGenerator.class">Asbo\WhosWhoBundle\Routing\UrlGenerator</parameter>
         <parameter key="asbo_whoswho.translation_domain">AsboWhosWhoBundle</parameter>
+        <parameter key="asbo_whoswho.security.owner_voter.class">Asbo\WhosWhoBundle\Security\OwnerVoter</parameter>
     </parameters>
 
     <services>
@@ -29,6 +30,10 @@
 
         <service id="asbo_whoswho.routing.urlGenerator" class="%asbo_whoswho.routing.urlGenerator.class%">
             <argument type="service" id="router" />
+        </service>
+
+        <service id="asbo_whoswho.security.owner_voter" class="%asbo_whoswho.security.owner_voter.class%" public="false">
+            <tag name="security.voter" />
         </service>
 
     </services>

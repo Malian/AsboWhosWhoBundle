@@ -85,8 +85,8 @@ class FraController extends ResourceController
      */
     public function editAction(Fra $fra, Request $request)
     {
-        if (!$this->canEdit($fra) && !$this->container->get('security.context')->isGranted('ROLE_WHOSWHO_CHANCELIER')) {
-            throw new AccessDeniedException('This user does not have access to this section');
+        if (false === $this->container->get('security.context')->isGranted('ROLE_WHOSWHO_FRA_EDIT', $fra)) {
+            throw new AccessDeniedException();
         }
 
          /** @var $formFactory \Asbo\WhosWhoBundle\Form\Factory\FormFactory */
@@ -116,22 +116,5 @@ class FraController extends ResourceController
                 'form' => $form->createView()
             )
         );
-    }
-
-    protected function canEdit($fra)
-    {
-        $user = $this->container->get('security.context')->getToken()->getUser();
-
-        if (!is_object($user) || !$user instanceof UserInterface) {
-            throw new AccessDeniedException('This user does not have access to this section.');
-        }
-
-        foreach ($fra->getFraHasUsers() as $link) {
-            if ($link->getUser()->isUser($user)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
