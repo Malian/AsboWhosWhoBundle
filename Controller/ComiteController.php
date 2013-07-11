@@ -12,6 +12,7 @@
 namespace Asbo\WhosWhoBundle\Controller;
 
 use Asbo\WhosWhoBundle\Entity\Post;
+use Asbo\WhosWhoBundle\Util\AnnoManipulator;
 use Asbo\ResourceBundle\Controller\ResourceController;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 
@@ -53,5 +54,10 @@ class ComiteController extends ResourceController
                 'anno' => $anno
             )
         );
+    }
+
+    public function lastAction()
+    {
+        return $this->annoAction(AnnoManipulator::getCurrentAnno());
     }
 }
