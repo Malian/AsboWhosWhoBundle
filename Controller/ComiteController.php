@@ -31,9 +31,9 @@ class ComiteController extends ResourceController
      */
     public function listAction()
     {
-        $fraHasPostManager = $this->container->get('asbo_whoswho.fra_has_post_manager');
-        $posts             = $fraHasPostManager->findByTypes(array(Post::TYPE_COMITE, Post::TYPE_CONSEIL));
-        $postsByYears      = array();
+        $manager      = $this->getFraHasPostManager();
+        $posts        = $manager->findByTypes(array(Post::TYPE_COMITE, Post::TYPE_CONSEIL));
+        $postsByYears = array();
 
         foreach ($posts as $post) {
             $postsByYears[$post->getAnno()][] = $post;
@@ -45,16 +45,19 @@ class ComiteController extends ResourceController
         );
     }
 
+    /**
+     * @Secure(roles="ROLE_WHOSWHO_USER")
+     */
     public function annoAction($anno)
     {
         $error = $this->container->get('validator')->validateValue($anno, new Anno());
 
         if (count($error) != 0) {
-            throw new NotFoundHttpException("Anno doens't exists");
+            throw new NotFoundHttpException(sprintf("Anno '%s' doens't exists", $anno));
         }
 
-        $fraHasPostManager = $this->container->get('asbo_whoswho.fra_has_post_manager');
-        $posts = $fraHasPostManager->findByTypesAndYear(array(Post::TYPE_COMITE, Post::TYPE_CONSEIL), $anno);
+        $manager = $this->getFraHasPostManager();
+        $posts   = $manager->findByTypesAndYear(array(Post::TYPE_COMITE, Post::TYPE_CONSEIL), $anno);
 
         /**
          * Lors de la phase de transition avec le synode il n'y a pas encore de comité
@@ -78,5 +81,10 @@ class ComiteController extends ResourceController
     public function lastAction()
     {
         return $this->annoAction(AnnoManipulator::getCurrentAnno());
+    }
+
+    protected function getFraHasPostManager()
+    {
+        return $this->container->get('asbo_whoswho.fra_has_post_manager');
     }
 }
