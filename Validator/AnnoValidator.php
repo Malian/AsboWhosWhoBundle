@@ -22,22 +22,16 @@ use Asbo\WhosWhoBundle\Util\AnnoManipulator;
  */
 class AnnoValidator extends ConstraintValidator
 {
-    protected $annoManipulator;
-
-    /**
-     * @param AnnoManipulator $manipulator
-     */
-    public function __construct(AnnoManipulator $manipulator)
-    {
-        $this->annoManipulator = $manipulator;
-    }
-
     /**
      * {@inheritDoc}
      */
     public function validate($value, Constraint $constraint)
     {
-        if (!$this->annoManipulator->isValid($value) && "" !== $value && null !== $value) {
+        if (null === $value || '' === $value) {
+            return;
+        }
+
+        if (!AnnoManipulator::isValid($value)) {
             $this->context->addViolation($constraint->message, array('%anno%' => $value));
         }
     }

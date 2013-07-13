@@ -74,21 +74,21 @@ class AnnoManipulator
      * @param  \DateTime|string $date
      * @return integer          The anno
      */
-    public function getAnnoByDate($date)
+    public static function getAnnoByDate($date)
     {
         if (!$date instanceof \Datetime) {
             $date = new DateTime($date);
         }
 
-        if ($date < $this->getFondationDate()) {
-            throw new \InvalidArgumentException(sprintf('The date must be upper than %s.', $this->getFondationDate()->format('d-m-Y')));
+        if ($date < self::getFondationDate()) {
+            throw new \InvalidArgumentException(sprintf('The date must be upper than %s.', self::getFondationDate()->format('d-m-Y')));
         } elseif ($date > new DateTime()) {
             throw new \InvalidArgumentException(sprintf('The date must be lower than today'));
         } elseif ($date < new DateTime(self::END_ANNO_0)) {
             return 0;
         }
 
-        return (int) $date->diff($this->getFondationDate())->format('%y') + 1;
+        return (int) $date->diff(self::getFondationDate())->format('%y') + 1;
     }
 
     /**
@@ -97,13 +97,13 @@ class AnnoManipulator
      * @param  integer   $anno
      * @return \Datetime
      */
-    public function getDateByAnno($anno)
+    public static function getDateByAnno($anno)
     {
-        if (!$this->isValid($anno)) {
+        if (!self::isValid($anno)) {
             throw new \InvalidArgumentException(sprintf('The anno must be valid. %d given.', $anno));
         }
 
-        return $this->getFondationDate()->add(new \DateInterval(sprintf('P%dY', $anno)));
+        return self::getFondationDate()->add(new \DateInterval(sprintf('P%dY', $anno)));
     }
 
     /**
@@ -112,13 +112,13 @@ class AnnoManipulator
      * @param  integer          $anno
      * @return array(\DateTime)
      */
-    public function getDateIntervalByAnno($anno)
+    public static function getDateIntervalByAnno($anno)
     {
-        if (!$this->isValid($anno)) {
+        if (!self::isValid($anno)) {
             throw new \InvalidArgumentException(sprintf('The anno must be valid. %d given.', $anno));
         }
 
-        $date1 = $this->getFondationDate();
+        $date1 = self::getFondationDate();
         $date2 = new DateTime(self::END_ANNO_0);
 
         if ($anno > 0) {
@@ -136,7 +136,7 @@ class AnnoManipulator
      * @param  integer $anno
      * @return boolean
      */
-    public function isValid($anno)
+    public static function isValid($anno)
     {
         $annos = self::getAnnos();
 
@@ -148,7 +148,7 @@ class AnnoManipulator
      *
      * @return DateTime
      */
-    public function getFondationDate()
+    public static function getFondationDate()
     {
         return new DateTime(self::FONDATION_DATE);
     }
