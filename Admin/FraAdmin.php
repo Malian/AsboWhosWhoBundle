@@ -51,6 +51,8 @@ class FraAdmin extends Admin
                 ->add('bornAt', 'birthday', array('required' => false))
                 ->add('bornIn')
                 ->add('principalAddress', null, array('query_builder' => $query_builder))
+                ->add('principalEmail', null, array('query_builder' => $query_builder))
+                ->add('principalPhone', null, array('query_builder' => $query_builder))
             ->end()
 
             ->with('ASBO')

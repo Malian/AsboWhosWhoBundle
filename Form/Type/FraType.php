@@ -14,7 +14,11 @@ namespace Asbo\WhosWhoBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 use Asbo\WhosWhoBundle\Util\AnnoManipulator;
+use Asbo\WhosWhoBundle\Form\EventListener\AddPrincipalFieldSubscriber;
+use Doctrine\ORM\EntityRepository;
 
 // @Todo: Changer ici par une interface parce que normalement on devrait pas devoir utiliser directement la classe
 // puisqu'elle est contenue dans $this->class...
@@ -52,6 +56,29 @@ class FraType extends AbstractType
                 ->add('status', 'choice', array('choices' => Fra::getStatusList(), 'disabled' => true))
                 ->add('anno', 'choice', array('choices' => AnnoManipulator::getAnnos() ,'disabled' => true))
                 ->add('pontif', 'checkbox', array('required' => false, 'disabled' => true))
+
+                ->addEventListener(
+                    FormEvents::PRE_SET_DATA,
+                    function (FormEvent $event) {
+                        $data = $event->getData();
+                        $form = $event->getForm();
+
+                        // Lorsque le formulaire est créé, l'entité passée est vide
+                        if (null === $data || null === $data->getId()) {
+                            return;
+                        }
+
+                        $closure = function (EntityRepository $er) use ($data) {
+                            return $er->createQueryBuilder('a')
+                                      ->where('a.fra = :fra')
+                                      ->setParameter('fra', $data);
+                        };
+
+                        $form->add('principalAddress', null, array('query_builder' => $closure));
+                        $form->add('principalPhone', null, array('query_builder' => $closure));
+                        $form->add('principalEmail', null, array('query_builder' => $closure));
+                    }
+                )
 
                 ->add('fraHasPosts', 'collection', array('by_reference' => false, 'type' => 'asbo_type_fraHasPost',  'allow_add' => true, 'allow_delete' => true, 'prototype' => true))
                 ->add('addresses', 'collection', array('by_reference' => false, 'type' => 'asbo_type_address', 'allow_add' => true, 'allow_delete' => true, 'prototype' => true))

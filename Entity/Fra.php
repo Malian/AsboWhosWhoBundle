@@ -175,6 +175,13 @@ class Fra
     private $emails;
 
     /**
+     * @var Asbo\WhosWhoBundle\Entity\Email $principalEmail
+     *
+     * @ORM\OneToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Email")
+     */
+    private $principalEmail;
+
+    /**
      * @var Asbo\WhosWhoBundle\Entity\Diploma $diplomas
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Diploma", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
@@ -189,6 +196,13 @@ class Fra
     private $phones;
 
     /**
+     * @var Asbo\WhosWhoBundle\Entity\Phone $principalPhone
+     *
+     * @ORM\OneToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Phone")
+     */
+    private $principalPhone;
+
+    /**
      * @var Asbo\WhosWhoBundle\Entity\Address $addresses
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Address", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
@@ -196,7 +210,7 @@ class Fra
     private $addresses;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Address $address
+     * @var Asbo\WhosWhoBundle\Entity\Address $principalAddress
      *
      * @ORM\OneToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Address")
      */
@@ -763,6 +777,10 @@ class Fra
 
         $this->emails->add($email);
 
+        if (null === $this->getPrincipalEmail()) {
+            $this->setPrincipalEmail($email);
+        }
+
         return $this;
     }
 
@@ -786,6 +804,28 @@ class Fra
     public function getEmails()
     {
         return $this->emails;
+    }
+
+    /**
+     * Set the principal email 
+     *
+     * @param \Asbo\WhosWhoBundle\Entity\Email $email
+     */
+    public function setPrincipalEmail(Email $email = null)
+    {
+        $this->principalEmail = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get the principal email 
+     *
+     * @return \Asbo\WhosWhoBundle\Entity\Email
+     */
+    public function getPrincipalEmail()
+    {
+        return $this->principalEmail;
     }
 
     /**
@@ -987,7 +1027,7 @@ class Fra
     /**
      * Get the principal address
      *
-     * @return \Asbo\WhosWhoBundle\Entity\Address $address
+     * @return \Asbo\WhosWhoBundle\Entity\Address
      */
     public function getPrincipalAddress()
     {
@@ -1003,6 +1043,10 @@ class Fra
     {
         $phone->setFra($this);
         $this->phones[] = $phone;
+
+        if (null === $this->getPrincipalPhone()) {
+            $this->setPrincipalPhone($phone);
+        }
 
         return $this;
     }
@@ -1027,6 +1071,28 @@ class Fra
     public function getPhones()
     {
         return $this->phones;
+    }
+
+    /**
+     * Set the principal phone 
+     *
+     * @param \Asbo\WhosWhoBundle\Entity\Phone $phone
+     */
+    public function setPrincipalPhone(Phone $phone = null)
+    {
+        $this->principalPhone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get the principal phone 
+     *
+     * @return \Asbo\WhosWhoBundle\Entity\Phone
+     */
+    public function getPrincipalPhone()
+    {
+        return $this->principalPhone;
     }
 
     /**
