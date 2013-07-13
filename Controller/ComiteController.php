@@ -15,9 +15,7 @@ use Asbo\WhosWhoBundle\Entity\Post;
 use Asbo\WhosWhoBundle\Util\AnnoManipulator;
 use Asbo\WhosWhoBundle\Validator\Constraints\Anno;
 use Asbo\ResourceBundle\Controller\ResourceController;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -29,7 +27,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class ComiteController extends ResourceController
 {
     /**
-     * Displays all comite 
+     * Displays all comite
      *
      * @throw AccessDeniedException if the user are not allowed
      *
@@ -85,7 +83,7 @@ class ComiteController extends ResourceController
 
     /**
      * Displays a specific comite by anno.
-     * 
+     *
      * @param $anno The anno
      *
      * @return Response
@@ -150,8 +148,8 @@ class ComiteController extends ResourceController
 
     /**
      * Checks if the attributes are granted against the current authentication token and optionally supplied object.
-     * 
-     * @param mixed $attributes
+     *
+     * @param mixed      $attributes
      * @param mixed|null $object
      *
      * @return Boolean
