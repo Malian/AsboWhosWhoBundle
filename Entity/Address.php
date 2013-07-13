@@ -51,14 +51,6 @@ class Address extends AbstractGMap
     private $type;
 
     /**
-     * @var boolean $principal
-     *
-     * @ORM\Column(name="principal", type="boolean", nullable=true)
-     * @Assert\Type(type="bool")
-     */
-    private $principal;
-
-    /**
      * @var Asbo\WhosWhoBundle\Entity\Fra
      *
      * @ORM\ManyToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Fra", inversedBy="addresses")
@@ -66,6 +58,9 @@ class Address extends AbstractGMap
      */
     private $fra;
 
+    /**
+     * Construtor.
+     */
     public function __construct()
     {
         $this->setType(static::TYPE_AUTRE);
@@ -102,29 +97,6 @@ class Address extends AbstractGMap
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * Set principal
-     *
-     * @param boolean $principal
-     * @return $this
-     */
-    public function setPrincipal($principal)
-    {
-        $this->principal = $principal;
-
-        return $this;
-    }
-
-    /**
-     * Is Princpal Adress
-     *
-     * @return boolean
-     */
-    public function isPrincipal()
-    {
-        return true === $this->principal;
     }
 
     /**

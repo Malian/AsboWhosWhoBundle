@@ -25,7 +25,6 @@ class Phone extends Units\Test
                 ->variable($phone->getNumber())->isNull()
                 ->variable($phone->getFra())->isNull()
                 ->variable($phone->getType())->isEqualTo(PhoneTest::TYPE_PRIVEE)
-                ->boolean($phone->isPrincipal())->isFalse()
              ->if($phone->setNumber($val = uniqid()))
              ->then
                 ->string($phone->getNumber())
@@ -83,17 +82,6 @@ class Phone extends Units\Test
 
         $this->sizeOf($callback)->isEqualTo(count($types));
         $this->array($callback)->containsValues($types);
-    }
-
-    public function testPrincipal()
-    {
-        $phone = new PhoneTest;
-
-        $phone->setPrincipal(true);
-        $this->boolean($phone->isPrincipal())->isTrue();
-
-        $phone->setPrincipal(false);
-        $this->boolean($phone->isPrincipal())->isFalse();
     }
 
     public function testFra()

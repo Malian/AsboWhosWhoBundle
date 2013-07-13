@@ -71,18 +71,14 @@ class Phone
     private $country;
 
     /**
-     * @var boolean $principal
-     *
-     * @ORM\Column(name="principal", type="boolean", nullable=true)
-     */
-    private $principal;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Fra", inversedBy="phones")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $fra;
 
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         $this->setType(static::TYPE_PRIVEE);
@@ -204,29 +200,6 @@ class Phone
     public function getFra()
     {
         return $this->fra;
-    }
-
-    /**
-     * Set principal
-     *
-     * @param boolean $principal
-     * @return $this
-     */
-    public function setPrincipal($principal)
-    {
-        $this->principal = $principal;
-
-        return $this;
-    }
-
-    /**
-     * Is Princpal number
-     *
-     * @return boolean
-     */
-    public function isPrincipal()
-    {
-        return true === $this->principal;
     }
 
     /**

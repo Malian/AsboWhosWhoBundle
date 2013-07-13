@@ -43,7 +43,6 @@ class AddressAdmin extends Admin
 
         $formMapper
            ->add('type', 'choice', array('choices' => Address::getTypes(), 'expanded' => false, 'multiple' => false))
-           ->add('principal')
            ->add($address);
 
         if (!$this->isChild()) {
@@ -59,8 +58,7 @@ class AddressAdmin extends Admin
         $datagridMapper
             ->add('fra')
             ->add('address')
-            ->add('type', 'doctrine_orm_choice', array('field_type' => 'choice', 'field_options' => array('choices' => Address::getTypes())))
-            ->add('principal');
+            ->add('type', 'doctrine_orm_choice', array('field_type' => 'choice', 'field_options' => array('choices' => Address::getTypes())));
     }
 
     /**
@@ -70,8 +68,7 @@ class AddressAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('address')
-            ->add('TypeCode')
-            ->add('principal', null, array('editable' => true));
+            ->add('TypeCode');
 
         if (!$this->isChild()) {
             $listMapper->add('fra', 'sonata_type_model_list');

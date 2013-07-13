@@ -41,8 +41,7 @@ class AddressType extends AbstractType
         $class = $this->class;
 
         $builder->add('address', 'gmap_address', array('data_class' => $this->class))
-                ->add('type', 'choice', array('choices' => $class::getTypes()))
-                ->add('principal');
+                ->add('type', 'choice', array('choices' => $class::getTypes()));
     }
 
     /**

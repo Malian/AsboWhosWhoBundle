@@ -25,7 +25,6 @@ class Email extends Units\Test
         $this->variable($email->getEmail())->isNull();
         $this->variable($email->getFra())->isNull();
         $this->variable($email->getType())->isEqualTo(EmailTest::TYPE_AUTRE);
-        $this->boolean($email->isPrincipal())->isFalse();
     }
 
     public function testEmail()
@@ -72,17 +71,6 @@ class Email extends Units\Test
 
         $this->sizeOf($callback)->isEqualTo(count($types));
         $this->array($callback)->containsValues($types);
-    }
-
-    public function testPrincipal()
-    {
-        $email = new EmailTest;
-
-        $email->setPrincipal(true);
-        $this->boolean($email->isPrincipal())->isTrue();
-
-        $email->setPrincipal(false);
-        $this->boolean($email->isPrincipal())->isFalse();
     }
 
     public function testFra()

@@ -49,7 +49,6 @@ class AsboWhosWhoExtension extends Extension
 
         if ($config['redirect_profile_user']['enabled']) {
             $container->setParameter('asbo_whoswho.profile.listener.route', $config['redirect_profile_user']['route']);
-            $container->setParameter('asbo_whoswho.profile.listener.new', $config['redirect_profile_user']['new']);
             $container->setParameter('asbo_whoswho.profile.listener.class', $config['redirect_profile_user']['listener']);
             $loader->load('redirect.xml');
         }

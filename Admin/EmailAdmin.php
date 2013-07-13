@@ -36,7 +36,6 @@ class EmailAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('email')
-                   ->add('principal', 'sonata_type_boolean')
                    ->add('type', 'choice', array('choices' => Email::getTypes(), 'expanded' => true, 'multiple' => false));
 
         if (!$this->isChild()) {
@@ -51,7 +50,6 @@ class EmailAdmin extends Admin
     {
         $datagridMapper->add('fra')
                        ->add('email')
-                       ->add('principal')
                        ->add('type', null, array('field_type' => 'choice', 'field_options' => array('choices' => Email::getTypes())));
     }
 
@@ -61,8 +59,7 @@ class EmailAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper->addIdentifier('email')
-                   ->add('getTypeCode', 'text', array('label' => 'Type', 'sortable' => 'Type'))
-                   ->add('principal', null, array('editable' => true));
+                   ->add('getTypeCode', 'text', array('label' => 'Type', 'sortable' => 'Type'));
 
         if (!$this->isChild()) {
             $listMapper->add('fra', 'sonata_type_model_list');

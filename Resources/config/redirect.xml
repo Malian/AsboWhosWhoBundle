@@ -10,7 +10,6 @@
             <argument type="service" id="security.context" />
             <argument type="service" id="asbo_whoswho.fra_has_user_manager" />
             <argument>%asbo_whoswho.profile.listener.route%</argument>
-            <argument>%asbo_whoswho.profile.listener.new%</argument>
             <tag name="kernel.event_listener" event="kernel.request" method="onCoreController" />
         </service>
     </services>

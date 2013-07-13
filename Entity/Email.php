@@ -60,13 +60,6 @@ class Email
     private $type;
 
     /**
-     * @var boolean $principal
-     *
-     * @ORM\Column(name="principal", type="boolean", nullable=true)
-     */
-    private $principal;
-
-    /**
      * @var Asbo\WhosWhoBundle\Entity\Fra
      *
      * @ORM\ManyToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Fra", inversedBy="emails")
@@ -74,6 +67,9 @@ class Email
      */
     private $fra;
 
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         $this->setType(Email::TYPE_AUTRE);
@@ -133,29 +129,6 @@ class Email
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * Set principal
-     *
-     * @param  boolean $principal
-     * @return Email
-     */
-    public function setPrincipal($principal)
-    {
-        $this->principal = $principal;
-
-        return $this;
-    }
-
-    /**
-     * Is the principal Email
-     *
-     * @return Boolean
-     */
-    public function isPrincipal()
-    {
-        return $this->principal == true;
     }
 
     /**

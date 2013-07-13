@@ -37,8 +37,7 @@ class PhoneAdmin extends Admin
     {
         $formMapper->add('number')
                    ->add('type', 'choice', array('choices' => Phone::getTypes()))
-                   ->add('country', 'country', array('preferred_choices' => array('BE', 'FR')))
-                   ->add('principal');
+                   ->add('country', 'country', array('preferred_choices' => array('BE', 'FR')));
 
         if (!$this->isChild()) {
             $formMapper->add('fra', 'sonata_type_model_list');
@@ -53,8 +52,7 @@ class PhoneAdmin extends Admin
         $datagridMapper->add('fra')
                        ->add('number')
                        ->add('type', 'doctrine_orm_choice', array('field_type' => 'choice', 'field_options' => array('choices' => Phone::getTypes())))
-                       ->add('country', null, array('field_type' => 'country'))
-                       ->add('principal');
+                       ->add('country', null, array('field_type' => 'country'));
     }
 
     /**
@@ -64,8 +62,7 @@ class PhoneAdmin extends Admin
     {
         $listMapper->addIdentifier('number')
                    ->add('getTypeCode')
-                   ->add('getCountryCode')
-                   ->add('principal', null, array('editable' => true));
+                   ->add('getCountryCode');
 
         if (!$this->isChild()) {
             $listMapper->add('fra', 'sonata_type_model_list');
