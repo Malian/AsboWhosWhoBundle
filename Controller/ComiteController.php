@@ -29,10 +29,18 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class ComiteController extends ResourceController
 {
     /**
-     * @Secure(roles="ROLE_WHOSWHO_USER")
+     * Displays all comite 
+     *
+     * @throw AccessDeniedException if the user are not allowed
+     *
+     * @return Response
      */
     public function listAction()
     {
+        if (!$this->isGranted('ROLE_WHOSWHO_USER')) {
+            throw new AccessDeniedException();
+        }
+
         $manager      = $this->getFraHasPostManager();
         $posts        = $manager->findByTypes(array(Post::TYPE_COMITE, Post::TYPE_CONSEIL));
         $postsByYears = array();
@@ -47,16 +55,47 @@ class ComiteController extends ResourceController
         );
     }
 
-    public function annoAction($anno, Request $request, $security = true)
+    /**
+     * Displays a specific comite by anno.
+     *
+     * @param $@nno The anno
+     *
+     * @throw AccessDeniedException if the user are not allowed.
+     *
+     * @return Response
+     */
+    public function annoAction($anno)
     {
-        $error = $this->container->get('validator')->validateValue($anno, new Anno());
+        if (!$this->isGranted('ROLE_WHOSWHO_USER')) {
+            throw new AccessDeniedException();
+        }
+
+        return $this->getByAnno($anno);
+    }
+
+    /**
+     * Displays current comite.
+     *
+     * @return Response
+     */
+    public function lastAction()
+    {
+        return $this->getByAnno(AnnoManipulator::getCurrentAnno());
+    }
+
+    /**
+     * Displays a specific comite by anno.
+     * 
+     * @param $anno The anno
+     *
+     * @return Response
+     */
+    protected function getByAnno($anno)
+    {
+        $error = $this->getValidator()->validateValue($anno, new Anno());
 
         if (count($error) != 0) {
             throw new NotFoundHttpException(sprintf("Anno '%s' doens't exists", $anno));
-        }
-
-        if ($security && !$this->container->get('security.context')->isGranted('ROLE_WHOSWHO_USER')) {
-            throw new AccessDeniedException();
         }
 
         $manager = $this->getFraHasPostManager();
@@ -64,17 +103,18 @@ class ComiteController extends ResourceController
 
         // Lors de la phase de transition avec le synode il n'y a pas encore de comité
         // On prend le comité de l'anno précédente comme référence
+        // Codexialement c'est correct ! ;-)
         if (0 === count($posts)) {
 
             --$anno;
 
             // Dans ce cas, on fait appel au controller depuis "lastAction"
-            if (null === $request->attributes->get('anno')) {
-                return $this->annoAction($anno, $request, $security);
+            if (null === $this->getRequest()->attributes->get('anno')) {
+                return $this->getByAnno($anno);
             }
 
             // Sinon on redirige en précisiant que c'est une redirection temporaire
-            $url = $this->getRouter()->generate('asbo_whoswho_comite_anno', array('anno' => $anno));
+            $url = $this->generateUrl('asbo_whoswho_comite_anno', array('anno' => $anno));
 
             return new RedirectResponse($url, 307);
         }
@@ -88,18 +128,36 @@ class ComiteController extends ResourceController
         );
     }
 
-    public function lastAction(Request $request)
+    /**
+     * Get validator.
+     *
+     * @return ValidatorInterface
+     */
+    protected function getValidator()
     {
-        return $this->annoAction(AnnoManipulator::getCurrentAnno(), $request, false);
+        return $this->get('validator');
     }
 
+    /**
+     * Get fraHasPost manager.
+     *
+     * @return FraHasPostManager
+     */
     protected function getFraHasPostManager()
     {
-        return $this->container->get('asbo_whoswho.fra_has_post_manager');
+        return $this->get('asbo_whoswho.fra_has_post_manager');
     }
 
-    protected function getRouter()
+    /**
+     * Checks if the attributes are granted against the current authentication token and optionally supplied object.
+     * 
+     * @param mixed $attributes
+     * @param mixed|null $object
+     *
+     * @return Boolean
+     */
+    protected function isGranted($attributes, $object = null)
     {
-        return $this->container->get('router');
+        return $this->get('security.context')->isGranted($attributes, $object);
     }
 }
