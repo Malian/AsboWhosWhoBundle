@@ -254,11 +254,7 @@ class Fra extends Units\Test
     {
         $fra = new BaseFra;
 
-        $this->exception(
-            function () use ($fra) {
-                $fra->getSetting('unknow');
-            }
-        )->isInstanceOf('\InvalidArgumentException');
+        $this->variable($fra->getSetting('unknow'))->isNull();
     }
 
     public function testDefaultSettings()
@@ -266,6 +262,7 @@ class Fra extends Units\Test
         $fra = new BaseFra;
 
         foreach ($fra->getSettings() as $key => $value) {
+            $this->dump($key);
             $this->boolean($fra->getSetting($key))->isTrue();
         }
 
@@ -283,7 +280,7 @@ class Fra extends Units\Test
         $this->array($fra->getSettings())->isEqualTo($settings);
 
         foreach ($fra->getSettings() as $key => $value) {
-            $this->boolean($fra->isSetting($key))->isTrue();
+            $this->boolean($fra->hasSetting($key))->isTrue();
             $this->boolean($fra->getSetting($key))->isEqualTo($value);
             $this->boolean($fra->getSetting($key))->isEqualTo($settings[$key]);
         }
@@ -295,7 +292,7 @@ class Fra extends Units\Test
         $setting      = 'emailNotification';
 
         $this->object($fra->setSettings(array($setting => $bool = $this->faker->boolean(50))))->isIdenticalTo($fra);
-        $this->boolean($fra->isSetting($setting))->isTrue();
+        $this->boolean($fra->hasSetting($setting))->isTrue();
         $this->boolean($fra->getSetting($setting))->isEqualTo($bool);
     }
 

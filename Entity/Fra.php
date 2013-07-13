@@ -228,14 +228,7 @@ class Fra
      *
      * @ORM\Column(name="settings", type="array")
      */
-    private $settings = array();
-
-    /**
-     * @var  array $defaultsettings
-     *
-     * Default Settings
-     */
-    private $defaultsettings = array(
+    private $settings = array(
         'whoswho'               => true,
         'pereat'                => true,
         'convoc_externe'        => true,
@@ -1044,7 +1037,7 @@ class Fra
      */
     public function setSettings($settings)
     {
-        $this->settings = array_merge($this->defaultsettings, $settings);
+        $this->settings = array_replace($this->settings, $settings);
 
         return $this;
     }
@@ -1056,7 +1049,7 @@ class Fra
      */
     public function getSettings()
     {
-        return array_merge($this->defaultsettings, $this->settings);
+        return $this->settings;
     }
 
     /**
@@ -1065,23 +1058,21 @@ class Fra
      * @return string
      * @throws InvalidArgumentException If the settings doesn't exist
      */
-    public function getSetting($key)
+    public function getSetting($key, $default = null)
     {
-        if ($this->isSetting($key)) {
-            return $this->getSettings()[$key];
-        } else {
-            throw new \InvalidArgumentException('Unknow settings as "'.$key.'"');
-        }
+        return array_key_exists($key, $this->settings) ? $this->settings[$key] : $default;
     }
 
     /**
      * Return if the settings exist
      *
+     * @param string $key The key
+     *
      * @return boolean
      */
-    public function isSetting($key)
+    public function hasSetting($key)
     {
-        return isset($this->getSettings()[$key]);
+        return array_key_exists($key, $this->settings);
     }
 
     /**
