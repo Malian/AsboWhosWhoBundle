@@ -14,7 +14,6 @@ namespace Asbo\WhosWhoBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
-use Asbo\WhosWhoBundle\Entity\Address;
 
 /**
  * Address type

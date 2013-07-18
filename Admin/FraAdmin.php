@@ -18,7 +18,6 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Asbo\WhosWhoBundle\Entity\Fra;
-use Asbo\WhosWhoBundle\Entity\Email;
 use Asbo\WhosWhoBundle\Util\AnnoManipulator;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Doctrine\ORM\EntityRepository;

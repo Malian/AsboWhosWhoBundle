@@ -12,7 +12,6 @@
 namespace Asbo\WhosWhoBundle\Entity;
 
 use Doctrine\ORM\EntityManager;
-use Asbo\UserBundle\Entity\User;
 
 /**
  * Fra has Post manager

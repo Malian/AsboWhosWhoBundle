@@ -21,8 +21,6 @@ use Lexik\Bundle\FormFilterBundle\Filter\ORM\Expr;
 use Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\FilterTypeSharedableInterface;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterOperands;
 
-use Asbo\WhosWhoBundle\Entity\Post;
-
 /**
  * Embbed filter type.
  */

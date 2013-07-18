@@ -12,6 +12,7 @@
 namespace Asbo\WhosWhoBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * FraHasPost repository

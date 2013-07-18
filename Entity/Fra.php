@@ -17,7 +17,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Asbo\WhosWhoBundle\Entity\Email;
 use Asbo\WhosWhoBundle\Entity\Diploma;
-use Asbo\WhosWhoBundle\Entity\Post;
 use Asbo\WhosWhoBundle\Entity\Phone;
 use Asbo\WhosWhoBundle\Entity\Address;
 use Asbo\WhosWhoBundle\Entity\Job;
