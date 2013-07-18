@@ -80,33 +80,21 @@ class FraController extends ResourceController
         );
     }
 
-    /**
-     * @SecureParam(name="fra", permissions="ROLE_WHOSWHO_USER")
-     */
     public function editAction(Fra $fra, Request $request)
     {
         if (false === $this->container->get('security.context')->isGranted('ROLE_WHOSWHO_FRA_EDIT', $fra)) {
             throw new AccessDeniedException();
         }
 
-         /** @var $formFactory \Asbo\WhosWhoBundle\Form\Factory\FormFactory */
-        $form = $this->container->get('asbo_whoswho.fra.form.factory')->createForm();
-        $form->setData($fra);
+        $form = $this->getFormFactory();
+        $form->setData($fra)->handleRequest($request);
 
-        if ('POST' === $request->getMethod()) {
-            $form->bind($request);
+        if ($form->isValid()) {
 
-            if ($form->isValid()) {
+            $userManager = $this->getFraManager();
+            $userManager->save($fra);
 
-                /** @var $fraManager \Asbo\WhosWhoBundle\Entity\FraManager */
-                $userManager = $this->container->get('asbo_whoswho.fra_manager');
-                $userManager->save($fra);
-
-                $url = $this->container->get('router')->generate('asbo_whoswho_fra_edit', array('slug' => $fra->getSlug()));
-                $response = new RedirectResponse($url);
-
-                return $response;
-            }
+            return $this->redirect($this->getFraEditUrl($fra));
         }
 
         return $this->renderResponse(
@@ -116,5 +104,37 @@ class FraController extends ResourceController
                 'form' => $form->createView()
             )
         );
+    }
+
+    /**
+     * Returns the form factory.
+     *
+     * @return \Asbo\WhosWhoBundle\Form\Factory\FormFactory
+     */
+    protected function getFormFactory()
+    {
+        return $this->container->get('asbo_whoswho.fra.form.factory')->createForm();
+    }
+
+    /**
+     * Return the url to the edit page of a fra.
+     *
+     * @param Fra $fra
+     *
+     * @return string The url
+     */
+    protected function getFraEditUrl(Fra $fra)
+    {
+        return $this->get('router')->generate('asbo_whoswho_fra_edit', array('slug' => $fra->getSlug()));
+    }
+
+    /**
+     * Return the FraManager
+     *
+     * @return Asbo\WhosWhoBundle\Entity\FraManager
+     */
+    protected function getFraManager()
+    {
+        return $this->get('asbo_whoswho.fra_manager');
     }
 }
