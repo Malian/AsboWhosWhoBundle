@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Asbo\WhosWhoBundle\Entity\Fra;
 use Asbo\WhosWhoBundle\Filter\FraFilterType;
 use Asbo\ResourceBundle\Controller\ResourceController;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 /**
  * Controller of fra page
@@ -26,13 +27,11 @@ class FraController extends ResourceController
 {
     /**
      * Show all the fra
+     *
+     * @Secure(roles="ROLE_WHOSWHO_USER")
      */
     public function listAction(Request $request)
     {
-        if (false === $this->isGranted('ROLE_WHOSWHO_USER')) {
-            throw new AccessDeniedException();
-        }
-
         $form = $this->get('form.factory')->create(new FraFilterType());
 
         if ($request->query->has('submit-filter')) {
@@ -45,24 +44,16 @@ class FraController extends ResourceController
             $fras = $this->getFraManager()->findAll();
         }
 
-        return $this->renderResponse(
-            'list.html',
-            array(
-                'fras' => $fras,
-                'form' => $form->createView()
-            )
-        );
+        return $this->renderResponse('list.html', ['fras' => $fras, 'form' => $form->createView()]);
     }
 
     /**
      * Show the fra
+     *
+     * @Secure(roles="ROLE_WHOSWHO_USER")
      */
     public function showAction(Fra $fra)
     {
-        if (false === $this->isGranted('ROLE_WHOSWHO_USER')) {
-            throw new AccessDeniedException();
-        }
-
         return $this->renderResponse(
             'show.html',
             array(
@@ -80,24 +71,16 @@ class FraController extends ResourceController
             throw new AccessDeniedException();
         }
 
-        $form = $this->getFormFactory();
-        $form->setData($fra)->handleRequest($request);
+        $form = $this->getFormFactory()->setData($fra)->handleRequest($request);
 
         if ($form->isValid()) {
 
-            $userManager = $this->getFraManager();
-            $userManager->save($fra);
+            $this->getFraManager()->save($fra);
 
             return $this->redirect($this->getFraEditUrl($fra));
         }
 
-        return $this->renderResponse(
-            'edit.html',
-            array(
-                'fra'  => $fra,
-                'form' => $form->createView()
-            )
-        );
+        return $this->renderResponse('edit.html', ['fra'  => $fra, 'form' => $form->createView()]);
     }
 
     /**
