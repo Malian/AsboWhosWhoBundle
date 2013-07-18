@@ -809,7 +809,7 @@ class Fra
     }
 
     /**
-     * Set the principal email 
+     * Set the principal email
      *
      * @param \Asbo\WhosWhoBundle\Entity\Email $email
      */
@@ -821,7 +821,7 @@ class Fra
     }
 
     /**
-     * Get the principal email 
+     * Get the principal email
      *
      * @return \Asbo\WhosWhoBundle\Entity\Email
      */
@@ -1076,7 +1076,7 @@ class Fra
     }
 
     /**
-     * Set the principal phone 
+     * Set the principal phone
      *
      * @param \Asbo\WhosWhoBundle\Entity\Phone $phone
      */
@@ -1088,7 +1088,7 @@ class Fra
     }
 
     /**
-     * Get the principal phone 
+     * Get the principal phone
      *
      * @return \Asbo\WhosWhoBundle\Entity\Phone
      */

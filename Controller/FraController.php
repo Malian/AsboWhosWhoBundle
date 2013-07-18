@@ -13,12 +13,8 @@ namespace Asbo\WhosWhoBundle\Controller;
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Asbo\WhosWhoBundle\Entity\Fra;
 use Asbo\WhosWhoBundle\Filter\FraFilterType;
-use JMS\SecurityExtraBundle\Annotation\Secure;
-use JMS\SecurityExtraBundle\Annotation\SecureParam;
 use Asbo\ResourceBundle\Controller\ResourceController;
 
 /**

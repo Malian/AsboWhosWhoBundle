@@ -79,7 +79,7 @@ class FraManager
         $filterBuilder = $this->getRepository()->createQueryBuilder('e');
 
         $this->filterQueryBuilder->addFilterConditions($form, $filterBuilder);
-                                         
+
         return $filterBuilder->getQuery()->getResult();
     }
 
