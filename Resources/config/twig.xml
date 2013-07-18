@@ -6,7 +6,9 @@
 
     <services>
         <service id="asbo.whoswho.twig.global" class="Asbo\WhosWhoBundle\Twig\GlobalVariables" >
-            <argument type="service" id="service_container" />
+            <call methode="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
         </service>
     </services>
 </container>

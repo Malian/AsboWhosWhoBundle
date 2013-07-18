@@ -13,24 +13,11 @@ namespace Asbo\WhosWhoBundle\DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\FixtureInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAware;
 use Nelmio\Alice\Fixtures;
 
-class LoadFixtureData implements FixtureInterface, ContainerAwareInterface
+class LoadFixtureData extends ContainerAware implements FixtureInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
 
     public function load(ObjectManager $om)
     {
