@@ -26,7 +26,7 @@ use Asbo\WhosWhoBundle\Entity\FraHasUser;
 class OwnerVoter implements VoterInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function supportsAttribute($attribute)
     {
@@ -34,7 +34,7 @@ class OwnerVoter implements VoterInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function supportsClass($class)
     {
@@ -42,7 +42,7 @@ class OwnerVoter implements VoterInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function vote(TokenInterface $token, $object, array $attributes)
     {
