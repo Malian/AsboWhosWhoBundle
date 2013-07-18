@@ -29,32 +29,24 @@ use Asbo\ResourceBundle\Controller\ResourceController;
 class FraController extends ResourceController
 {
     /**
-     * @Secure(roles="ROLE_WHOSWHO_USER")
-     * @todo Injecter le filtre dans le manager
+     * Show all the fra
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
+        if (false === $this->isGranted('ROLE_WHOSWHO_USER')) {
+            throw new AccessDeniedException();
+        }
 
         $form = $this->get('form.factory')->create(new FraFilterType());
 
-        if ($this->get('request')->query->has('submit-filter')) {
-            // bind values from the request
-            $form->bind($this->get('request'));
+        if ($request->query->has('submit-filter')) {
 
-            // initliaze a query builder
-            $filterBuilder = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('AsboWhosWhoBundle:Fra')
-                ->createQueryBuilder('e');
+            $form->bind($request);
 
-            // build the query from the given form object
-            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
-
-            // now look at the DQL =)
-            $fras = $filterBuilder->getQuery()->getResult();
+            $fras = $this->getFraManager()->findAllWithFormFilter($form);
 
         } else {
-            $fraManager = $this->container->get('asbo_whoswho.fra_manager');
-            $fras       = $fraManager->findAll();
+            $fras = $this->getFraManager()->findAll();
         }
 
         return $this->renderResponse(
@@ -67,11 +59,14 @@ class FraController extends ResourceController
     }
 
     /**
-     * @Secure(roles="ROLE_WHOSWHO_USER")
-     * @ParamConverter("fra", class="AsboWhosWhoBundle:Fra")
+     * Show the fra
      */
     public function showAction(Fra $fra)
     {
+        if (false === $this->isGranted('ROLE_WHOSWHO_USER')) {
+            throw new AccessDeniedException();
+        }
+
         return $this->renderResponse(
             'show.html',
             array(
@@ -80,9 +75,12 @@ class FraController extends ResourceController
         );
     }
 
+    /**
+     * Edit the fra
+     */
     public function editAction(Fra $fra, Request $request)
     {
-        if (false === $this->container->get('security.context')->isGranted('ROLE_WHOSWHO_FRA_EDIT', $fra)) {
+        if (false === $this->isGranted('ROLE_WHOSWHO_FRA_EDIT', $fra)) {
             throw new AccessDeniedException();
         }
 
@@ -136,5 +134,18 @@ class FraController extends ResourceController
     protected function getFraManager()
     {
         return $this->get('asbo_whoswho.fra_manager');
+    }
+
+    /**
+     * Checks if the attributes are granted against the current authentication token and optionally supplied object.
+     *
+     * @param mixed      $attributes
+     * @param mixed|null $object
+     *
+     * @return Boolean
+     */
+    protected function isGranted($attributes, $object = null)
+    {
+        return $this->get('security.context')->isGranted($attributes, $object);
     }
 }

@@ -13,6 +13,8 @@ namespace Asbo\WhosWhoBundle\Entity;
 
 use Doctrine\ORM\EntityManager;
 use Asbo\WhosWhoBundle\Model\FraUserInterface;
+use Symfony\Component\Form\FormInterface;
+use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 
 /**
  * Fra manager
@@ -29,13 +31,21 @@ class FraManager
     protected $em;
 
     /**
+     * Form Filter
+     *
+     * @var Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface
+     */
+    protected $filterQueryBuilder;
+
+    /**
      *  Constructor
      *
      * @param EntityManager $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, FilterBuilderUpdaterInterface $filterQueryBuilder)
     {
-        $this->em = $em;
+        $this->em                     = $em;
+        $this->filterQueryBuilder = $filterQueryBuilder;
     }
 
     /**
@@ -58,6 +68,19 @@ class FraManager
     public function findByUser(FraUserInterface $user)
     {
         return $this->getRepository()->findBy(array('user' => $user));
+    }
+
+    /**
+     * Find fras with form filter
+     *
+     */
+    public function findAllWithFormFilter(FormInterface $form)
+    {
+        $filterBuilder = $this->getRepository()->createQueryBuilder('e');
+
+        $this->filterQueryBuilder->addFilterConditions($form, $filterBuilder);
+                                         
+        return $filterBuilder->getQuery()->getResult();
     }
 
     /**

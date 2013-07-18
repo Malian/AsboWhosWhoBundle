@@ -21,7 +21,8 @@ class FraManager extends Test
     {
         $this->em      = new \Mock\Doctrine\ORM\EntityManager();
         $this->fra     = new \Mock\Asbo\WhosWhoBundle\Entity\Fra();
-        $this->manager = new FraManagerTested($this->em);
+        $this->filter  = new \Mock\Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface();
+        $this->manager = new FraManagerTested($this->em, $this->filter);
 
         $this->mockGenerator->orphanize('__construct');
         $this->repository = new \Mock\Doctrine\ORM\EntityRepository();
@@ -30,7 +31,7 @@ class FraManager extends Test
 
     public function testConstructor()
     {
-        $this->object(new FraManagerTested($this->em));
+        $this->object(new FraManagerTested($this->em, $this->filter));
     }
 
     public function testGetRepository()
