@@ -17,7 +17,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Asbo\WhosWhoBundle\Util\AnnoManipulator;
-use Asbo\WhosWhoBundle\Form\EventListener\AddPrincipalFieldSubscriber;
 use Doctrine\ORM\EntityRepository;
 
 // @Todo: Changer ici par une interface parce que normalement on devrait pas devoir utiliser directement la classe
