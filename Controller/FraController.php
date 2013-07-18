@@ -18,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Asbo\WhosWhoBundle\Entity\Fra;
 use Asbo\WhosWhoBundle\Filter\FraFilterType;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use JMS\SecurityExtraBundle\Annotation\SecureParam;
 use Asbo\ResourceBundle\Controller\ResourceController;
 
 /**
@@ -80,7 +81,7 @@ class FraController extends ResourceController
     }
 
     /**
-     * @Secure(roles="ROLE_WHOSWHO_USER")
+     * @SecureParam(name="fra", permissions="ROLE_WHOSWHO_USER")
      */
     public function editAction(Fra $fra, Request $request)
     {
