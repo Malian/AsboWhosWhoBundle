@@ -13,14 +13,31 @@ namespace Asbo\WhosWhoBundle\DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\FixtureInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Nelmio\Alice\Fixtures;
 
-class LoadFixtureData implements FixtureInterface
+class LoadFixtureData implements FixtureInterface, ContainerAwareInterface
 {
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
 
     public function load(ObjectManager $om)
     {
-        Fixtures::load(__DIR__.'/fixtures.yml', $om, array('providers' => array($this)));
+        $kernel = $this->container->get('kernel');
+        $path   = $kernel->locateResource('@AsboWhosWhoBundle/DataFixtures/ORM/fixtures.yml');
+
+        Fixtures::load($path, $om, array('providers' => array($this)));
     }
 
     public function monogramme()
