@@ -57,7 +57,7 @@ class FraHasPostRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    private function joinFra($qb)
+    private function joinFra(QueryBuilder $qb)
     {
         $qb->leftJoin('l.fra', 'f')
            ->addSelect('f')
