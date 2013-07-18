@@ -28,7 +28,7 @@ class AnnoType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $choicesCallback = function (Options $options, $value) {
+        $choicesCallback = function (Options $options) {
             $annos = AnnoManipulator::getAnnos();
 
             return $options['inverse_choices'] ? array_reverse($annos, true) : $annos;

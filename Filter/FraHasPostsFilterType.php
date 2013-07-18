@@ -44,7 +44,7 @@ class FraHasPostsFilterType extends AbstractType implements FilterTypeSharedable
      */
     public function addShared(FilterBuilderExecuterInterface $qbe)
     {
-        $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
+        $closure = function (QueryBuilder $filterBuilder, $alias) {
             // add the join clause to the doctrine query builder
             // the where clause for the label and color fields
             // will be added automatically with the right alias
