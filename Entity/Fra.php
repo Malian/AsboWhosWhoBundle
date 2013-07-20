@@ -343,10 +343,13 @@ class Fra
 
         // Quand on rajoute un fra il y a de forte chance pour qu'il soit
         // Tyro et que ce soit un garçon
-        // De plus quand on rajoute un fra en général c'est pour l'anno en cours.
         $this->type   = self::TYPE_IMPETRANT;
         $this->status = self::STATUS_TYRO;
         $this->gender = 0;
+
+        // De plus quand on rajoute un fra en général c'est pour l'anno en cours.
+        // Cependant, on rajoute une dépendance.
+        // TODO : Faire un refactoring et définir la valeur de anno dans le manager
         $this->anno   = AnnoManipulator::getCurrentAnno();
     }
 
