@@ -15,7 +15,7 @@ file that was distributed with this source code.
     </div>
 {% endif %}
 
-<form novalidate action="{{ path('asbo_whoswho_addressing_edit', {'slug': fra.slug, 'address_id': address.id}) }}" {{ form_enctype(form) }} method="POST">
+<form novalidate action="{{ path('asbo_whoswho_addressing_create', {'slug': fra.slug}) }}" {{ form_enctype(form) }} method="POST">
     {{ form_rest(form) }}
     <input type="submit" value="Editer" class="btn btn-success" />
 </form>

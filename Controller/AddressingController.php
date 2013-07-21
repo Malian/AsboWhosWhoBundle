@@ -26,13 +26,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
  */
 class AddressingController extends ResourceController
 {
+
     /**
-     * Edit an address
+     * Update an address.
      *
-     * @throws AccessDeniedException if the user are not allowed
+     * @param Fra $fra
+     * @param Address $address
+     * @param Request $request
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @ParamConverter("address", class="Asbo\WhosWhoBundle\Entity\Address", options={"id" = "address_id"})
      */
-    public function editAction(Fra $fra, Address $address, Request $request)
+    public function updateAction(Fra $fra, Address $address, Request $request)
     {
         if ($address->getFra()->getId() !== $fra->getId()) {
             throw $this->createNotFoundException('Link between Fra and Address not found !');
@@ -46,16 +51,78 @@ class AddressingController extends ResourceController
 
         if ($form->isValid()) {
 
-            $this->get('session')->getFlashBag()->add(
+            $this->getAddressManager()->update($address);
+
+            $this->setFlash(
                 'success',
-                'Votre addresse a bien été modifiée !'
+                'Votre adresse a bien été modifiée !'
             );
 
             return $this->redirect($this->getFraController()->getFraEditUrl($fra));
         }
 
-        return $this->renderResponse('edit.html', ['fra'  => $fra, 'address' => $address, 'form' => $form->createView()]);
+        return $this->renderResponse('update.html', ['fra'  => $fra, 'address' => $address, 'form' => $form->createView()]);
 
+    }
+
+    /**
+     * Create an address
+     *
+     * @param Fra $fra
+     * @param Request $request
+     * @throws AccessDeniedException
+     */
+    public function createAction(Fra $fra, Request $request)
+    {
+        if (!$this->isGranted('ROLE_WHOSWHO_FRA_EDIT', $fra)) {
+            throw new AccessDeniedException('You are not allowed to edit this fra !');
+        }
+
+        $address = $this->getAddressManager()->createNew();
+        $form = $this->getFormFactory();
+
+        $form->setData($address)->handleRequest($request);
+
+        if ($form->isValid()) {
+            $address->setFra($fra);
+            $this->getAddressManager()->update($address);
+            $this->setFlash('succes', 'Votre adresse a bien été créée !');
+            return $this->redirect($this->getFraController()->getFraEditUrl($fra));
+        }
+
+        return $this->renderResponse('create.html', ['fra'  => $fra, 'form' => $form->createView()]);
+    }
+
+    /**
+     * Delete an address.
+     *
+     * @param Fra $fra
+     * @param Address $address
+     * @param Request $request
+     * @ParamConverter("address", class="Asbo\WhosWhoBundle\Entity\Address", options={"id" = "address_id"})
+     */
+    public function deleteAction(Fra $fra, Address $address, Request $request)
+    {
+        if (!$this->isGranted('ROLE_WHOSWHO_FRA_EDIT', $fra)) {
+            throw new AccessDeniedException('You are not allowed to edit this fra !');
+        }
+
+        $this->setFlash('success', 'Votre adresse a bien été supprimée !');
+        $this->redirect($this->getFraController()->getFraEditUrl($fra));
+    }
+
+    /**
+     * @param string $type
+     * @param string $message
+     * @return mixed
+     */
+    protected function setFlash($type, $message)
+    {
+        return $this
+            ->get('session')
+            ->getFlashBag()
+            ->add($type, $message)
+            ;
     }
 
     /**
@@ -65,7 +132,15 @@ class AddressingController extends ResourceController
      */
     protected function getFormFactory()
     {
-        return $this->container->get('asbo_whoswho.addressing.form.factory')->createForm();
+        return $this->get('asbo_whoswho.addressing.form.factory')->createForm();
+    }
+
+    /**
+     * @return \Asbo\WhosWhoBundle\Doctrine\AddressManager
+     */
+    protected function getAddressManager()
+    {
+        return $this->get('asbo_whoswho.address_manager');
     }
 
     /**
