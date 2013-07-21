@@ -71,10 +71,6 @@
             <tag name="form.type" alias="asbo_type_fra" />
         </service>
 
-        <service id="asbo.whoswho.form.type.gmap_address" class="%asbo.whoswho.model.gmap_address.class%">
-            <tag name="form.type" alias="gmap_address" />
-        </service>
-
     </services>
 
 </container>

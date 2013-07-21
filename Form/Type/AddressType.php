@@ -40,8 +40,12 @@ class AddressType extends AbstractType
         /** @var \Asbo\WhosWhoBundle\Entity\Address $class */
         $class = $this->class;
 
-        $builder->add('address', 'gmap_address', array('data_class' => $this->class))
-                ->add('type', 'choice', array('choices' => $class::getTypes()));
+        $builder->add('address', null, array('required' => true))
+                ->add('type', 'choice', array('choices' => $class::getTypes()))
+                ->add('locality', null, array('required' => false))
+                ->add('country', null, array('required' => false))
+                ->add('lat', 'text', array('required' => false, 'read_only' => true))
+                ->add('lng', 'text', array('required' => false, 'read_only' => true));
     }
 
     /**
