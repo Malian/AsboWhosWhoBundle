@@ -63,8 +63,11 @@
             <argument>asbo_type_fra</argument>
         </service>
 
+        <service id="asbo_whoswho.form.eventlistener.editfra" class="Asbo\WhosWhoBundle\Form\EventListener\EditFraListener" public="false" />
+
         <service id="asbo.whoswho.form.type.fra" class="Asbo\WhosWhoBundle\Form\Type\FraType">
             <argument>%asbo.whoswho.entity.fra.class%</argument>
+            <argument type="service" id="asbo_whoswho.form.eventlistener.editfra" />
             <tag name="form.type" alias="asbo_type_fra" />
         </service>
 
