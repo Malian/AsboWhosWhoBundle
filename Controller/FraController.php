@@ -85,6 +85,18 @@ class FraController extends ResourceController
     }
 
     /**
+     * Return the url to the edit page of a fra.
+     *
+     * @param Fra $fra
+     *
+     * @return string The url
+     */
+    public function getFraEditUrl(Fra $fra)
+    {
+        return $this->get('router')->generate('asbo_whoswho_fra_edit', array('slug' => $fra->getSlug()));
+    }
+
+    /**
      * Returns the form factory.
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -92,18 +104,6 @@ class FraController extends ResourceController
     protected function getFormFactory()
     {
         return $this->container->get('asbo_whoswho.fra.form.factory')->createForm();
-    }
-
-    /**
-     * Return the url to the edit page of a fra.
-     *
-     * @param Fra $fra
-     *
-     * @return string The url
-     */
-    protected function getFraEditUrl(Fra $fra)
-    {
-        return $this->get('router')->generate('asbo_whoswho_fra_edit', array('slug' => $fra->getSlug()));
     }
 
     /**

@@ -8,6 +8,7 @@
     <parameters>
         <parameter key="asbo.controller.frontend.fra.class">Asbo\WhosWhoBundle\Controller\FraController</parameter>
         <parameter key="asbo.controller.frontend.comite.class">Asbo\WhosWhoBundle\Controller\ComiteController</parameter>
+        <parameter key="asbo.controller.frontend.addressing.class">Asbo\WhosWhoBundle\Controller\AddressingController</parameter>
     </parameters>
 
     <services>
@@ -24,6 +25,15 @@
             <argument>asbo</argument>
             <argument>whoswho</argument>
             <argument>AsboWhosWhoBundle:Fra</argument>
+
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+        <service id="asbo.controller.frontend.addressing" class="%asbo.controller.frontend.addressing.class%">
+            <argument>asbo</argument>
+            <argument>whoswho</argument>
+            <argument>AsboWhosWhoBundle:Addressing</argument>
 
             <call method="setContainer">
                 <argument type="service" id="service_container" />
