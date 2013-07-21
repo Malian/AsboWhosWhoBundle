@@ -180,6 +180,7 @@ class Fra
      * @var Email $principalEmail
      *
      * @ORM\OneToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Email")
+     * @ORM\JoinColumn(name="principalEmail_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $principalEmail;
 
@@ -201,6 +202,7 @@ class Fra
      * @var Phone $principalPhone
      *
      * @ORM\OneToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Phone")
+     * @ORM\JoinColumn(name="principalPhone_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $principalPhone;
 
@@ -215,6 +217,7 @@ class Fra
      * @var Address $principalAddress
      *
      * @ORM\OneToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Address")
+     * @ORM\JoinColumn(name="principalAddress_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $principalAddress;
 
