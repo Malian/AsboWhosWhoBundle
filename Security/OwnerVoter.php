@@ -56,6 +56,7 @@ class OwnerVoter implements VoterInterface
 
             $vote = self::ACCESS_DENIED;
 
+            /** @var \Asbo\WhosWhoBundle\Entity\Fra $object */
             foreach ($object->getFraHasUsers() as $link) {
                 if ($this->isOwner($link, $token->getUser())) {
                     $vote = self::ACCESS_GRANTED;

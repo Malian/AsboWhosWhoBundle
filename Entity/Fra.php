@@ -149,91 +149,91 @@ class Fra
     private $slug;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection $fraHasUsers
+     * @var FraHasUser[] $fraHasUsers
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\FraHasUser", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $fraHasUsers;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection $fraHasPosts
+     * @var FrahasPost[] $fraHasPosts
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\FraHasPost", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $fraHasPosts;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection $fraHasImages
+     * @var FraHasImage[] $fraHasImages
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\FraHasImage", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $fraHasImages;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection $emails
+     * @var Email[] $emails
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Email", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $emails;
 
     /**
-     * @var \Asbo\WhosWhoBundle\Entity\Email $principalEmail
+     * @var Email $principalEmail
      *
      * @ORM\OneToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Email")
      */
     private $principalEmail;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection $diplomas
+     * @var Diploma[] $diplomas
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Diploma", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $diplomas;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection $phones
+     * @var Phone[] $phones
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Phone", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $phones;
 
     /**
-     * @var \Asbo\WhosWhoBundle\Entity\Phone $principalPhone
+     * @var Phone $principalPhone
      *
      * @ORM\OneToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Phone")
      */
     private $principalPhone;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection $addresses
+     * @var Address[] $addresses
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Address", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $addresses;
 
     /**
-     * @var \Asbo\WhosWhoBundle\Entity\Address $principalAddress
+     * @var Address $principalAddress
      *
      * @ORM\OneToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Address")
      */
     private $principalAddress;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection $jobs
+     * @var Job[] $jobs
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Job", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $jobs;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection $families
+     * @var Family[] $families
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Family", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $families;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection $externalPosts
+     * @var ExternalPost[] $externalPosts
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\ExternalPost", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
