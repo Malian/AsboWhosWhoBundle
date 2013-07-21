@@ -84,12 +84,18 @@ class FraType extends AbstractType
                         $data = $event->getData();
                         $form = $event->getForm();
 
+                        // Lorsque le formulaire est créé, l'entité passée est vide
+                        if (null === $data || null === $data->getId()) {
+                            return;
+                        }
+
                         if (0 === count($data->getAddresses())) {
                             $form->remove('principalAddress');
                         }
                     }
                 )
-                ->add('fraHasPosts', 'collection', array('by_reference' => false, 'type' => 'asbo_type_fraHasPost',  'allow_add' => true, 'allow_delete' => true, 'prototype' => true))
+                ->add('fraHasPosts', 'collection', array('by_reference' => false, 'type' => 'asbo_type_fraHasPost',
+                    'allow_add' => true, 'allow_delete' => true, 'prototype' => true))
                 ->add('addresses', 'collection', array('by_reference' => false, 'type' => 'asbo_type_address', 'allow_add' => true, 'allow_delete' => true, 'prototype' => true))
                 ->add('emails', 'collection', array('by_reference' => false, 'type' => 'asbo_type_email', 'allow_add' => true, 'allow_delete' => true, 'prototype' => true))
                 ->add('phones', 'collection', array('by_reference' => false, 'type' => 'asbo_type_phone', 'allow_add' => true, 'allow_delete' => true, 'prototype' => true))
