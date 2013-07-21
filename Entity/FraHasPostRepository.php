@@ -21,6 +21,11 @@ use Doctrine\ORM\QueryBuilder;
  */
 class FraHasPostRepository extends EntityRepository
 {
+    /**
+     * @param array $types
+     *
+     * @return FraHasPost[]
+     */
     public function findByTypes(array $types)
     {
 
@@ -39,6 +44,12 @@ class FraHasPostRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @param array   $types
+     * @param integer $anno
+     *
+     * @return FraHasPost[]
+     */
     public function findByTypesAndYear(array $types, $anno)
     {
         $qb = $this->createQueryBuilder('l')
@@ -57,6 +68,11 @@ class FraHasPostRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @param QueryBuilder $qb
+     *
+     * @return QueryBuilder
+     */
     private function joinFra(QueryBuilder $qb)
     {
         $qb->leftJoin('l.fra', 'f')

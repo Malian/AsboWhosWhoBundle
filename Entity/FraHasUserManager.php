@@ -24,10 +24,13 @@ class FraHasUserManager
     /**
      * Entity Manager
      *
-     * @var Doctrine\ORM\EntityManager
+     * @var \Doctrine\ORM\EntityManager
      */
     protected $em;
 
+    /**
+     * @param EntityManager $em
+     */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
@@ -36,8 +39,8 @@ class FraHasUserManager
     /**
      * Find an user and if the user is owner
      *
-     * @param  User       $fra
-     * @return FraHasUser
+     * @param  \Asbo\WhosWhoBundle\Model\FraUserInterface $user
+     * @return FraHasUser|null
      */
     public function findByUserAndOwner(User $user)
     {
@@ -47,9 +50,9 @@ class FraHasUserManager
     /**
      * Return the repository associate to the manager
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return \Doctrine\ORM\EntityRepository
      */
-    public function getRepository()
+    protected function getRepository()
     {
         return $this->em->getRepository('AsboWhosWhoBundle:FraHasUser');
     }
@@ -59,7 +62,7 @@ class FraHasUserManager
      *
      * @return string
      */
-    public function getClass()
+    protected function getClass()
     {
         return 'Asbo\WhosWhoBundle\Entity\FraHasUser';
     }

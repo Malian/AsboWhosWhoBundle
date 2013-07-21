@@ -50,7 +50,7 @@ class AnnoManipulator
     public static function getAnnos()
     {
         if (null === static::$annos) {
-            static::$annos = range(0, (new DateTime())->diff(new DateTime(self::FONDATION_DATE))->format('%y') + 1);
+            static::$annos = range(0, intval((new DateTime())->diff(self::getFondationDate())->format('%y')) + 1);
         }
 
         return static::$annos;
@@ -71,8 +71,10 @@ class AnnoManipulator
     /**
      * Returns the anno corresponding to the date
      *
-     * @param  \DateTime|string $date
-     * @return integer          The anno
+     * @param \DateTime|string $date
+     *
+     * @throws \InvalidArgumentException
+     * @return integer                   The anno
      */
     public static function getAnnoByDate($date)
     {
@@ -94,7 +96,9 @@ class AnnoManipulator
     /**
      * Get the date that corresponding to anno
      *
-     * @param  integer   $anno
+     * @param integer $anno
+     *
+     * @throws \InvalidArgumentException
      * @return \Datetime
      */
     public static function getDateByAnno($anno)
@@ -109,7 +113,9 @@ class AnnoManipulator
     /**
      * Return an array with the interval of anno
      *
-     * @param  integer          $anno
+     * @param integer $anno
+     *
+     * @throws \InvalidArgumentException
      * @return array(\DateTime)
      */
     public static function getDateIntervalByAnno($anno)

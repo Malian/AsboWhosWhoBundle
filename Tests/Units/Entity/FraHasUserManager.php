@@ -37,15 +37,6 @@ class FraHasUserManager extends Units\Test
         $this->object(new FraHasUserManagerTested($this->em));
     }
 
-    public function testGetRepository()
-    {
-        $this->manager->getRepository();
-
-        $this->mock($this->em)
-                ->call('getRepository')
-                    ->once();
-    }
-
     public function testFindByUserAndOwner()
     {
         $this->calling($this->repository)->findOneBy = $this->fraHasUser;
@@ -59,11 +50,5 @@ class FraHasUserManager extends Units\Test
                 ->call('findOneBy')
                     ->withIdenticalArguments(array('user' => $user, 'owner' => true))
                     ->once();
-    }
-
-    public function testGetClass()
-    {
-        $this->string($this->manager->getClass())
-                ->isEqualTo('Asbo\WhosWhoBundle\Entity\FraHasUser');
     }
 }

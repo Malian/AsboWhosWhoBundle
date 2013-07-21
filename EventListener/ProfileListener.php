@@ -26,17 +26,17 @@ use Asbo\WhosWhoBundle\Entity\FraHasUserManager;
 class ProfileListener
 {
     /**
-     * @var Asbo\WhosWhoBundle\Routing\UrlGenerator
+     * @var UrlGenerator $generator
      */
     public $generator;
 
     /**
-     * @var Symfony\Component\Security\Core\SecurityContext $securityContext
+     * @var SecurityContextInterface $securityContext
      */
     public $securityContext;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\FraHasUserManager  $fraHasUserManager
+     * @var FraHasUserManager  $fraHasUserManager
      */
     public $fraHasUserManager;
 
@@ -46,10 +46,10 @@ class ProfileListener
     public $route;
 
     /**
-     * @param \Asbo\WhosWhoBundle\Routing\UrlGenerator                  $generator
-     * @param \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
-     * @param \Asbo\WhosWhoBundle\Entity\FraUserManager                 $fraHasUserManager
-     * @param string                                                    $route
+     * @param UrlGenerator             $generator
+     * @param SecurityContextInterface $securityContext
+     * @param FraHasUserManager        $fraHasUserManager
+     * @param string                   $route
      */
     public function __construct(
         UrlGenerator $generator,
@@ -66,7 +66,7 @@ class ProfileListener
     /**
      * Event called when a user going to his profile and if he is en ROLE_WHOSWHO_USER
      *
-     * @param FilterControllerEvent $event
+     * @param GetResponseEvent $event
      */
     public function onCoreController(GetResponseEvent $event)
     {
@@ -78,7 +78,7 @@ class ProfileListener
                 $user       = $this->securityContext->getToken()->getuser();
                 $fraHasUser = $this->fraHasUserManager->findByUserAndOwner($user);
 
-                if (count($fraHasUser) > 0) {
+                if (null !== $fraHasUser) {
                     $url = $this->generator->fra($fraHasUser->getFra());
                     $event->setResponse(new RedirectResponse($url));
                 }

@@ -43,7 +43,7 @@ class Rank
     private $name;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Fra
+     * @var Fra
      *
      * @ORM\ManyToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Fra", inversedBy="ranks")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")

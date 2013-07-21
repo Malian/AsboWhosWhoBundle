@@ -149,91 +149,91 @@ class Fra
     private $slug;
 
     /**
-     * @var Doctrine\Common\Collections\ArrayCollection $fraHasUsers
+     * @var \Doctrine\Common\Collections\ArrayCollection $fraHasUsers
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\FraHasUser", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $fraHasUsers;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Post $fraHasPosts
+     * @var \Doctrine\Common\Collections\ArrayCollection $fraHasPosts
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\FraHasPost", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $fraHasPosts;
 
     /**
-     * @var Asbo\MediaBundle\Entity\Media $fraHasImages
+     * @var \Doctrine\Common\Collections\ArrayCollection $fraHasImages
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\FraHasImage", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $fraHasImages;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Email $emails
+     * @var \Doctrine\Common\Collections\ArrayCollection $emails
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Email", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $emails;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Email $principalEmail
+     * @var \Asbo\WhosWhoBundle\Entity\Email $principalEmail
      *
      * @ORM\OneToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Email")
      */
     private $principalEmail;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Diploma $diplomas
+     * @var \Doctrine\Common\Collections\ArrayCollection $diplomas
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Diploma", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $diplomas;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Phone $phones
+     * @var \Doctrine\Common\Collections\ArrayCollection $phones
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Phone", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $phones;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Phone $principalPhone
+     * @var \Asbo\WhosWhoBundle\Entity\Phone $principalPhone
      *
      * @ORM\OneToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Phone")
      */
     private $principalPhone;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Address $addresses
+     * @var \Doctrine\Common\Collections\ArrayCollection $addresses
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Address", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $addresses;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Address $principalAddress
+     * @var \Asbo\WhosWhoBundle\Entity\Address $principalAddress
      *
      * @ORM\OneToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Address")
      */
     private $principalAddress;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Job $jobs
+     * @var \Doctrine\Common\Collections\ArrayCollection $jobs
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Job", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $jobs;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Family $families
+     * @var \Doctrine\Common\Collections\ArrayCollection $families
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Family", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $families;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\ExternalPost $externalPosts
+     * @var \Doctrine\Common\Collections\ArrayCollection $externalPosts
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\ExternalPost", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
@@ -366,6 +366,8 @@ class Fra
     /**
      * Set id
      * This function is unused.
+     *
+     * @param integer $id
      *
      * @return $this
      */
@@ -691,6 +693,8 @@ class Fra
      * Remove a link between a fra and an user
      *
      * @param \Asbo\WhosWhoBundle\Entity\FraHasUser $fraHasUser
+     *
+     * @return $this
      */
     public function removeFraHasUser(FraHasUser $fraHasUser)
     {
@@ -731,6 +735,8 @@ class Fra
      * Remove a link between a fran and a post
      *
      * @param \Asbo\WhosWhoBundle\Entity\FraHasPost $fraHasPost
+     *
+     * @return $this
      */
     public function removeFraHasPost(FraHasPost $fraHasPost)
     {
@@ -763,6 +769,8 @@ class Fra
      * Remove a link between a fra and an image
      *
      * @param \Asbo\WhosWhoBundle\Entity\FraHasImage $fraHasImage
+     *
+     * @return $this
      */
     public function removeFraHasImage(FraHasImage $fraHasImage)
     {
@@ -775,6 +783,8 @@ class Fra
      * Add a email
      *
      * @param \Asbo\WhosWhoBundle\Entity\Email $email
+     *
+     * @return $this
      */
     public function addEmail(Email $email)
     {
@@ -793,6 +803,8 @@ class Fra
      * Remove an email
      *
      * @param \Asbo\WhosWhoBundle\Entity\Email $email
+     *
+     * @return $this
      */
     public function removeEmail(Email $email)
     {
@@ -815,6 +827,8 @@ class Fra
      * Set the principal email
      *
      * @param \Asbo\WhosWhoBundle\Entity\Email $email
+     *
+     * @return $this
      */
     public function setPrincipalEmail(Email $email = null)
     {
@@ -837,6 +851,8 @@ class Fra
      * Add a job
      *
      * @param \Asbo\WhosWhoBundle\Entity\Job $job
+     *
+     * @return $this
      */
     public function addJob(Job $job)
     {
@@ -851,6 +867,8 @@ class Fra
      * Remove an job
      *
      * @param \Asbo\WhosWhoBundle\Entity\Job $job
+     *
+     * @return $this
      */
     public function removeJob(Job $job)
     {
@@ -862,7 +880,7 @@ class Fra
     /**
      * Get jobs
      *
-     * @return array $jobs
+     * @return \Doctrine\Common\Collections\ArrayCollection $jobs
      */
     public function getJobs()
     {
@@ -873,6 +891,8 @@ class Fra
      * Add a diploma
      *
      * @param \Asbo\WhosWhoBundle\Entity\Diploma $diploma
+     *
+     * @return $this
      */
     public function addDiploma(Diploma $diploma)
     {
@@ -887,6 +907,8 @@ class Fra
      * Remove a diploma
      *
      * @param \Asbo\WhosWhoBundle\Entity\Diploma $diploma
+     *
+     * @return $this
      */
     public function removeDiploma(Diploma $diploma)
     {
@@ -909,6 +931,8 @@ class Fra
      * Remove a member of family
      *
      * @param \Asbo\WhosWhoBundle\Entity\Family $family
+     *
+     * @return $this
      */
     public function removeFamily(Family $family)
     {
@@ -921,6 +945,8 @@ class Fra
      * Add a membre of family
      *
      * @param \Asbo\WhosWhoBundle\Entity\Family $family
+     *
+     * @return $this
      */
     public function addFamily(Family $family)
     {
@@ -945,6 +971,8 @@ class Fra
      * Add external posts
      *
      * @param \Asbo\WhosWhoBundle\Entity\ExternalPost $externalPost
+     *
+     * @return $this
      */
     public function addExternalPost(ExternalPost $externalPost)
     {
@@ -958,7 +986,9 @@ class Fra
     /**
      * Remove an external post
      *
-     * @param \Asbo\WhosWhoBundle\Entity\ExternPost $externalPost
+     * @param \Asbo\WhosWhoBundle\Entity\ExternalPost $externalPost
+     *
+     * @return $this
      */
     public function removeExternalPost(ExternalPost $externalPost)
     {
@@ -981,6 +1011,8 @@ class Fra
      * Add an address
      *
      * @param \Asbo\WhosWhoBundle\Entity\Address $address
+     *
+     * @return $this
      */
     public function addAddress(Address $address)
     {
@@ -1009,6 +1041,8 @@ class Fra
      * Remove an address
      *
      * @param \Asbo\WhosWhoBundle\Entity\Address $address
+     *
+     * @return $this
      */
     public function removeAddress(Address $address)
     {
@@ -1021,6 +1055,8 @@ class Fra
      * Set the principal address
      *
      * @param \Asbo\WhosWhoBundle\Entity\Address $address
+     *
+     * @return $this
      */
     public function setPrincipalAddress(Address $address = null)
     {
@@ -1043,6 +1079,8 @@ class Fra
      * Add a phone
      *
      * @param \Asbo\WhosWhoBundle\Entity\Phone $phone
+     *
+     * @return $this
      */
     public function addPhone(Phone $phone)
     {
@@ -1060,6 +1098,8 @@ class Fra
      * Remove a phone number
      *
      * @param \Asbo\WhosWhoBundle\Entity\Phone $phone
+     *
+     * @return $this
      */
     public function removePhone(Phone $phone)
     {
@@ -1082,6 +1122,8 @@ class Fra
      * Set the principal phone
      *
      * @param \Asbo\WhosWhoBundle\Entity\Phone $phone
+     *
+     * @return $this
      */
     public function setPrincipalPhone(Phone $phone = null)
     {
@@ -1103,8 +1145,9 @@ class Fra
     /**
      * Set settings
      *
-     * @param  array $settings
-     * @return array
+     * @param array $settings
+     *
+     * @return $this
      */
     public function setSettings($settings)
     {
@@ -1126,8 +1169,9 @@ class Fra
     /**
      * Get setting by key
      *
-     * @return string
-     * @throws InvalidArgumentException If the settings doesn't exist
+     * @param $key
+     * @param  null  $default
+     * @return mixed
      */
     public function getSetting($key, $default = null)
     {
@@ -1218,6 +1262,7 @@ class Fra
 
         // Rajout des deniers en fonction des posts occupés
         foreach ($this->getFraHasPosts() as $post) {
+            /** @var $post \Asbo\WhosWhoBundle\Entity\FraHasPost */
             $total += $post->getPost()->getDenier();
         }
 

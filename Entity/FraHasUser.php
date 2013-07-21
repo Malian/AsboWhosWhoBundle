@@ -10,6 +10,7 @@
  */
 namespace Asbo\WhosWhoBundle\Entity;
 
+use Asbo\WhosWhoBundle\Model\FraUserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -34,7 +35,7 @@ class FraHasUser
     private $id;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Fra
+     * @var Fra
      *
      * @ORM\ManyToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Fra", cascade={"persist"}, inversedBy="fraHasUsers")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
@@ -43,7 +44,7 @@ class FraHasUser
     protected $fra;
 
     /**
-     * @var Asbo\UserBundle\Entity\User $user
+     * @var FraUserInterface $user
      *
      * @ORM\ManyToOne(targetEntity="Asbo\WhosWhoBundle\Model\FraUserInterface", cascade={"persist"})
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
@@ -89,7 +90,7 @@ class FraHasUser
      * Set owner
      *
      * @param  boolean    $owner
-     * @return UserHasFra
+     * @return $this
      */
     public function setOwner($owner)
     {
@@ -111,10 +112,11 @@ class FraHasUser
     /**
      * Set fra
      *
-     * @param  \Asbo\WhosWhoBundle\Entity\Fra $fra
-     * @return UserHasFra
+     * @param  Fra $fra
+     *
+     * @return $this
      */
-    public function setFra(\Asbo\WhosWhoBundle\Entity\Fra $fra)
+    public function setFra(Fra $fra)
     {
         $this->fra = $fra;
 
@@ -124,7 +126,7 @@ class FraHasUser
     /**
      * Get fra
      *
-     * @return \Asbo\WhosWhoBundle\Entity\Fra
+     * @return Fra
      */
     public function getFra()
     {
@@ -134,10 +136,11 @@ class FraHasUser
     /**
      * Set user
      *
-     * @param  \Asbo\UserBundle\Entity\User $user
-     * @return UserHasFra
+     * @param  FraUserInterface $user
+     *
+     * @return $this
      */
-    public function setUser(\Asbo\WhosWhoBundle\Model\FraUserInterface $user)
+    public function setUser(FraUserInterface $user)
     {
         $this->user = $user;
 
@@ -147,7 +150,7 @@ class FraHasUser
     /**
      * Get user
      *
-     * @return \Asbo\UserBundle\Entity\User
+     * @todo: Interface
      */
     public function getUser()
     {

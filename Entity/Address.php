@@ -51,7 +51,7 @@ class Address extends AbstractGMap
     private $type;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Fra
+     * @var \Asbo\WhosWhoBundle\Entity\Fra
      *
      * @ORM\ManyToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Fra", inversedBy="addresses")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
@@ -102,7 +102,7 @@ class Address extends AbstractGMap
     /**
      * Set fra
      *
-     * @param Asbo\WhosWhoBundle\Entity\Fra $fra
+     * @param \Asbo\WhosWhoBundle\Entity\Fra $fra
      * @return $this
      */
     public function setFra(Fra $fra)
@@ -115,7 +115,7 @@ class Address extends AbstractGMap
     /**
      * Get fra
      *
-     * @return Asbo\WhosWhoBundle\Entity\Fra
+     * @return \Asbo\WhosWhoBundle\Entity\Fra
      */
     public function getFra()
     {

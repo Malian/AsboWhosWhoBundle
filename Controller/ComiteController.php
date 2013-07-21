@@ -29,9 +29,7 @@ class ComiteController extends ResourceController
     /**
      * Displays all comite
      *
-     * @throw AccessDeniedException if the user are not allowed
-     *
-     * @return Response
+     * @throws AccessDeniedException if the user are not allowed
      */
     public function listAction()
     {
@@ -56,11 +54,9 @@ class ComiteController extends ResourceController
     /**
      * Displays a specific comite by anno.
      *
-     * @param $@nno The anno
+     * @param integer $anno The anno
      *
-     * @throw AccessDeniedException if the user are not allowed.
-     *
-     * @return Response
+     * @throws AccessDeniedException if the user are not allowed.
      */
     public function annoAction($anno)
     {
@@ -73,8 +69,6 @@ class ComiteController extends ResourceController
 
     /**
      * Displays current comite.
-     *
-     * @return Response
      */
     public function lastAction()
     {
@@ -84,9 +78,9 @@ class ComiteController extends ResourceController
     /**
      * Displays a specific comite by anno.
      *
-     * @param $anno The anno
+     * @param integer $anno The anno
      *
-     * @return Response
+     * @throws NotFoundHttpException if the anno doesn't exist
      */
     protected function getByAnno($anno)
     {
@@ -129,7 +123,7 @@ class ComiteController extends ResourceController
     /**
      * Get validator.
      *
-     * @return ValidatorInterface
+     * @return \Symfony\Component\Validator\ValidatorInterface
      */
     protected function getValidator()
     {
@@ -139,7 +133,7 @@ class ComiteController extends ResourceController
     /**
      * Get fraHasPost manager.
      *
-     * @return FraHasPostManager
+     * @return \Asbo\WhosWhobundle\Entity\FraHasPostManager
      */
     protected function getFraHasPostManager()
     {
@@ -152,7 +146,7 @@ class ComiteController extends ResourceController
      * @param mixed      $attributes
      * @param mixed|null $object
      *
-     * @return Boolean
+     * @return boolean
      */
     protected function isGranted($attributes, $object = null)
     {

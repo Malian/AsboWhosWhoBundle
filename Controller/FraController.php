@@ -32,11 +32,12 @@ class FraController extends ResourceController
      */
     public function listAction(Request $request)
     {
+        /** @var \Symfony\Component\Form\FormInterface $form */
         $form = $this->get('form.factory')->create(new FraFilterType());
 
         if ($request->query->has('submit-filter')) {
 
-            $form->bind($request);
+            $form->handleRequest($request);
 
             $fras = $this->getFraManager()->findAllWithFormFilter($form);
 
@@ -86,7 +87,7 @@ class FraController extends ResourceController
     /**
      * Returns the form factory.
      *
-     * @return \Asbo\WhosWhoBundle\Form\Factory\FormFactory
+     * @return \Symfony\Component\Form\FormInterface
      */
     protected function getFormFactory()
     {
@@ -108,7 +109,7 @@ class FraController extends ResourceController
     /**
      * Return the FraManager
      *
-     * @return Asbo\WhosWhoBundle\Entity\FraManager
+     * @return \Asbo\WhosWhoBundle\Entity\FraManager
      */
     protected function getFraManager()
     {

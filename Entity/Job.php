@@ -206,7 +206,7 @@ class Job
     /**
      * Set fra
      *
-     * @param Asbo\WhosWhoBundle\Entity\Fra $fra
+     * @param Fra $fra
      * @return $this
      */
     public function setFra(Fra $fra)
@@ -219,7 +219,7 @@ class Job
     /**
      * Get fra
      *
-     * @return Asbo\WhosWhoBundle\Entity\Fra
+     * @return Fra
      */
     public function getFra()
     {

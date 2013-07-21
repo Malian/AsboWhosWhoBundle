@@ -170,10 +170,4 @@ class FraHasPostManager extends Units\Test
                 ->call('flush')
                     ->once();
     }
-
-    public function testGetClass()
-    {
-        $this->string($this->manager->getClass())
-                ->isEqualTo('Asbo\WhosWhoBundle\Entity\FraHasPost');
-    }
 }

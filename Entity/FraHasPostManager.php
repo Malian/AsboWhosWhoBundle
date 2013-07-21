@@ -23,10 +23,13 @@ class FraHasPostManager
     /**
      * Entity Manager
      *
-     * @var Doctrine\ORM\EntityManager
+     * @var \Doctrine\ORM\EntityManager
      */
     protected $em;
 
+    /**
+     * @param EntityManager $em
+     */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
@@ -35,7 +38,7 @@ class FraHasPostManager
     /**
      * Persist and flush automaticly the entity
      *
-     * @param Asbo\WhosWhoBundle\Entity\FraHasPost $entity
+     * @param \Asbo\WhosWhoBundle\Entity\FraHasPost $entity
      */
     protected function persistAndFlush($entity)
     {
@@ -46,8 +49,9 @@ class FraHasPostManager
     /**
      * Find a fra by fra
      *
-     * @param  Asbo\WhosWhoBundle\Entity\Fra      $fra
-     * @return FraHasPost|DoctrineCollection|null
+     * @param \Asbo\WhosWhoBundle\Entity\Fra $fra
+     *
+     * @return FraHasPost|\Doctrine\Common\Collections\ArrayCollection|null
      */
     public function findByFra(Fra $fra)
     {
@@ -69,7 +73,9 @@ class FraHasPostManager
      * Find all posts by type
      *
      * @param  array|null
-     * @return FraHasPost|null
+     *
+     * @throws \Exception
+     * @return FraHasPost[]|null
      */
     public function findByTypes($types)
     {
@@ -88,8 +94,9 @@ class FraHasPostManager
      * Find all posts by type and year
      *
      * @param  array|null
-     * @param  integer         $year
-     * @return FraHasPost|null
+     * @param  integer           $year
+     * @throws \Exception
+     * @return FraHasPost[]|null
      */
     public function findByTypesAndYear($types, $year)
     {
@@ -107,7 +114,7 @@ class FraHasPostManager
     /**
      * Return the repository associate to the manager
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return \Asbo\WhosWhoBundle\Entity\FraHasPostRepository
      */
     public function getRepository()
     {
@@ -130,7 +137,9 @@ class FraHasPostManager
     /**
      * Save a fra into db
      *
-     * @return Fra
+     * @param FraHasPost $fra
+     *
+     * @return \Asbo\WhosWhoBundle\Entity\Fra
      */
     public function save(FraHasPost $fra)
     {
@@ -142,7 +151,7 @@ class FraHasPostManager
      *
      * @return string
      */
-    public function getClass()
+    protected function getClass()
     {
         return 'Asbo\WhosWhoBundle\Entity\FraHasPost';
     }

@@ -34,15 +34,6 @@ class FraManager extends Test
         $this->object(new FraManagerTested($this->em, $this->filter));
     }
 
-    public function testGetRepository()
-    {
-        $this->manager->getRepository();
-
-        $this->mock($this->em)
-                ->call('getRepository')
-                    ->once();
-    }
-
     public function testFindByUser()
     {
         $this->calling($this->repository)->findBy = array();
@@ -108,11 +99,5 @@ class FraManager extends Test
                     ->exactly(count($fras))
                 ->call('flush')
                     ->once();
-    }
-
-    public function testGetClass()
-    {
-        $this->string($this->manager->getClass())
-                ->isEqualTo('Asbo\WhosWhoBundle\Entity\Fra');
     }
 }

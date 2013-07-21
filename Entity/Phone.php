@@ -13,7 +13,7 @@ namespace Asbo\WhosWhoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Locale\Locale;
+use Symfony\Component\Intl\Intl;
 use Asbo\WhosWhoBundle\Entity\Fra;
 
 /**
@@ -166,7 +166,10 @@ class Phone
     /**
      * Get Country Code
      *
+     * @param null|string $locale
+     *
      * @return string
+     * @todo: Je suis pas fan de cette manière de faire
      */
     public function getCountryCode($locale = null)
     {
@@ -174,7 +177,7 @@ class Phone
             $locale = \Locale::getDefault();
         }
 
-        $countries = Locale::getDisplayCountries($locale);
+        $countries = Intl::getRegionBundle()->getCountryNames($locale);
 
         return $countries[$this->getCountry()];
     }
@@ -182,7 +185,7 @@ class Phone
     /**
      * Set fra
      *
-     * @param Asbo\WhosWhoBundle\Entity\Fra $fra
+     * @param Fra $fra
      * @return $this
      */
     public function setFra(Fra $fra)
@@ -195,7 +198,7 @@ class Phone
     /**
      * Get fra
      *
-     * @return Asbo\WhosWhoBundle\Entity\Fra
+     * @return Fra
      */
     public function getFra()
     {

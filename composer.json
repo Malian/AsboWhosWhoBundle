@@ -22,7 +22,8 @@
         "lexik/form-filter-bundle":         "1.2.*",
         "stof/doctrine-extensions-bundle":  "1.1.*",
         "nelmio/alice":                     "1.4.*",
-        "asbo/resource-bundle":             "0.1.*"
+        "asbo/resource-bundle":             "0.1.*",
+        "doctrine/data-fixtures":           "2.0.*"
     },
     "require-dev": {
         "atoum/atoum":                   "dev-master"

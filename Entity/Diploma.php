@@ -58,14 +58,14 @@ class Diploma
     private $institution;
 
     /**
-     * @var date $graduatedAt
+     * @var \Datetime $graduatedAt
      *
      * @ORM\Column(name="graduatedAt", type="date", nullable=true)
      */
     private $graduatedAt;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Fra
+     * @var Fra
      *
      * @ORM\ManyToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Fra", inversedBy="diplomas")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
@@ -132,6 +132,7 @@ class Diploma
      * Set institution
      *
      * @param string $institution
+     *
      * @return $this
      */
     public function setInstitution($institution)
@@ -154,7 +155,8 @@ class Diploma
     /**
      * Set graduatedAt
      *
-     * @param date $graduatedAt
+     * @param \Datetime $graduatedAt
+     *
      * @return $this
      */
     public function setGraduatedAt($graduatedAt = null)
@@ -167,7 +169,7 @@ class Diploma
     /**
      * Get graduatedAt_fin
      *
-     * @return date
+     * @return \Datetime
      */
     public function getGraduatedAt()
     {
@@ -187,7 +189,8 @@ class Diploma
     /**
      * Set fra
      *
-     * @param Asbo\WhosWhoBundle\Entity\Fra $fra
+     * @param Fra $fra
+     *
      * @return $this
      */
     public function setFra(Fra $fra)
@@ -200,7 +203,7 @@ class Diploma
     /**
      * Get fra
      *
-     * @return Asbo\WhosWhoBundle\Entity\Fra
+     * @return Fra
      */
     public function getFra()
     {

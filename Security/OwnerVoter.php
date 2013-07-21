@@ -70,8 +70,8 @@ class OwnerVoter implements VoterInterface
     /**
      * Verifies that the user is the owner
      *
-     * @param  Fra     $fra
-     * @param  mixed   $user
+     * @param  FraHasUser $fra
+     * @param  mixed      $user
      * @return boolean
      */
     protected function isOwner(FraHasUser $fra, $user)

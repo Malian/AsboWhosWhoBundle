@@ -26,32 +26,33 @@ class FraManager
     /**
      * Entity Manager
      *
-     * @var Doctrine\ORM\EntityManager
+     * @var \Doctrine\ORM\EntityManager
      */
     protected $em;
 
     /**
      * Form Filter
      *
-     * @var Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface
+     * @var \Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface
      */
     protected $filterQueryBuilder;
 
     /**
      *  Constructor
      *
-     * @param EntityManager $em
+     * @param EntityManager                 $em
+     * @param FilterBuilderUpdaterInterface $filterQueryBuilder
      */
     public function __construct(EntityManager $em, FilterBuilderUpdaterInterface $filterQueryBuilder)
     {
-        $this->em                     = $em;
+        $this->em = $em;
         $this->filterQueryBuilder = $filterQueryBuilder;
     }
 
     /**
      * Persist and flush automaticly the entity
      *
-     * @param Asbo\WhosWhoBundle\Entity\Fra $entity
+     * @param \Asbo\WhosWhoBundle\Entity\Fra $entity
      */
     protected function persistAndFlush($entity)
     {
@@ -62,8 +63,8 @@ class FraManager
     /**
      * Find a fra by user
      *
-     * @param  Asbo\WhosWhoBundle\Model\UserFraInterface $user
-     * @return Fra|DoctrineCollection|null
+     * @param  FraUserInterface $user
+     * @return Fra[]|null
      */
     public function findByUser(FraUserInterface $user)
     {
@@ -96,9 +97,9 @@ class FraManager
     /**
      * Return the repository associate to the manager
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return \Doctrine\ORM\EntityRepository
      */
-    public function getRepository()
+    protected function getRepository()
     {
         return $this->em->getRepository('AsboWhosWhoBundle:Fra');
     }
@@ -119,7 +120,7 @@ class FraManager
     /**
      * Save a fra into db
      *
-     * @return Fra
+     * @param Fra $fra
      */
     public function save(Fra $fra)
     {
@@ -127,7 +128,7 @@ class FraManager
     }
 
     /**
-     * Save mutliple fra
+     * Save multiple fra
      *
      * @param array $fras
      */
@@ -145,7 +146,7 @@ class FraManager
      *
      * @return string
      */
-    public function getClass()
+    protected function getClass()
     {
         return 'Asbo\WhosWhoBundle\Entity\Fra';
     }

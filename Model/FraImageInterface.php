@@ -13,4 +13,5 @@ namespace Asbo\WhosWhoBundle\Model;
 
 interface FraImageInterface
 {
+    public function getId();
 }

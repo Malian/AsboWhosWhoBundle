@@ -37,6 +37,7 @@ class AddressType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var \Asbo\WhosWhoBundle\Entity\Address $class */
         $class = $this->class;
 
         $builder->add('address', 'gmap_address', array('data_class' => $this->class))

@@ -60,7 +60,7 @@ class Email
     private $type;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Fra
+     * @var Fra
      *
      * @ORM\ManyToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Fra", inversedBy="emails")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
@@ -134,7 +134,8 @@ class Email
     /**
      * Set fra
      *
-     * @param  Asbo\WhosWhoBundle\Entity\Fra $fra
+     * @param Fra $fra
+     *
      * @return Email
      */
     public function setFra(Fra $fra)
@@ -147,7 +148,7 @@ class Email
     /**
      * Get fra
      *
-     * @return Asbo\WhosWhoBundle\Entity\Fra
+     * @return Fra
      */
     public function getFra()
     {

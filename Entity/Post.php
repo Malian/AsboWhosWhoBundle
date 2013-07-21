@@ -165,7 +165,8 @@ class Post
     /**
      * Set denier
      *
-     * @param integer $dernier
+     * @param integer $denier
+     *
      * @return $this
      */
     public function setDenier($denier)

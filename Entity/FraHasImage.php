@@ -11,6 +11,7 @@
 
 namespace Asbo\WhosWhoBundle\Entity;
 
+use Asbo\WhosWhoBundle\Model\FraImageInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Asbo\WhosWhoBundle\Validator\Constraints\Anno;
@@ -35,7 +36,7 @@ class FraHasImage
     private $id;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Fra
+     * @var Fra
      *
      * @ORM\ManyToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Fra", cascade={"persist"}, inversedBy="fraHasImages")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
@@ -44,7 +45,7 @@ class FraHasImage
     protected $fra;
 
     /**
-     * @var Asbo\UserBundle\Entity\User $user
+     * @var FraImageInterface $image
      *
      * @ORM\ManyToOne(targetEntity="Asbo\WhosWhoBundle\Model\FraImageInterface", cascade={"persist"})
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
@@ -70,10 +71,11 @@ class FraHasImage
     /**
      * Set fra
      *
-     * @param  \Asbo\WhosWhoBundle\Entity\Fra $fra
-     * @return UserHasFra
+     * @param Fra $fra
+     *
+     * @return $this
      */
-    public function setFra(\Asbo\WhosWhoBundle\Entity\Fra $fra)
+    public function setFra(Fra $fra)
     {
         $this->fra = $fra;
 
@@ -83,7 +85,7 @@ class FraHasImage
     /**
      * Get fra
      *
-     * @return \Asbo\WhosWhoBundle\Entity\Fra
+     * @return Fra
      */
     public function getFra()
     {
@@ -93,10 +95,11 @@ class FraHasImage
     /**
      * Set user
      *
-     * @param  Asbo\CoreBundle\Entity\Media $image
-     * @return UserHasFra
+     * @param FraImageInterface $image
+     *
+     * @return $this
      */
-    public function setImage(\Asbo\CoreBundle\Entity\Media $image)
+    public function setImage(FraImageInterface $image)
     {
         $this->image = $image;
 
@@ -106,7 +109,7 @@ class FraHasImage
     /**
      * Get user
      *
-     * @return \Asbo\CoreBundle\Entity\Media
+     * @return FraImageInterface
      */
     public function getImage()
     {

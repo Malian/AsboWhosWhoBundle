@@ -27,6 +27,7 @@ class AnnoValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
+        /** @var Constraints\Anno $constraint */
         if (null === $value || '' === $value) {
             return;
         }

@@ -28,6 +28,9 @@ class FormFactory
         $this->validationGroups = $validationGroups;
     }
 
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
     public function createForm()
     {
         return $this->formFactory->createNamed(
