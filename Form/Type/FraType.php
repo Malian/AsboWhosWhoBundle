@@ -78,7 +78,17 @@ class FraType extends AbstractType
                         $form->add('principalEmail', null, array('query_builder' => $closure));
                     }
                 )
+                ->addEventListener(
+                    FormEvents::POST_SET_DATA,
+                    function (FormEvent $event) {
+                        $data = $event->getData();
+                        $form = $event->getForm();
 
+                        if (0 === count($data->getAddresses())) {
+                            $form->remove('principalAddress');
+                        }
+                    }
+                )
                 ->add('fraHasPosts', 'collection', array('by_reference' => false, 'type' => 'asbo_type_fraHasPost',  'allow_add' => true, 'allow_delete' => true, 'prototype' => true))
                 ->add('addresses', 'collection', array('by_reference' => false, 'type' => 'asbo_type_address', 'allow_add' => true, 'allow_delete' => true, 'prototype' => true))
                 ->add('emails', 'collection', array('by_reference' => false, 'type' => 'asbo_type_email', 'allow_add' => true, 'allow_delete' => true, 'prototype' => true))
