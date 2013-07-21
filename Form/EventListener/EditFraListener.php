@@ -47,9 +47,9 @@ class EditFraListener implements EventSubscriberInterface
                 ->setParameter('fra', $data);
         };
 
-        $form->add('principalAddress', null, array('query_builder' => $closure));
-        $form->add('principalPhone', null, array('query_builder' => $closure));
-        $form->add('principalEmail', null, array('query_builder' => $closure));
+        $form->add('principalAddress', null, array('query_builder' => $closure, 'empty_value' => false));
+        $form->add('principalPhone', null, array('query_builder' => $closure, 'empty_value' => false));
+        $form->add('principalEmail', null, array('query_builder' => $closure, 'empty_value' => false));
     }
 
     /**
