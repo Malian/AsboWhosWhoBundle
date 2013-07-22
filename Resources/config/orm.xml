@@ -8,12 +8,25 @@
     </parameters>
 
     <services>
-        <service id="asbo_whoswho.address_manager" class="Asbo\WhosWhoBundle\Doctrine\AddressManager">
-            <argument type="service" id="asbo_whoswho.entity_manager" />
+
+        <service id="asbo_whoswho.entity_manager"
+                 factory-service="doctrine"
+                 factory-method="getManager"
+                 class="Doctrine\ORM\EntityManager"
+                 public="false" />
+
+        <service id="asbo_whoswho.entity_repository"
+                 factory-service="doctrine"
+                 factory-method="getRepository"
+                 class="Doctrine\Common\Persistence\ObjectRepository"
+                 public="false">
             <argument>%asbo_whoswho.entity.address.class%</argument>
         </service>
 
-        <service id="asbo_whoswho.entity_manager" factory-service="doctrine" factory-method="getManager" class="Doctrine\ORM\EntityManager" public="false" />
+        <service id="asbo_whoswho.address_manager" class="Asbo\WhosWhoBundle\Doctrine\AddressManager">
+            <argument type="service" id="asbo_whoswho.entity_manager" />
+            <argument type="service" id="asbo_whoswho.entity_repository" />
+        </service>
 
     </services>
 

@@ -12,6 +12,7 @@
 namespace Asbo\WhosWhoBundle\Doctrine;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectRepository;
 
 /**
  * Address manager
@@ -28,11 +29,15 @@ class AbstractManager
     protected $om;
 
     /**
+     * Entity Repository
+     *
      * @var \Doctrine\Common\Persistence\ObjectRepository $repository
      */
     protected $repository;
 
     /**
+     * Class name
+     *
      * @var string
      */
     protected $class;
@@ -41,15 +46,13 @@ class AbstractManager
      * Constructor
      *
      * @param ObjectManager $om
-     * @param string $class
+     * @param ObjectRepository $repository
      */
-    public function __construct(ObjectManager $om, $class)
+    public function __construct(ObjectManager $om, ObjectRepository $repository)
     {
         $this->om = $om;
-        $this->repository = $om->getRepository($class);
-
-        $metadata = $om->getClassMetadata($class);
-        $this->class = $metadata->getName();
+        $this->repository = $repository;
+        $this->class = $repository->getClassName();
     }
 
     /**
@@ -87,5 +90,15 @@ class AbstractManager
         if ($andFlush) {
             $this->om->flush();
         }
+    }
+
+    /**
+     * Returns the repositry.
+     *
+     * @return \Doctrine\Common\Persistence\ObjectRepository
+     */
+    public function getRespository()
+    {
+        return $this->repository;
     }
 }
