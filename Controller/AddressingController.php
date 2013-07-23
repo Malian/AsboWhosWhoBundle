@@ -116,7 +116,10 @@ class AddressingController extends ResourceController
 
         if ($form->isValid()) {
 
-            if ($form->get('delete')->isClicked()) {
+            /** @var \Symfony\Component\Form\ClickableInterface $button */
+            $button = $form->get('delete');
+
+            if ($button->isClicked()) {
                 $this->getAddressManager()->delete($address);
                 $this->setFlash('success', 'Votre adresse a bien été supprimée !');
             }
