@@ -43,4 +43,3 @@ asbo_whoswho_addressing_update:
     defaults:
         _controller: asbo.controller.frontend.addressing:updateAction
         _method: GET|POST
-

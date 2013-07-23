@@ -28,8 +28,6 @@ class ComiteController extends ResourceController
 {
     /**
      * Displays all comite
-     *
-     * @throws AccessDeniedException if the user are not allowed
      */
     public function listAction()
     {
@@ -53,10 +51,6 @@ class ComiteController extends ResourceController
 
     /**
      * Displays a specific comite by anno.
-     *
-     * @param integer $anno The anno
-     *
-     * @throws AccessDeniedException if the user are not allowed.
      */
     public function annoAction($anno)
     {
@@ -77,12 +71,8 @@ class ComiteController extends ResourceController
 
     /**
      * Displays a specific comite by anno.
-     *
-     * @param integer $anno The anno
-     *
-     * @throws NotFoundHttpException if the anno doesn't exist
      */
-    protected function getByAnno($anno)
+    public function getByAnno($anno)
     {
         $error = $this->getValidator()->validateValue($anno, new Anno());
 

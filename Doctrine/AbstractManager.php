@@ -15,11 +15,11 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 
 /**
- * Address manager
+ * Abstract Manager
  *
  * @author De Ron Malian <deronmalian@gmail.com>
  */
-class AbstractManager
+abstract class AbstractManager
 {
     /**
      * Entity Manager
@@ -38,14 +38,14 @@ class AbstractManager
     /**
      * Class name
      *
-     * @var string
+     * @var string $class
      */
     protected $class;
 
     /**
      * Constructor
      *
-     * @param ObjectManager $om
+     * @param ObjectManager    $om
      * @param ObjectRepository $repository
      */
     public function __construct(ObjectManager $om, ObjectRepository $repository)
@@ -68,24 +68,29 @@ class AbstractManager
     }
 
     /**
-     * Returns the fully qualified class name.
+     * Updates the specified instance of an entity.
      *
-     * @return string
-     */
-    public function getClass()
-    {
-        return $this->class;
-    }
-
-    /**
-     * Updates an entity.
-     *
-     * @param object  $entity
+     * @param object  $entity   The entity to update
      * @param boolean $andFlush
      */
     public function update($entity, $andFlush = true)
     {
         $this->om->persist($entity);
+
+        if ($andFlush) {
+            $this->om->flush();
+        }
+    }
+
+    /**
+     * Deletes the specified instance of an entity
+     *
+     * @param mixed $entity   The entity to save
+     * @param bool  $andFlush
+     */
+    public function delete($entity, $andFlush = true)
+    {
+        $this->om->remove($entity);
 
         if ($andFlush) {
             $this->om->flush();
@@ -100,5 +105,15 @@ class AbstractManager
     public function getRespository()
     {
         return $this->repository;
+    }
+
+    /**
+     * Returns the fully qualified class name.
+     *
+     * @return string
+     */
+    public function getClass()
+    {
+        return $this->class;
     }
 }

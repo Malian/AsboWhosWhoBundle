@@ -25,7 +25,7 @@ class AddressManager extends AbstractManager
     /**
      * Find an address by fra
      *
-     * @param  Fra $fra
+     * @param  Fra       $fra
      * @return Address[]
      */
     public function findByFra(Fra $fra)
@@ -36,7 +36,7 @@ class AddressManager extends AbstractManager
     /**
      * Find all addresses
      *
-     * @return object[]
+     * @return Address[]
      */
     public function findAll()
     {
