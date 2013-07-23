@@ -116,8 +116,10 @@ class AddressingController extends ResourceController
 
         if ($form->isValid()) {
 
-            $this->getAddressManager()->delete($address);
-            $this->setFlash('success', 'Votre adresse a bien été supprimée !');
+            if ($form->get('delete')->isClicked()) {
+                $this->getAddressManager()->delete($address);
+                $this->setFlash('success', 'Votre adresse a bien été supprimée !');
+            }
 
             return $this->redirect($this->getFraController()->getFraEditUrl($fra));
         }
@@ -138,7 +140,12 @@ class AddressingController extends ResourceController
      */
     protected function getDeleteForm()
     {
-        return $this->createFormBuilder()->getForm();
+        $form = $this->createFormBuilder()
+            ->add('delete', 'submit')
+            ->add('cancel', 'submit')
+        ;
+
+        return $form->getForm();
     }
 
     /**
