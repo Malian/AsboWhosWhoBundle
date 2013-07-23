@@ -17,6 +17,7 @@ use Asbo\ResourceBundle\Controller\ResourceController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use JMS\SecurityExtraBundle\Annotation\PreAuthorize;
 
 /**
  * Controller of comite page
@@ -31,6 +32,7 @@ class AddressingController extends ResourceController
      * Update an address.
      *
      * @ParamConverter("address", class="Asbo\WhosWhoBundle\Entity\Address", options={"id" = "address_id"})
+     * @PreAuthorize("#fra.getId() == #address.getFra().getId()")
      */
     public function updateAction(Fra $fra, Address $address, Request $request)
     {
