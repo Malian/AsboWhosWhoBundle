@@ -16,13 +16,13 @@ use Asbo\WhosWhoBundle\Entity\Address;
 use Asbo\ResourceBundle\Controller\ResourceController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * Controller of comite page
  *
  * @author De Ron Malian <deronmalian@gmail.com>
+ * @todo Trouver un moyen de gérer les droits et la correspondance des entités sans répétition
  */
 class AddressingController extends ResourceController
 {
@@ -30,24 +30,23 @@ class AddressingController extends ResourceController
     /**
      * Update an address.
      *
-     * @param Fra $fra
-     * @param Address $address
-     * @param Request $request
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @ParamConverter("address", class="Asbo\WhosWhoBundle\Entity\Address", options={"id" = "address_id"})
      */
     public function updateAction(Fra $fra, Address $address, Request $request)
     {
         if ($address->getFra()->getId() !== $fra->getId()) {
-            throw $this->createNotFoundException('Link between Fra and Address not found !');
+            throw $this->createNotFoundException(
+                'Link between Fra and Address not found !'
+            );
         }
 
         if (!$this->isGranted('ROLE_WHOSWHO_FRA_EDIT', $address->getFra())) {
-            throw new AccessDeniedException('You are not allowed to edit this fra !');
+            throw new AccessDeniedException(
+                'You are not allowed to edit this fra !'
+            );
         }
 
-        $form = $this->getFormFactory()->setData($address)->handleRequest($request);
+        $form = $this->getAddressForm()->setData($address)->handleRequest($request);
 
         if ($form->isValid()) {
 
@@ -61,59 +60,103 @@ class AddressingController extends ResourceController
             return $this->redirect($this->getFraController()->getFraEditUrl($fra));
         }
 
-        return $this->renderResponse('update.html', ['fra'  => $fra, 'address' => $address, 'form' => $form->createView()]);
+        return $this->renderResponse('update.html',
+            [
+                'fra'  => $fra,
+                'address' => $address,
+                'form' => $form->createView()
+            ]
+        );
 
     }
 
     /**
      * Create an address
-     *
-     * @param Fra $fra
-     * @param Request $request
-     * @throws AccessDeniedException
      */
     public function createAction(Fra $fra, Request $request)
     {
         if (!$this->isGranted('ROLE_WHOSWHO_FRA_EDIT', $fra)) {
-            throw new AccessDeniedException('You are not allowed to edit this fra !');
+            throw new AccessDeniedException(
+                'You are not allowed to edit this fra !'
+            );
         }
 
         $address = $this->getAddressManager()->createNew();
-        $form = $this->getFormFactory();
+        $form = $this->getAddressForm();
 
         $form->setData($address)->handleRequest($request);
 
         if ($form->isValid()) {
+
             $address->setFra($fra);
             $this->getAddressManager()->update($address);
             $this->setFlash('succes', 'Votre adresse a bien été créée !');
+
             return $this->redirect($this->getFraController()->getFraEditUrl($fra));
         }
 
-        return $this->renderResponse('create.html', ['fra'  => $fra, 'form' => $form->createView()]);
+        return $this->renderResponse('create.html',
+            [
+                'fra'  => $fra,
+                'form' => $form->createView()
+            ]
+        );
     }
 
     /**
      * Delete an address.
      *
-     * @param Fra $fra
-     * @param Address $address
-     * @param Request $request
      * @ParamConverter("address", class="Asbo\WhosWhoBundle\Entity\Address", options={"id" = "address_id"})
      */
     public function deleteAction(Fra $fra, Address $address, Request $request)
     {
-        if (!$this->isGranted('ROLE_WHOSWHO_FRA_EDIT', $fra)) {
-            throw new AccessDeniedException('You are not allowed to edit this fra !');
+        if ($address->getFra()->getId() !== $fra->getId()) {
+            throw $this->createNotFoundException(
+                'Link between Fra and Address not found !'
+            );
         }
 
-        $this->setFlash('success', 'Votre adresse a bien été supprimée !');
-        $this->redirect($this->getFraController()->getFraEditUrl($fra));
+        if (!$this->isGranted('ROLE_WHOSWHO_FRA_EDIT', $fra)) {
+            throw new AccessDeniedException(
+                'You are not allowed to edit this fra !'
+            );
+        }
+
+        $form = $this->getDeleteForm();
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $this->getAddressManager()->delete($address);
+            $this->setFlash('success', 'Votre adresse a bien été supprimée !');
+
+            return $this->redirect($this->getFraController()->getFraEditUrl($fra));
+        }
+
+        return $this->renderResponse('delete.html',
+            [
+                'address' => $address,
+                'form' => $form->createView()
+            ]
+        );
+
     }
 
     /**
-     * @param string $type
-     * @param string $message
+     * Returns a secured form.
+     *
+     * @return \Symfony\Component\Form\Form
+     */
+    protected function getDeleteForm()
+    {
+        return $this->createFormBuilder()->getForm();
+    }
+
+    /**
+     * Alias to add easier a flash message.
+     *
+     * @param  string $type
+     * @param  string $message
      * @return mixed
      */
     protected function setFlash($type, $message)
@@ -130,17 +173,29 @@ class AddressingController extends ResourceController
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function getFormFactory()
+    protected function getAddressForm()
     {
         return $this->get('asbo_whoswho.addressing.form.factory')->createForm();
     }
 
     /**
+     * Returns the address manager to manipulate addresses.
+     *
      * @return \Asbo\WhosWhoBundle\Doctrine\AddressManager
      */
     protected function getAddressManager()
     {
         return $this->get('asbo_whoswho.address_manager');
+    }
+
+    /**
+     * Returns the controller that manipulates fra.
+     *
+     * @return \Asbo\WhosWhoBundle\Controller\FraController
+     */
+    protected function getFraController()
+    {
+        return $this->get('asbo.controller.frontend.fra');
     }
 
     /**
@@ -154,13 +209,5 @@ class AddressingController extends ResourceController
     protected function isGranted($attributes, $object = null)
     {
         return $this->get('security.context')->isGranted($attributes, $object);
-    }
-
-    /**
-     * @return \Asbo\WhosWhoBundle\Controller\FraController
-     */
-    protected function getFraController()
-    {
-        return $this->get('asbo.controller.frontend.fra');
     }
 }
