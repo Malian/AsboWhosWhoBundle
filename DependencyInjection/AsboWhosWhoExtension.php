@@ -46,6 +46,7 @@ class AsboWhosWhoExtension extends Extension
         $loader->load('twig.xml');
         $loader->load('util.xml');
         $loader->load('validators.xml');
+        $loader->load('orm.xml');
 
         if ($config['redirect_profile_user']['enabled']) {
             $container->setParameter('asbo_whoswho.profile.listener.route', $config['redirect_profile_user']['route']);

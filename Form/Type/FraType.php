@@ -14,11 +14,8 @@ namespace Asbo\WhosWhoBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormEvent;
 use Asbo\WhosWhoBundle\Util\AnnoManipulator;
 use Asbo\WhosWhoBundle\Form\EventListener\EditFraListener;
-use Doctrine\ORM\EntityRepository;
 
 // @Todo: Changer ici par une interface parce que normalement on devrait pas devoir utiliser directement la classe
 // puisqu'elle est contenue dans $this->class...
@@ -42,7 +39,8 @@ class FraType extends AbstractType
     private $editFraListener;
 
     /**
-     * @param string $class The Fra class name
+     * @param string          $class           The Fra class name
+     * @param EditFraListener $editFraListener
      */
     public function __construct($class, EditFraListener $editFraListener)
     {

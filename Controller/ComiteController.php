@@ -28,8 +28,6 @@ class ComiteController extends ResourceController
 {
     /**
      * Displays all comite
-     *
-     * @throws AccessDeniedException if the user are not allowed
      */
     public function listAction()
     {
@@ -53,10 +51,6 @@ class ComiteController extends ResourceController
 
     /**
      * Displays a specific comite by anno.
-     *
-     * @param integer $anno The anno
-     *
-     * @throws AccessDeniedException if the user are not allowed.
      */
     public function annoAction($anno)
     {
@@ -77,12 +71,8 @@ class ComiteController extends ResourceController
 
     /**
      * Displays a specific comite by anno.
-     *
-     * @param integer $anno The anno
-     *
-     * @throws NotFoundHttpException if the anno doesn't exist
      */
-    protected function getByAnno($anno)
+    public function getByAnno($anno)
     {
         $error = $this->getValidator()->validateValue($anno, new Anno());
 
@@ -121,16 +111,6 @@ class ComiteController extends ResourceController
     }
 
     /**
-     * Get validator.
-     *
-     * @return \Symfony\Component\Validator\ValidatorInterface
-     */
-    protected function getValidator()
-    {
-        return $this->get('validator');
-    }
-
-    /**
      * Get fraHasPost manager.
      *
      * @return \Asbo\WhosWhobundle\Entity\FraHasPostManager
@@ -138,18 +118,5 @@ class ComiteController extends ResourceController
     protected function getFraHasPostManager()
     {
         return $this->get('asbo_whoswho.fra_has_post_manager');
-    }
-
-    /**
-     * Checks if the attributes are granted against the current authentication token and optionally supplied object.
-     *
-     * @param mixed      $attributes
-     * @param mixed|null $object
-     *
-     * @return boolean
-     */
-    protected function isGranted($attributes, $object = null)
-    {
-        return $this->get('security.context')->isGranted($attributes, $object);
     }
 }

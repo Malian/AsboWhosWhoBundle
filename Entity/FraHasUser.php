@@ -89,7 +89,7 @@ class FraHasUser
     /**
      * Set owner
      *
-     * @param  boolean    $owner
+     * @param boolean $owner
      * @return $this
      */
     public function setOwner($owner)
@@ -112,7 +112,7 @@ class FraHasUser
     /**
      * Set fra
      *
-     * @param  Fra $fra
+     * @param Fra $fra
      *
      * @return $this
      */
@@ -136,7 +136,7 @@ class FraHasUser
     /**
      * Set user
      *
-     * @param  FraUserInterface $user
+     * @param FraUserInterface $user
      *
      * @return $this
      */

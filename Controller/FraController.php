@@ -85,6 +85,18 @@ class FraController extends ResourceController
     }
 
     /**
+     * Return the url to the edit page of a fra.
+     *
+     * @param Fra $fra
+     *
+     * @return string The url
+     */
+    public function getFraEditUrl(Fra $fra)
+    {
+        return $this->get('router')->generate('asbo_whoswho_fra_edit', array('slug' => $fra->getSlug()));
+    }
+
+    /**
      * Returns the form factory.
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -95,18 +107,6 @@ class FraController extends ResourceController
     }
 
     /**
-     * Return the url to the edit page of a fra.
-     *
-     * @param Fra $fra
-     *
-     * @return string The url
-     */
-    protected function getFraEditUrl(Fra $fra)
-    {
-        return $this->get('router')->generate('asbo_whoswho_fra_edit', array('slug' => $fra->getSlug()));
-    }
-
-    /**
      * Return the FraManager
      *
      * @return \Asbo\WhosWhoBundle\Entity\FraManager
@@ -114,18 +114,5 @@ class FraController extends ResourceController
     protected function getFraManager()
     {
         return $this->get('asbo_whoswho.fra_manager');
-    }
-
-    /**
-     * Checks if the attributes are granted against the current authentication token and optionally supplied object.
-     *
-     * @param mixed      $attributes
-     * @param mixed|null $object
-     *
-     * @return Boolean
-     */
-    protected function isGranted($attributes, $object = null)
-    {
-        return $this->get('security.context')->isGranted($attributes, $object);
     }
 }

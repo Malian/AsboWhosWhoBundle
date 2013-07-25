@@ -29,3 +29,25 @@ asbo_whoswho_comite_anno:
     defaults:
         _controller: asbo.controller.frontend.comite:annoAction
         _method: GET
+
+asbo_whoswho_addressing_create:
+    pattern:  /fra/{slug}/addresses/new
+    defaults:
+        _controller: asbo.controller.frontend.addressing:createAction
+        _method: GET|POST
+
+asbo_whoswho_addressing_update:
+    pattern:  /fra/{slug}/addresses/{address_id}
+    requirements:
+        address_id: \d+
+    defaults:
+        _controller: asbo.controller.frontend.addressing:updateAction
+        _method: GET|POST
+
+asbo_whoswho_addressing_delete:
+    pattern:  /fra/{slug}/addresses/{address_id}/delete
+    requirements:
+        address_id: \d+
+    defaults:
+        _controller: asbo.controller.frontend.addressing:deleteAction
+        _method: GET|POST
