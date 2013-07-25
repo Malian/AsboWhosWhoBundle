@@ -38,9 +38,7 @@ class AddressingController extends ResourceController
         }
 
         $address = $this->getAddressManager()->createNew();
-        $form = $this->getAddressForm();
-
-        $form->setData($address)->handleRequest($request);
+        $form = $this->getAddressForm()->setData($address)->handleRequest($request);
 
         if ($form->isValid()) {
 
@@ -116,10 +114,7 @@ class AddressingController extends ResourceController
 
         if ($form->isValid()) {
 
-            /** @var \Symfony\Component\Form\ClickableInterface $button */
-            $button = $form->get('delete');
-
-            if ($button->isClicked()) {
+            if ($form->get('delete')->isClicked()) {
                 $this->getAddressManager()->delete($address);
                 $this->setFlash('success', 'Votre adresse a bien été supprimée !');
             }
@@ -149,22 +144,6 @@ class AddressingController extends ResourceController
         ;
 
         return $form->getForm();
-    }
-
-    /**
-     * Alias to add easier a flash message.
-     *
-     * @param  string $type
-     * @param  string $message
-     * @return mixed
-     */
-    protected function setFlash($type, $message)
-    {
-        return $this
-            ->get('session')
-            ->getFlashBag()
-            ->add($type, $message)
-            ;
     }
 
     /**
@@ -198,15 +177,14 @@ class AddressingController extends ResourceController
     }
 
     /**
-     * Checks if the attributes are granted against the current authentication token and optionally supplied object.
+     * Returns the url to the add an address page
      *
-     * @param mixed      $attributes
-     * @param mixed|null $object
+     * @param $fra
      *
-     * @return boolean
+     * @return string
      */
-    protected function isGranted($attributes, $object = null)
+    protected function getCreateAddressUrl(Fra $fra)
     {
-        return $this->get('security.context')->isGranted($attributes, $object);
+        return $this->generateUrl('asbo_whoswho_addressing_create', array('slug' => $fra->getSlug()));
     }
 }

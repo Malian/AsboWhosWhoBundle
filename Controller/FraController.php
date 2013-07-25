@@ -115,17 +115,4 @@ class FraController extends ResourceController
     {
         return $this->get('asbo_whoswho.fra_manager');
     }
-
-    /**
-     * Checks if the attributes are granted against the current authentication token and optionally supplied object.
-     *
-     * @param mixed      $attributes
-     * @param mixed|null $object
-     *
-     * @return Boolean
-     */
-    protected function isGranted($attributes, $object = null)
-    {
-        return $this->get('security.context')->isGranted($attributes, $object);
-    }
 }
