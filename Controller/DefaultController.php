@@ -15,6 +15,8 @@ use Asbo\WhosWhoBundle\Entity\Fra;
 use Asbo\ResourceBundle\Controller\ResourceController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\GenericEvent;
 
 /**
  * Base Controller
@@ -31,12 +33,20 @@ class DefaultController extends ResourceController
         $this->isAllowedToEditFraOrException($fra);
 
         $object = $this->getManager()->createNew();
+
+        $this->dispatchEvent('create_initialize', $object, array('request' => $request));
+
         $form = $this->getForm()->setData($object)->handleRequest($request);
 
         if ($form->isValid()) {
-
             $object->setFra($fra);
+
+            $this->dispatchEvent('create_succeed', $object, array('request' => $request));
+
             $this->getManager()->update($object);
+
+            $this->dispatchEvent('create_completed', $object, array('request' => $request));
+
             $this->setFlash('succes', 'Votre adresse a bien été créée !');
 
             return $this->redirect($this->getFraController()->getFraEditUrl($fra));
@@ -140,6 +150,23 @@ class DefaultController extends ResourceController
         }
 
         return $object;
+    }
+
+    /**
+     * Informs listeners that event data was used
+     *
+     * @param string       $name
+     * @param Event|object $eventOrResource
+     */
+    public function dispatchEvent($name, $eventOrResource, $args = array())
+    {
+        if (!$eventOrResource instanceof Event) {
+            $name = $this->getConfiguration()->getEventName($name);
+
+            $eventOrResource = new GenericEvent($eventOrResource, $args);
+        }
+
+        $this->getEventDispatcher()->dispatch($name, $eventOrResource);
     }
 
     /**
