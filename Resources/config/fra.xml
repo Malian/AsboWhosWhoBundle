@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+                               http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="asbo_whoswho.controller.fra.class">Asbo\WhosWhoBundle\Controller\FraController</parameter>
+        <parameter key="asbo_whoswho.entity.fra.class">Asbo\WhosWhoBundle\Entity\Fra</parameter>
+        <parameter key="asbo_whoswho.form.type.fra.class">Asbo\WhosWhoBundle\Form\Type\FraType</parameter>
+        <parameter key="asbo_whoswho.form.factory.fra.class">Asbo\WhosWhoBundle\Form\Factory\FormFactory</parameter>
+        <parameter key="asbo_whoswho.manager.fra.class">Asbo\WhosWhoBundle\Doctrine\FraManager</parameter>
+        <parameter key="asbo_whoswho.repository.fra.class">Doctrine\Common\Persistence\ObjectRepository</parameter>
+    </parameters>
+
+    <services>
+        <service id="asbo_whoswho.controller.fra" class="%asbo_whoswho.controller.fra.class%">
+            <argument>asbo_whoswho</argument>
+            <argument>fra</argument>
+            <argument>AsboWhosWhoBundle:Fra</argument>
+
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+
+        <service id="asbo_whoswho.form.event_listener.editfra" class="Asbo\WhosWhoBundle\Form\EventListener\EditFraListener" public="false" />
+
+        <service id="asbo_whoswho.form.type.fra" class="%asbo_whoswho.form.type.fra.class%">
+            <argument>%asbo_whoswho.entity.fra.class%</argument>
+            <argument type="service" id="asbo_whoswho.form.event_listener.editfra" />
+            <tag name="form.type" alias="asbo_whoswho_fra" />
+        </service>
+
+        <service id="asbo_whoswho.form.factory.fra" class="%asbo_whoswho.form.factory.fra.class%">
+            <argument type="service" id="form.factory" />
+            <argument>asbo_whoswho_fra</argument>
+            <argument>asbo_whoswho_fra</argument>
+        </service>
+
+        <service id="asbo_whoswho.repository.fra"
+                 factory-service="doctrine"
+                 factory-method="getRepository"
+                 class="%asbo_whoswho.repository.fra.class%"
+                 public="false">
+            <argument>%asbo_whoswho.entity.fra.class%</argument>
+        </service>
+
+        <service id="asbo_whoswho.manager.fra" class="%asbo_whoswho.manager.fra.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="asbo_whoswho.repository.fra" />
+            <argument type="service" id="lexik_form_filter.query_builder_updater" />
+        </service>
+
+    </services>
+</container>

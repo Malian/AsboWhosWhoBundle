@@ -34,10 +34,18 @@ class AsboWhosWhoExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
         $loader->load('form.xml');
-        $loader->load('controller.xml');
         $loader->load('validators.xml');
-        $loader->load('orm.xml');
+        $loader->load('twig.xml');
+        //$loader->load('redirect.xml');
+        $loader->load('admin.xml');
+        $loader->load('comite.xml');
+
+        // Resources
+        $loader->load('fra.xml');
+        $loader->load('address.xml');
         $loader->load('phone.xml');
+        $loader->load('diploma.xml');
+        $loader->load('email.xml');
         $loader->load('fraHasPost.xml');
     }
 }

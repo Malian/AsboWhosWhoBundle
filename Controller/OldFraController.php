@@ -15,6 +15,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Asbo\WhosWhoBundle\Entity\Fra;
 use Asbo\WhosWhoBundle\Filter\FraFilterType;
+use Asbo\ResourceBundle\Controller\ResourceController;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 
 /**
@@ -22,7 +23,7 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
  *
  * @author De Ron Malian <deronmalian@gmail.com>
  */
-class FraController extends DefaultController
+class OldFraController extends ResourceController
 {
     /**
      * Show all the fra
@@ -38,10 +39,10 @@ class FraController extends DefaultController
 
             $form->handleRequest($request);
 
-            $fras = $this->getManager()->findAllWithFormFilter($form);
+            $fras = $this->getFraManager()->findAllWithFormFilter($form);
 
         } else {
-            $fras = $this->getManager()->findAll();
+            $fras = $this->getFraManager()->findAll();
         }
 
         return $this->renderResponse('list.html', ['fras' => $fras, 'form' => $form->createView()]);
@@ -65,17 +66,17 @@ class FraController extends DefaultController
     /**
      * Edit the fra
      */
-    public function updateAction(Fra $fra, Request $request)
+    public function editAction(Fra $fra, Request $request)
     {
         if (false === $this->isGranted('ROLE_WHOSWHO_FRA_EDIT', $fra)) {
             throw new AccessDeniedException();
         }
 
-        $form = $this->getForm()->setData($fra)->handleRequest($request);
+        $form = $this->getFormFactory()->setData($fra)->handleRequest($request);
 
         if ($form->isValid()) {
 
-            $this->getManager()->update($fra);
+            $this->getFraManager()->save($fra);
 
             return $this->redirect($this->getFraEditUrl($fra));
         }
@@ -92,7 +93,26 @@ class FraController extends DefaultController
      */
     public function getFraEditUrl(Fra $fra)
     {
-        return $this->get('router')->generate('asbo_whoswho_fra_update', array('slug' => $fra->getSlug()));
+        return $this->get('router')->generate('asbo_whoswho_fra_edit', array('slug' => $fra->getSlug()));
     }
 
+    /**
+     * Returns the form factory.
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function getFormFactory()
+    {
+        return $this->container->get('asbo_whoswho.fra.form.factory')->createForm();
+    }
+
+    /**
+     * Return the FraManager
+     *
+     * @return \Asbo\WhosWhoBundle\Entity\FraManager
+     */
+    protected function getFraManager()
+    {
+        return $this->get('asbo_whoswho.fra_manager');
+    }
 }

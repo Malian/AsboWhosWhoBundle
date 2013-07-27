@@ -6,12 +6,9 @@
 
 
     <parameters>
-        <parameter key="asbo_whoswho.fra_manager.class">Asbo\WhosWhoBundle\Entity\FraManager</parameter>
-        <parameter key="asbo_whoswho.fra_has_user_manager.class">Asbo\WhosWhoBundle\Entity\FraHasUserManager</parameter>
-        <parameter key="asbo_whoswho.fra_has_post_manager.class">Asbo\WhosWhoBundle\Entity\FraHasPostManager</parameter>
         <parameter key="asbo_whoswho.routing.urlGenerator.class">Asbo\WhosWhoBundle\Routing\UrlGenerator</parameter>
-        <parameter key="asbo_whoswho.translation_domain">AsboWhosWhoBundle</parameter>
         <parameter key="asbo_whoswho.security.owner_voter.class">Asbo\WhosWhoBundle\Security\OwnerVoter</parameter>
+        <parameter key="asbo_whoswho.listener.flash.class">Asbo\WhosWhoBundle\EventListener\FlashListener</parameter>
     </parameters>
 
     <services>
@@ -24,7 +21,7 @@
             <tag name="security.voter" />
         </service>
 
-        <service id="asbo_whoswho.listener.flash" class="Asbo\WhosWhoBundle\EventListener\FlashListener">
+        <service id="asbo_whoswho.listener.flash" class="%asbo_whoswho.listener.flash.class%">
             <tag name="kernel.event_subscriber" />
             <argument type="service" id="session" />
             <argument type="service" id="translator" />

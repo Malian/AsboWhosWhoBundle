@@ -85,6 +85,6 @@ class FraType extends AbstractType
      */
     public function getName()
     {
-        return 'asbo_type_fra';
+        return 'asbo_whoswho_fra';
     }
 }

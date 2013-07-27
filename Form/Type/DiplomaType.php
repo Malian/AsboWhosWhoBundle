@@ -60,6 +60,6 @@ class DiplomaType extends AbstractType
      */
     public function getName()
     {
-        return 'asbo_type_diploma';
+        return 'asbo_whoswho_diploma';
     }
 }
