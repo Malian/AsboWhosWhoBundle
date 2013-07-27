@@ -47,7 +47,7 @@ class DefaultController extends ResourceController
 
             $this->dispatchEvent('create_completed', $object, array('request' => $request));
 
-            $this->setFlash('succes', 'Votre adresse a bien été créée !');
+            $this->setFlash('success', 'Votre adresse a bien été créée !');
 
             return $this->redirect($this->getFraController()->getFraEditUrl($fra));
         }
