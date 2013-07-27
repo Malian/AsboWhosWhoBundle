@@ -16,6 +16,9 @@ namespace Asbo\WhosWhoBundle;
  */
 final class AsboWhosWhoEvents
 {
+    /**
+     * Generic events
+     */
     const GENERIC_CREATE_INITIALIZE =  'create.initialize';
     const GENERIC_CREATE_COMPLETED = 'create.completed';
     const GENERIC_CREATE_SUCCESS = 'create.success';
