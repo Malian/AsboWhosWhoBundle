@@ -38,5 +38,6 @@ class AsboWhosWhoExtension extends Extension
         $loader->load('validators.xml');
         $loader->load('orm.xml');
         $loader->load('phone.xml');
+        $loader->load('fraHasPost.xml');
     }
 }

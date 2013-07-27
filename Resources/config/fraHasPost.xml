@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="asbo_whoswho.entity.frahaspost.class">Asbo\WhosWhoBundle\Entity\fraHasPost</parameter>
+        <parameter key="asbo_whoswho.controller.frahaspost.class">Asbo\WhosWhoBundle\Controller\DefaultController</parameter>
+    </parameters>
+
+    <services>
+        <service id="asbo_whoswho.form.type.frahaspost" class="Asbo\WhosWhoBundle\Form\Type\FraHasPostType">
+            <argument>%asbo_whoswho.entity.frahaspost.class%</argument>
+            <tag name="form.type" alias="asbo_whoswho_frahaspost" />
+        </service>
+
+        <service id="asbo_whoswho.form.factory.frahaspost" class="Asbo\WhosWhoBundle\Form\Factory\FormFactory">
+            <argument type="service" id="form.factory" />
+            <argument>asbo_whoswho_frahaspost</argument>
+            <argument>asbo_whoswho_frahaspost</argument>
+        </service>
+
+        <service id="asbo_whoswho.controller.frahaspost" class="%asbo_whoswho.controller.frahaspost.class%">
+            <argument>asbo_whoswho</argument>
+            <argument>frahaspost</argument>
+            <argument>AsboWhosWhoBundle:Post</argument>
+
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+
+        <service id="asbo_whoswho.repository.frahaspost"
+                 factory-service="doctrine"
+                 factory-method="getRepository"
+                 class="Doctrine\Common\Persistence\ObjectRepository"
+                 public="false">
+            <argument>%asbo_whoswho.entity.frahaspost.class%</argument>
+        </service>
+
+        <service id="asbo_whoswho.manager.frahaspost" class="Asbo\WhosWhoBundle\Doctrine\DefaultManager">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="asbo_whoswho.repository.frahaspost" />
+        </service>
+
+    </services>
+</container>

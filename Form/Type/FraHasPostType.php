@@ -58,6 +58,6 @@ class FraHasPostType extends AbstractType
      */
     public function getName()
     {
-        return 'asbo_type_fraHasPost';
+        return 'asbo_whoswho_frahaspost';
     }
 }
