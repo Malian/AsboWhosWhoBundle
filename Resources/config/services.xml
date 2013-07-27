@@ -16,19 +16,6 @@
 
     <services>
 
-        <service id="asbo_whoswho.fra_manager" class="%asbo_whoswho.fra_manager.class%">
-            <argument type="service" id="doctrine.orm.entity_manager" />
-            <argument type="service" id="lexik_form_filter.query_builder_updater" />
-        </service>
-
-        <service id="asbo_whoswho.fra_has_post_manager" class="%asbo_whoswho.fra_has_post_manager.class%">
-            <argument type="service" id="doctrine.orm.entity_manager" />
-        </service>
-
-        <service id="asbo_whoswho.fra_has_user_manager" class="%asbo_whoswho.fra_has_user_manager.class%">
-            <argument type="service" id="doctrine.orm.entity_manager" />
-        </service>
-
         <service id="asbo_whoswho.routing.urlGenerator" class="%asbo_whoswho.routing.urlGenerator.class%">
             <argument type="service" id="router" />
         </service>

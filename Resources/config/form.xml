@@ -63,7 +63,7 @@
             <argument>asbo_type_fra</argument>
         </service>
 
-        <service id="asbo_whoswho.addressing.form.factory" class="Asbo\WhosWhoBundle\Form\Factory\FormFactory">
+        <service id="asbo_whoswho.form.factory.address" class="Asbo\WhosWhoBundle\Form\Factory\FormFactory">
             <argument type="service" id="form.factory" />
             <argument>asbo_whoswho_address</argument>
             <argument>asbo_type_address</argument>

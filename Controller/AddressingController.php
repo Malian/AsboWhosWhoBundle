@@ -20,7 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JMS\SecurityExtraBundle\Annotation\PreAuthorize;
 
 /**
- * Controller of Addressing
+ * Controller of Address
  *
  * @author De Ron Malian <deronmalian@gmail.com>
  */

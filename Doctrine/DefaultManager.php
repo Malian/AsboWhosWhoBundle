@@ -19,7 +19,7 @@ use Doctrine\Common\Persistence\ObjectRepository;
  *
  * @author De Ron Malian <deronmalian@gmail.com>
  */
-abstract class AbstractManager
+class DefaultManager
 {
     /**
      * Entity Manager
@@ -102,7 +102,7 @@ abstract class AbstractManager
      *
      * @return \Doctrine\Common\Persistence\ObjectRepository
      */
-    public function getRespository()
+    public function getRepository()
     {
         return $this->repository;
     }
