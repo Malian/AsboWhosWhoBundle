@@ -61,7 +61,22 @@ class FlashListener implements EventSubscriberInterface
 
                 $call = sprintf('get%sCompleted', $action);
 
-                foreach (array('phone') as $resource) {
+                $resources = [
+                    'address',
+                    'diploma',
+                    'email',
+                    'externalpost',
+                    'family',
+                    'job',
+                    'phone',
+                    'rank',
+                    'fra',
+                    'frahasimage',
+                    'frahaspost',
+                    'frahasuser'
+                ];
+
+                foreach ($resources as $resource) {
                     self::$subscribedEvents[AsboWhosWhoEvents::$call($resource)] =  'addSuccessFlash';
                 }
             }
