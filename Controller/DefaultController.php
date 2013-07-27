@@ -11,6 +11,7 @@
 
 namespace Asbo\WhosWhoBundle\Controller;
 
+use Asbo\WhosWhoBundle\AsboWhosWhoEvents;
 use Asbo\WhosWhoBundle\Entity\Fra;
 use Asbo\ResourceBundle\Controller\ResourceController;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,20 +35,18 @@ class DefaultController extends ResourceController
 
         $object = $this->getManager()->createNew();
 
-        $this->dispatchEvent('create_initialize', $object, array('request' => $request));
+        $this->dispatchEvent(AsboWhosWhoEvents::GENERIC_CREATE_INITIALIZE, $object, array('request' => $request));
 
         $form = $this->getForm()->setData($object)->handleRequest($request);
 
         if ($form->isValid()) {
             $object->setFra($fra);
 
-            $this->dispatchEvent('create_succeed', $object, array('request' => $request));
+            $this->dispatchEvent(AsboWhosWhoEvents::GENERIC_CREATE_SUCCESS, $object, array('request' => $request));
 
             $this->getManager()->update($object);
 
-            $this->dispatchEvent('create_completed', $object, array('request' => $request));
-
-            $this->setFlash('success', 'Votre adresse a bien été créée !');
+            $this->dispatchEvent(AsboWhosWhoEvents::GENERIC_CREATE_COMPLETED, $object, array('request' => $request));
 
             return $this->redirect($this->getFraController()->getFraEditUrl($fra));
         }
@@ -69,16 +68,17 @@ class DefaultController extends ResourceController
 
         $this->isAllowedToEditFraOrException($object->getFra());
 
+        $this->dispatchEvent(AsboWhosWhoEvents::GENERIC_EDIT_INITIALIZE, $object, array('request' => $request));
+
         $form = $this->getForm()->setData($object)->handleRequest($request);
 
         if ($form->isValid()) {
 
+            $this->dispatchEvent(AsboWhosWhoEvents::GENERIC_EDIT_SUCCESS, $object, array('request' => $request));
+
             $this->getManager()->update($object);
 
-            $this->setFlash(
-                'success',
-                'Votre adresse a bien été modifiée !'
-            );
+            $this->dispatchEvent(AsboWhosWhoEvents::GENERIC_EDIT_COMPLETED, $object, array('request' => $request));
 
             return $this->redirect($this->getFraController()->getFraEditUrl($fra));
         }
@@ -90,7 +90,6 @@ class DefaultController extends ResourceController
                 'form' => $form->createView()
             ]
         );
-
     }
 
     /**
@@ -109,7 +108,7 @@ class DefaultController extends ResourceController
 
             if ($form->get('delete')->isClicked()) {
                 $this->getManager()->delete($object);
-                $this->setFlash('success', 'Votre adresse a bien été supprimée !');
+                $this->dispatchEvent(AsboWhosWhoEvents::GENERIC_DELETE_COMPLETED, $object, array('request' => $request));
             }
 
             return $this->redirect($this->getFraController()->getFraEditUrl($fra));
@@ -121,7 +120,6 @@ class DefaultController extends ResourceController
                 'form' => $form->createView()
             ]
         );
-
     }
 
     /**
