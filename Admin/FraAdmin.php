@@ -68,7 +68,7 @@ class FraAdmin extends Admin
 
             ->with('Settings', array('collapsed' => true))
                 ->add('settings', 'asbo_type_settings')
-                ->end();
+            ->end();
     }
 
     /**

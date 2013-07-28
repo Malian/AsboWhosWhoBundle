@@ -36,8 +36,8 @@ class FraManager extends DefaultManager
     /**
      * Constructor.
      *
-     * @param ObjectManager $om
-     * @param ObjectRepository $repository
+     * @param ObjectManager                 $om
+     * @param ObjectRepository              $repository
      * @param FilterBuilderUpdaterInterface $filterQueryBuilder
      */
     public function __construct(ObjectManager $om, ObjectRepository $repository, FilterBuilderUpdaterInterface $filterQueryBuilder)

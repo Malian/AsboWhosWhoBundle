@@ -23,7 +23,6 @@ use Sonata\AdminBundle\Form\FormMapper;
  */
 class ExternalPostAdmin extends Admin
 {
-
     /**
      * {@inheritdoc}
      */

@@ -10,8 +10,8 @@
         <parameter key="asbo_whoswho.entity.frahaspost.class">Asbo\WhosWhoBundle\Entity\FraHasPost</parameter>
         <parameter key="asbo_whoswho.form.type.frahaspost.class">Asbo\WhosWhoBundle\Form\Type\FraHasPostType</parameter>
         <parameter key="asbo_whoswho.form.factory.frahaspost.class">Asbo\WhosWhoBundle\Form\Factory\FormFactory</parameter>
-        <parameter key="asbo_whoswho.manager.frahaspost.class">Asbo\WhosWhoBundle\Doctrine\DefaultManager</parameter>
-        <parameter key="asbo_whoswho.repository.frahaspost.class">Doctrine\Common\Persistence\ObjectRepository</parameter>
+        <parameter key="asbo_whoswho.manager.frahaspost.class">Asbo\WhosWhoBundle\Doctrine\FraHasPostManager</parameter>
+        <parameter key="asbo_whoswho.repository.frahaspost.class">Asbo\WhosWhoBundle\Doctrine\FraHasPostRepository</parameter>
     </parameters>
 
     <services>

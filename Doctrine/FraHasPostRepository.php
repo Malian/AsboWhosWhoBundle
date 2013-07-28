@@ -9,10 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Asbo\WhosWhoBundle\Entity;
+namespace Asbo\WhosWhoBundle\Doctrine;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Asbo\WhosWhoBundle\Entity\FraHasPost;
 
 /**
  * FraHasPost repository
@@ -30,10 +31,10 @@ class FraHasPostRepository extends EntityRepository
     {
 
         $qb = $this->createQueryBuilder('l')
-                     ->leftJoin('l.post', 'p')
-                     ->addSelect('p')
-                     ->orderBy('l.anno')
-                     ->addOrderBy('p.type');
+            ->leftJoin('l.post', 'p')
+            ->addSelect('p')
+            ->orderBy('l.anno')
+            ->addOrderBy('p.type');
 
         foreach ($types as $type) {
             $qb->orWhere('p.type = '.$type);
@@ -53,9 +54,9 @@ class FraHasPostRepository extends EntityRepository
     public function findByTypesAndYear(array $types, $anno)
     {
         $qb = $this->createQueryBuilder('l')
-                     ->leftJoin('l.post', 'p')
-                     ->addSelect('p')
-                     ->addOrderBy('p.type');
+            ->leftJoin('l.post', 'p')
+            ->addSelect('p')
+            ->addOrderBy('p.type');
 
         foreach ($types as $type) {
             $qb->orWhere('p.type = '.$type);
@@ -76,11 +77,11 @@ class FraHasPostRepository extends EntityRepository
     private function joinFra(QueryBuilder $qb)
     {
         $qb->leftJoin('l.fra', 'f')
-           ->addSelect('f')
-           ->leftJoin('f.fraHasImages', 'x')
-           ->addSelect('x')
-           ->leftJoin('x.image', 'i')
-           ->addSelect('i');
+            ->addSelect('f')
+            ->leftJoin('f.fraHasImages', 'x')
+            ->addSelect('x')
+            ->leftJoin('x.image', 'i')
+            ->addSelect('i');
 
         return $qb;
     }

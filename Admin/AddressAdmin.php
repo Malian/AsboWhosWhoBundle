@@ -24,7 +24,6 @@ use Asbo\WhosWhoBundle\Entity\Address;
  */
 class AddressAdmin extends Admin
 {
-
     /**
      * {@inheritdoc}
      */
@@ -35,15 +34,13 @@ class AddressAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $address = $formMapper->create(
-            'address',
-            'gmap_address',
-            array('show_all' => true, 'data_class' => 'Asbo\WhosWhoBundle\Entity\Address')
-        );
-
         $formMapper
-           ->add('type', 'choice', array('choices' => Address::getTypes(), 'expanded' => false, 'multiple' => false))
-           ->add($address);
+            ->add('address')
+            ->add('locality')
+            ->add('country')
+            ->add('lat')
+            ->add('lng')
+            ->add('type', 'choice', array('choices' => Address::getTypes(), 'expanded' => false, 'multiple' => false));
 
         if (!$this->isChild()) {
             $formMapper->add('fra', 'sonata_type_model_list');
@@ -58,6 +55,10 @@ class AddressAdmin extends Admin
         $datagridMapper
             ->add('fra')
             ->add('address')
+            ->add('locality')
+            ->add('country')
+            ->add('lat')
+            ->add('lng')
             ->add('type', 'doctrine_orm_choice', array('field_type' => 'choice', 'field_options' => array('choices' => Address::getTypes())));
     }
 
@@ -68,6 +69,8 @@ class AddressAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('address')
+            ->add('locality')
+            ->add('country')
             ->add('TypeCode');
 
         if (!$this->isChild()) {

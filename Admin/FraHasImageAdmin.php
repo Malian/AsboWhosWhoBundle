@@ -23,7 +23,6 @@ use Sonata\AdminBundle\Form\FormMapper;
  */
 class FraHasImageAdmin extends Admin
 {
-
     /**
      * {@inheritdoc}
      */

@@ -34,7 +34,7 @@ class FraController extends DefaultController
         /** @var \Symfony\Component\Form\FormInterface $form */
         $form = $this->get('form.factory')->create(new FraFilterType());
 
-        if ($request->query->has('submit-filter')) {
+        if (null !== $request->get('submit-filter')) {
 
             $form->handleRequest($request);
 

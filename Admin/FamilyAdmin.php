@@ -24,7 +24,6 @@ use Asbo\WhosWhoBundle\Entity\Family;
  */
 class FamilyAdmin extends Admin
 {
-
     /**
      * {@inheritdoc}
      */

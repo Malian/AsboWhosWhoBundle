@@ -113,10 +113,10 @@ class ComiteController extends ResourceController
     /**
      * Get fraHasPost manager.
      *
-     * @return \Asbo\WhosWhobundle\Entity\FraHasPostManager
+     * @return \Asbo\WhosWhoBundle\Doctrine\FraHasPostManager
      */
     protected function getFraHasPostManager()
     {
-        return $this->get('asbo_whoswho.fra_has_post_manager');
+        return $this->get('asbo_whoswho.manager.frahaspost');
     }
 }

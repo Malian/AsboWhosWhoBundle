@@ -24,7 +24,6 @@ use Asbo\WhosWhoBundle\Entity\Email;
  */
 class EmailAdmin extends Admin
 {
-
     /**
      * {@inheritdoc}
      */

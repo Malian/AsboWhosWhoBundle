@@ -9,49 +9,25 @@
  * file that was distributed with this source code.
  */
 
-namespace Asbo\WhosWhoBundle\Entity;
+namespace Asbo\WhosWhoBundle\Doctrine;
 
-use Doctrine\ORM\EntityManager;
+use Asbo\WhosWhoBundle\Entity\Fra;
+use Asbo\WhosWhoBundle\Entity\FraHasPost;
 
 /**
  * Fra has Post manager
  *
  * @author De Ron Malian <deronmalian@gmail.com>
  */
-class FraHasPostManager
+class FraHasPostManager extends DefaultManager
 {
-    /**
-     * Entity Manager
-     *
-     * @var \Doctrine\ORM\EntityManager
-     */
-    protected $em;
 
     /**
-     * @param EntityManager $em
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
-    /**
-     * Persist and flush automaticly the entity
-     *
-     * @param \Asbo\WhosWhoBundle\Entity\FraHasPost $entity
-     */
-    protected function persistAndFlush($entity)
-    {
-        $this->em->persist($entity);
-        $this->em->flush();
-    }
-
-    /**
-     * Find a fra by fra
+     * Find a fraHasPost by fra
      *
      * @param \Asbo\WhosWhoBundle\Entity\Fra $fra
      *
-     * @return FraHasPost|\Doctrine\Common\Collections\ArrayCollection|null
+     * @return FraHasPost[]
      */
     public function findByFra(Fra $fra)
     {
@@ -62,7 +38,7 @@ class FraHasPostManager
      * Find all posts
      *
      * @param  array|null
-     * @return FraHasPost|null
+     * @return FraHasPost[]
      */
     public function findAll()
     {
@@ -112,47 +88,12 @@ class FraHasPostManager
     }
 
     /**
-     * Return the repository associate to the manager
+     * Returns the repositry.
      *
-     * @return \Asbo\WhosWhoBundle\Entity\FraHasPostRepository
+     * @return \Asbo\WhosWhoBundle\Doctrine\FraHasPostRepository
      */
     public function getRepository()
     {
-        return $this->em->getRepository('AsboWhosWhoBundle:FraHasPost');
-    }
-
-    /**
-     * Creates a fra entity.
-     *
-     * @return Fra
-     */
-    public function create()
-    {
-        $class      = $this->getClass();
-        $fraHasPost = new $class;
-
-        return $fraHasPost;
-    }
-
-    /**
-     * Save a fra into db
-     *
-     * @param FraHasPost $fra
-     *
-     * @return \Asbo\WhosWhoBundle\Entity\Fra
-     */
-    public function save(FraHasPost $fra)
-    {
-        $this->persistAndFlush($fra);
-    }
-
-    /**
-     * Returns the user's fully qualified class name.
-     *
-     * @return string
-     */
-    protected function getClass()
-    {
-        return 'Asbo\WhosWhoBundle\Entity\FraHasPost';
+        return $this->repository;
     }
 }
