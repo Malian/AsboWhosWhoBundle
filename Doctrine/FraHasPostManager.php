@@ -19,7 +19,7 @@ use Asbo\WhosWhoBundle\Entity\FraHasPost;
  *
  * @author De Ron Malian <deronmalian@gmail.com>
  */
-class FraHasPostManager extends DefaultManager
+class FraHasPostManager extends EntityManager
 {
 
     /**

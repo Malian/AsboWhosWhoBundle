@@ -153,8 +153,9 @@ class DefaultController extends ResourceController
     /**
      * Informs listeners that event data was used
      *
-     * @param string       $name
+     * @param string $name
      * @param Event|object $eventOrResource
+     * @param array $args
      */
     public function dispatchEvent($name, $eventOrResource, $args = array())
     {
@@ -195,7 +196,7 @@ class DefaultController extends ResourceController
     /**
      * Returns the object manager.
      *
-     * @return \Asbo\WhosWhoBundle\Doctrine\DefaultManager
+     * @return \Asbo\WhosWhoBundle\Doctrine\EntityManager
      */
     protected function getManager()
     {

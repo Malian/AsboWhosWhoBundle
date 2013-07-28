@@ -34,7 +34,7 @@ use Asbo\WhosWhoBundle\Util\AnnoManipulator;
  * @author De Ron Malian <deronmalian@gmail.com>
  *
  * @ORM\Table(name="ww__fra")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Asbo\WhosWhoBundle\Doctrine\FraRepository")
  */
 class Fra
 {

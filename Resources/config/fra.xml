@@ -11,7 +11,7 @@
         <parameter key="asbo_whoswho.form.type.fra.class">Asbo\WhosWhoBundle\Form\Type\FraType</parameter>
         <parameter key="asbo_whoswho.form.factory.fra.class">Asbo\WhosWhoBundle\Form\Factory\FormFactory</parameter>
         <parameter key="asbo_whoswho.manager.fra.class">Asbo\WhosWhoBundle\Doctrine\FraManager</parameter>
-        <parameter key="asbo_whoswho.repository.fra.class">Doctrine\Common\Persistence\ObjectRepository</parameter>
+        <parameter key="asbo_whoswho.repository.fra.class">Asbo\WhosWhoBundle\Doctrine\FraRepository</parameter>
     </parameters>
 
     <services>

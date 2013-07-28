@@ -11,9 +11,9 @@
 
 namespace Asbo\WhosWhoBundle\Doctrine;
 
-use Asbo\WhosWhoBundle\Doctrine\DefaultManager;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\Persistence\ObjectRepository;
+use Asbo\WhosWhoBundle\Doctrine\EntityManager as  BaseEntityManager;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Asbo\WhosWhoBundle\Model\FraUserInterface;
 use Asbo\WhosWhoBundle\Entity\Fra;
 use Symfony\Component\Form\FormInterface;
@@ -24,7 +24,7 @@ use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
  *
  * @author De Ron Malian <deronmalian@gmail.com>
  */
-class FraManager extends DefaultManager
+class FraManager extends BaseEntityManager
 {
     /**
      * Form Filter
@@ -36,11 +36,11 @@ class FraManager extends DefaultManager
     /**
      * Constructor.
      *
-     * @param ObjectManager                 $om
-     * @param ObjectRepository              $repository
+     * @param EntityManager                 $om
+     * @param EntityRepository              $repository
      * @param FilterBuilderUpdaterInterface $filterQueryBuilder
      */
-    public function __construct(ObjectManager $om, ObjectRepository $repository, FilterBuilderUpdaterInterface $filterQueryBuilder)
+    public function __construct(EntityManager $om, EntityRepository $repository, FilterBuilderUpdaterInterface $filterQueryBuilder)
     {
         parent::__construct($om, $repository);
         $this->filterQueryBuilder = $filterQueryBuilder;

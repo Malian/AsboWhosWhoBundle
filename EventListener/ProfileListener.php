@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Asbo\WhosWhoBundle\Routing\UrlGenerator;
-use Asbo\WhosWhoBundle\Doctrine\DefaultManager;
+use Asbo\WhosWhoBundle\Doctrine\EntityManager;
 
 /**
  * Profile event listener
@@ -36,7 +36,7 @@ class ProfileListener
     public $securityContext;
 
     /**
-     * @var DefaultManager  $fraHasUserManager
+     * @var EntityManager  $fraHasUserManager
      */
     public $fraHasUserManager;
 
@@ -48,13 +48,13 @@ class ProfileListener
     /**
      * @param UrlGenerator             $generator
      * @param SecurityContextInterface $securityContext
-     * @param DefaultManager           $fraHasUserManager
+     * @param EntityManager           $fraHasUserManager
      * @param string                   $route
      */
     public function __construct(
         UrlGenerator $generator,
         SecurityContextInterface $securityContext,
-        DefaultManager $fraHasUserManager,
+        EntityManager $fraHasUserManager,
         $route
     ) {
         $this->generator         = $generator;

@@ -3,7 +3,7 @@
 /*
  * This file is part of the ASBO package.
  *
- * (c) De Ron Malian <deronmalian@gmail.com>
+ * (c) De Ron Malian <deronmalian@gmail.cem>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,27 +11,27 @@
 
 namespace Asbo\WhosWhoBundle\Doctrine;
 
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\EntityManager as BaseEntityManager;
 
 /**
  * Abstract Manager
  *
- * @author De Ron Malian <deronmalian@gmail.com>
+ * @author De Ron Malian <deronmalian@gmail.cem>
  */
-class DefaultManager
+class EntityManager
 {
     /**
      * Entity Manager
      *
      * @var \Doctrine\ORM\EntityManagerInterface
      */
-    protected $om;
+    protected $em;
 
     /**
      * Entity Repository
      *
-     * @var \Doctrine\Common\Persistence\ObjectRepository $repository
+     * @var \Doctrine\ORM\EntityRepository $repository
      */
     protected $repository;
 
@@ -45,12 +45,12 @@ class DefaultManager
     /**
      * Constructor
      *
-     * @param ObjectManager    $om
-     * @param ObjectRepository $repository
+     * @param BaseEntityManager $em
+     * @param EntityRepository  $repository
      */
-    public function __construct(ObjectManager $om, ObjectRepository $repository)
+    public function __construct(BaseEntityManager $em, EntityRepository $repository)
     {
-        $this->om = $om;
+        $this->em = $em;
         $this->repository = $repository;
         $this->class = $repository->getClassName();
     }
@@ -75,10 +75,10 @@ class DefaultManager
      */
     public function update($entity, $andFlush = true)
     {
-        $this->om->persist($entity);
+        $this->em->persist($entity);
 
         if ($andFlush) {
-            $this->om->flush();
+            $this->em->flush();
         }
     }
 
@@ -90,17 +90,17 @@ class DefaultManager
      */
     public function delete($entity, $andFlush = true)
     {
-        $this->om->remove($entity);
+        $this->em->remove($entity);
 
         if ($andFlush) {
-            $this->om->flush();
+            $this->em->flush();
         }
     }
 
     /**
      * Returns the repositry.
      *
-     * @return \Doctrine\Common\Persistence\ObjectRepository
+     * @return \Doctrine\ORM\EntityRepository
      */
     public function getRepository()
     {
