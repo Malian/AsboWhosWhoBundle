@@ -14,7 +14,7 @@ namespace Asbo\WhosWhoBundle\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Asbo\WhosWhoBundle\Entity\Fra;
-use Asbo\WhosWhoBundle\Filter\FraFilterType;
+use Asbo\WhosWhoBundle\Form\Filter\FraFilterType;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 
 /**
@@ -34,14 +34,17 @@ class FraController extends DefaultController
         /** @var \Symfony\Component\Form\FormInterface $form */
         $form = $this->get('form.factory')->create(new FraFilterType());
 
+        /** @var \Asbo\WhosWhoBundle\Doctrine\FraManager $manager */
+        $manager = $this->getManager();
+
         if (null !== $request->get('submit-filter')) {
 
             $form->handleRequest($request);
 
-            $fras = $this->getManager()->findAllWithFormFilter($form);
+            $fras = $manager->findAllWithFormFilter($form);
 
         } else {
-            $fras = $this->getManager()->findAll();
+            $fras = $manager->findAll();
         }
 
         return $this->renderResponse('list.html', ['fras' => $fras, 'form' => $form->createView()]);
@@ -92,7 +95,7 @@ class FraController extends DefaultController
      */
     public function getFraEditUrl(Fra $fra)
     {
-        return $this->get('router')->generate('asbo_whoswho_fra_update', array('slug' => $fra->getSlug()));
+        return $this->get('router')->generate($this->getConfiguration()->getRouteName('update'), array('slug' => $fra->getSlug()));
     }
 
 }

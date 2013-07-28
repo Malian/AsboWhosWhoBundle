@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Asbo\WhosWhoBundle\Filter;
+namespace Asbo\WhosWhoBundle\Form\Filter;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
