@@ -1,25 +1,25 @@
 asbo_whoswho_list:
     pattern: /
     defaults:
-        _controller: asbo.controller.frontend.fra:listAction
+        _controller: asbo.controller.fra:listAction
         _method: GET|POST
 
 asbo_whoswho_fra_show:
     pattern: /fra/{slug}
     defaults:
-        _controller: asbo.controller.frontend.fra:showAction
+        _controller: asbo.controller.fra:showAction
         _method: GET
 
 asbo_whoswho_fra_edit:
     pattern: /fra/{slug}/edit
     defaults:
-        _controller: asbo.controller.frontend.fra:editAction
+        _controller: asbo.controller.fra:editAction
         _method: GET|POST
 
 asbo_whoswho_comites:
     pattern: /comites
     defaults:
-        _controller: asbo.controller.frontend.comite:listAction
+        _controller: asbo.controller.comite:listAction
         _method: GET
 
 asbo_whoswho_comite_anno:
@@ -27,27 +27,33 @@ asbo_whoswho_comite_anno:
     requirements:
         anno: \d+
     defaults:
-        _controller: asbo.controller.frontend.comite:annoAction
+        _controller: asbo.controller.comite:annoAction
         _method: GET
 
-asbo_whoswho_addressing_create:
-    pattern:  /fra/{slug}/addresses/new
+asbo_whoswho_comite_last:
+    pattern: /comite/
     defaults:
-        _controller: asbo.controller.frontend.addressing:createAction
+        _controller: asbo.controller.comite:lastAction
+        _method: GET
+
+asbo_whoswho_address_create:
+    pattern:  /fra/{slug}/address/new
+    defaults:
+        _controller: asbo.controller.address:createAction
         _method: GET|POST
 
-asbo_whoswho_addressing_update:
-    pattern:  /fra/{slug}/addresses/{address_id}
+asbo_whoswho_address_update:
+    pattern:  /fra/{slug}/address/{address_id}
     requirements:
         address_id: \d+
     defaults:
-        _controller: asbo.controller.frontend.addressing:updateAction
+        _controller: asbo.controller.address:updateAction
         _method: GET|POST
 
-asbo_whoswho_addressing_delete:
-    pattern:  /fra/{slug}/addresses/{address_id}/delete
+asbo_whoswho_address_delete:
+    pattern:  /fra/{slug}/address/{address_id}/delete
     requirements:
         address_id: \d+
     defaults:
-        _controller: asbo.controller.frontend.addressing:deleteAction
+        _controller: asbo.controller.address:deleteAction
         _method: GET|POST

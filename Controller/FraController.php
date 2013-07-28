@@ -37,9 +37,9 @@ class FraController extends DefaultController
         /** @var \Asbo\WhosWhoBundle\Doctrine\FraManager $manager */
         $manager = $this->getManager();
 
-        if (null !== $request->get('submit-filter')) {
+        if ($request->query->has('submit-filter')) {
 
-            $form->handleRequest($request);
+            $form->submit($request);
 
             $fras = $manager->findAllWithFormFilter($form);
 

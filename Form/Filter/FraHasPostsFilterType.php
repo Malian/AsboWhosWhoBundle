@@ -46,11 +46,11 @@ class FraHasPostsFilterType extends AbstractType implements FilterTypeSharedable
             // the where clause for the label and color fields
             // will be added automatically with the right alias
             // later by the Lexik\Filter\QueryBuilderUpdater
-            $filterBuilder->leftJoin($alias . '.fraHasPosts', 'posts');
+            $filterBuilder->leftJoin($alias . '.fraHasPosts', 'p');
         };
 
         // then use the query builder executor to define the join,
         // the join's alias and things to do on the doctrine query builder.
-        $qbe->addOnce($qbe->getAlias().'.fraHasPosts', 'posts', $closure);
+        $qbe->addOnce($qbe->getAlias().'.fraHasPosts', 'p', $closure);
     }
 }

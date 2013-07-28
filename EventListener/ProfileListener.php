@@ -48,7 +48,7 @@ class ProfileListener
     /**
      * @param UrlGenerator             $generator
      * @param SecurityContextInterface $securityContext
-     * @param DefaultManager        $fraHasUserManager
+     * @param DefaultManager           $fraHasUserManager
      * @param string                   $route
      */
     public function __construct(
