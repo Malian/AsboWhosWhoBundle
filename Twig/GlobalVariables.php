@@ -21,16 +21,6 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 class GlobalVariables extends ContainerAware
 {
     /**
-     * Return asbo.whoswho.version parameter
-     *
-     * @return string
-     */
-    public function getVersion()
-    {
-        return $this->container->getParameter('asbo.whoswho.version');
-    }
-
-    /**
      * Return the url generator from Asbo WhosWho namespace
      *
      * @return \Asbo\WhosWhoBundle\Routing\UrlGenerator

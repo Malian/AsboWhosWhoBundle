@@ -22,7 +22,7 @@ use Asbo\WhosWhoBundle\Validator\Constraints\Anno;
  * @author De Ron Malian <deronmalian@gmail.com>
  *
  * @ORM\Table(name="ww__fra_image")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Asbo\WhosWhoBundle\Doctrine\EntityRepository")
  */
 class FraHasImage
 {

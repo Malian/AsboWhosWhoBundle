@@ -22,7 +22,7 @@ use Asbo\WhosWhoBundle\Entity\Fra;
  * @author De Ron Malian <deronmalian@gmail.com>
  *
  * @ORM\Table(name="ww__phone")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Asbo\WhosWhoBundle\Doctrine\EntityRepository")
  */
 class Phone
 {

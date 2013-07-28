@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @author De Ron Malian <deronmalian@gmail.com>
  *
  * @ORM\Table(name="ww__rank")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Asbo\WhosWhoBundle\Doctrine\EntityRepository")
  */
 class Rank
 {

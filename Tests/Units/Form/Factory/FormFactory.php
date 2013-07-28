@@ -34,22 +34,13 @@ class FormFactory extends Units\Test
         $factoryMock = new \Mock\Symfony\Component\Form\FormFactoryInterface();
         $name        = $this->faker->word();
         $type        = $this->faker->word();
-        $validation  = $this->faker->words(3);
-
-        $factory = new FormFactoryTested($factoryMock, $name, $type, $validation);
-        $factory->createForm();
-
-        $this->mock($factoryMock)
-                ->call('createNamed')
-                    ->withIdenticalArguments($name, $type, null, array('validation_groups' => $validation))
-                    ->once();
 
         $factory = new FormFactoryTested($factoryMock, $name, $type);
         $factory->createForm();
 
         $this->mock($factoryMock)
                 ->call('createNamed')
-                    ->withIdenticalArguments($name, $type, null, array('validation_groups' => null))
+                    ->withIdenticalArguments($name, $type, null)
                     ->once();
     }
 }

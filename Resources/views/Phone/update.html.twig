@@ -1,0 +1,21 @@
+{#
+
+This file is part of the ASBO package.
+
+(c) De Ron Malian <deronmalian@gmail.com>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% if form.vars.errors is not empty%}
+    <div class="alert alert-error">
+        {{ form_errors(form) }}
+    </div>
+{% endif %}
+
+<form novalidate action="{{ path('asbo_whoswho_phone_update', {'slug': fra.slug, 'phone_id': phone.id}) }}" {{ form_enctype(form) }} method="POST">
+    {{ form_rest(form) }}
+    <input type="submit" value="Editer" class="btn btn-success" />
+</form>

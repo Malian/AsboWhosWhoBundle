@@ -65,6 +65,6 @@ class AddressType extends AbstractType
      */
     public function getName()
     {
-        return 'asbo_type_address';
+        return 'asbo_whoswho_address';
     }
 }

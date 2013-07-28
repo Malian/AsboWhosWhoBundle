@@ -23,7 +23,7 @@ use Asbo\WhosWhoBundle\Validator\Constraints\Anno;
  * @author De Ron Malian <deronmalian@gmail.com>
  *
  * @ORM\Table(name="ww__fra_post")
- * @ORM\Entity(repositoryClass="Asbo\WhosWhoBundle\Entity\FraHasPostRepository")
+ * @ORM\Entity(repositoryClass="Asbo\WhosWhoBundle\Doctrine\FraHasPostRepository")
  */
 class FraHasPost
 {

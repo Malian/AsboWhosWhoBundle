@@ -55,7 +55,7 @@ class FraAdmin extends Admin
             ->end()
 
             ->with('ASBO')
-                ->add('anno', 'asbo_type_anno', array('help' =>  'Date de rentrée à l\'ASBO'))
+                ->add('anno', 'asbo_whoswho_anno', array('help' =>  'Date de rentrée à l\'ASBO'))
                 ->add('type', 'choice', array('choices' => Fra::getTypesList(), 'help' => 'Comment le membre est-il rentré à l\'ASBO ?'))
                 ->add('status', 'choice', array('choices' => Fra::getStatusList(), 'help' =>  'Quel est son status actuel ?'))
                 ->add('pontif', 'sonata_type_boolean', array('choices' => array('Non', 'Oui'), 'help' => 'Le Fra est/a-t\'il été pontif ?'))
@@ -67,8 +67,8 @@ class FraAdmin extends Admin
             ->end()
 
             ->with('Settings', array('collapsed' => true))
-                ->add('settings', 'asbo_type_settings')
-                ->end();
+                ->add('settings', 'asbo_whoswho_fra_settings')
+            ->end();
     }
 
     /**

@@ -60,6 +60,6 @@ class PhoneType extends AbstractType
      */
     public function getName()
     {
-        return 'asbo_type_phone';
+        return 'asbo_whoswho_phone';
     }
 }

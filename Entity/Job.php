@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Represent a Job entity
  *
  * @ORM\Table(name="ww__job")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Asbo\WhosWhoBundle\Doctrine\EntityRepository")
  */
 class Job
 {

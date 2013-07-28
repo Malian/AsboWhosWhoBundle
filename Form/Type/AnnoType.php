@@ -36,7 +36,6 @@ class AnnoType extends AbstractType
 
         $resolver->setDefaults(
             array(
-                'invalid_message' => 'L\'anno {{ value }} n\'existe pas à l\'ASBO !',
                 'inverse_choices' => true,
                 'choices' => $choicesCallback
             )
@@ -54,7 +53,7 @@ class AnnoType extends AbstractType
      */
     public function getName()
     {
-        return 'asbo_type_anno';
+        return 'asbo_whoswho_anno';
     }
 
     /**

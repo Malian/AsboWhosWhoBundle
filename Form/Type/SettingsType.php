@@ -44,7 +44,7 @@ class SettingsType extends AbstractType
      */
     public function getName()
     {
-        return 'asbo_type_settings';
+        return 'asbo_whoswho_fra_settings';
     }
 
     /**

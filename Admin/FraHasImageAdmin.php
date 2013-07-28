@@ -23,7 +23,6 @@ use Sonata\AdminBundle\Form\FormMapper;
  */
 class FraHasImageAdmin extends Admin
 {
-
     /**
      * {@inheritdoc}
      */
@@ -36,7 +35,7 @@ class FraHasImageAdmin extends Admin
     {
         $formMapper
             ->add('image', 'sonata_type_model_list', array(), array('link_parameters' => array('context' => 'whoswho')))
-            ->add('anno', 'asbo_type_anno')
+            ->add('anno', 'asbo_whoswho_anno')
             ->add('principal', 'sonata_type_boolean');
 
         if (!$this->isChild()) {
