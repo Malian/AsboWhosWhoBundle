@@ -43,6 +43,7 @@ class Menu extends ContainerAware
 
         /** @var \Asbo\WhosWhoBundle\Entity\Fra $fra */
         $fra = $options['fra'];
+        $route = $this->getRequest()->get('_route');
 
         $menu = $factory->createItem('root',
             [
@@ -55,7 +56,17 @@ class Menu extends ContainerAware
 
         $menu->setCurrent($this->getRequest()->getRequestUri());
 
-        if ($this->isAllowedToEditFra($fra)) {
+        if ($route !== 'asbo_whoswho_fra_show') {
+            $menu->addChild('show',
+                [
+                    'route' => 'asbo_whoswho_fra_show',
+                    'routeParameters' => ['slug' => $fra->getSlug()],
+                    'labelAttributes' => ['icon' => 'icon-user icon-large', 'iconOnly' => false]
+                ]
+            )->setLabel('asbo_whoswho.menu.fra.show');
+        }
+
+        if ($this->isAllowedToEditFra($fra) && $route !== 'asbo_whoswho_fra_edit') {
             $menu->addChild('edit',
                 [
                     'route' => 'asbo_whoswho_fra_update',
@@ -64,6 +75,7 @@ class Menu extends ContainerAware
                 ]
             )->setLabel('asbo_whoswho.menu.fra.edit');
         }
+
 
         $menu->addChild('addresses',
             [
