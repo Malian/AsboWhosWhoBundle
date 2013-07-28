@@ -38,6 +38,7 @@ class AsboWhosWhoExtension extends Extension
         $loader->load('twig.xml');
         //$loader->load('redirect.xml');
         $loader->load('admin.xml');
+        $loader->load('menu.xml');
         $loader->load('comite.xml');
 
         // Resources
