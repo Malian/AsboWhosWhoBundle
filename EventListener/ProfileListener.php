@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Asbo\WhosWhoBundle\Routing\UrlGenerator;
-use Asbo\WhosWhoBundle\Doctrine\FraHasUserManager;
+use Asbo\WhosWhoBundle\Doctrine\DefaultManager;
 
 /**
  * Profile event listener
@@ -36,7 +36,7 @@ class ProfileListener
     public $securityContext;
 
     /**
-     * @var FraHasUserManager  $fraHasUserManager
+     * @var DefaultManager  $fraHasUserManager
      */
     public $fraHasUserManager;
 
@@ -48,13 +48,13 @@ class ProfileListener
     /**
      * @param UrlGenerator             $generator
      * @param SecurityContextInterface $securityContext
-     * @param FraHasUserManager        $fraHasUserManager
+     * @param DefaultManager        $fraHasUserManager
      * @param string                   $route
      */
     public function __construct(
         UrlGenerator $generator,
         SecurityContextInterface $securityContext,
-        FraHasUserManager $fraHasUserManager,
+        DefaultManager $fraHasUserManager,
         $route
     ) {
         $this->generator         = $generator;
@@ -76,7 +76,7 @@ class ProfileListener
             if ($routeName === $this->route && $this->securityContext->isGranted('ROLE_WHOSWHO_USER')) {
 
                 $user = $this->securityContext->getToken()->getuser();
-                $fraHasUser = $this->fraHasUserManager->getRepository()->findBy(array('user' => $user, 'owner' => true));
+                $fraHasUser = $this->fraHasUserManager->getRepository()->findOneBy(array('user' => $user, 'owner' => true));
 
                 if (null !== $fraHasUser) {
                     $url = $this->generator->fra($fraHasUser->getFra());
