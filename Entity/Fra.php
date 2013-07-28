@@ -23,6 +23,7 @@ use Asbo\WhosWhoBundle\Entity\FraHasUser;
 use Asbo\WhosWhoBundle\Entity\Phone;
 use Asbo\WhosWhoBundle\Entity\Address;
 use Asbo\WhosWhoBundle\Entity\Job;
+use Asbo\WhosWhoBundle\Entity\Rank;
 use Asbo\WhosWhoBundle\Entity\Family;
 use Asbo\WhosWhoBundle\Entity\ExternalPost;
 use Asbo\WhosWhoBundle\Validator\Constraints\Anno;
@@ -229,6 +230,13 @@ class Fra
     private $jobs;
 
     /**
+     * @var Rank[] $ranks
+     *
+     * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Rank", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $ranks;
+
+    /**
      * @var Family[] $families
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Family", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
@@ -338,6 +346,7 @@ class Fra
         $this->phones        = new ArrayCollection();
         $this->addresses     = new ArrayCollection();
         $this->jobs          = new ArrayCollection();
+        $this->ranks          = new ArrayCollection();
         $this->fraHasUsers   = new ArrayCollection();
         $this->fraHasPosts   = new ArrayCollection();
         $this->fraHasImages  = new ArrayCollection();
@@ -888,6 +897,47 @@ class Fra
     public function getJobs()
     {
         return $this->jobs;
+    }
+
+
+    /**
+     * Add a rank
+     *
+     * @param \Asbo\WhosWhoBundle\Entity\Rank $rank
+     *
+     * @return $this
+     */
+    public function addRank(Rank $rank)
+    {
+        $rank->setFra($this);
+
+        $this->ranks->add($rank);
+
+        return $this;
+    }
+
+    /**
+     * Remove a rank
+     *
+     * @param \Asbo\WhosWhoBundle\Entity\Rank $rank
+     *
+     * @return $this
+     */
+    public function removeRank(Rank $rank)
+    {
+        $this->ranks->removeElement($rank);
+
+        return $this;
+    }
+
+    /**
+     * Get ranks
+     *
+     * @return \Doctrine\Common\Collections\ArrayCollection $ranks
+     */
+    public function getRanks()
+    {
+        return $this->ranks;
     }
 
     /**

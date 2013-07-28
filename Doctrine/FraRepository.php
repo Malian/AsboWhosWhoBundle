@@ -26,7 +26,7 @@ class FraRepository extends EntityRepository
     protected function getQueryBuilder()
     {
         $qb = parent::getQueryBuilder()
-            ->select('fraHasuser, user, fraHasImage, image, fraHasPost, post, address, diploma, email, externalPost, family, job, phone, rank')
+            ->select('fra, fraHasUser, user, fraHasImage, image, fraHasPost, post, address, diploma, email, externalPost, family, job, phone, rank')
             ->leftJoin('fra.fraHasUsers', 'fraHasUser')
             ->leftJoin('fraHasUser.user', 'user')
             ->leftJoin('fra.fraHasImages', 'fraHasImage')
