@@ -11,7 +11,6 @@
 
 namespace Asbo\WhosWhoBundle\Doctrine;
 
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManager as BaseEntityManager;
 
 /**
@@ -31,7 +30,7 @@ class EntityManager
     /**
      * Entity Repository
      *
-     * @var \Doctrine\ORM\EntityRepository $repository
+     * @var \Asbo\WhosWhoBundle\Doctrine\EntityRepository $repository
      */
     protected $repository;
 

@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * External Post
  *
  * @ORM\Table(name="ww__externalPost")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Asbo\WhosWhoBundle\Doctrine\EntityRepository")
  */
 class ExternalPost
 {

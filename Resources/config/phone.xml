@@ -10,8 +10,8 @@
         <parameter key="asbo_whoswho.entity.phone.class">Asbo\WhosWhoBundle\Entity\Phone</parameter>
         <parameter key="asbo_whoswho.form.type.phone.class">Asbo\WhosWhoBundle\Form\Type\PhoneType</parameter>
         <parameter key="asbo_whoswho.form.factory.phone.class">Asbo\WhosWhoBundle\Form\Factory\FormFactory</parameter>
-        <parameter key="asbo_whoswho.manager.phone.class">Asbo\WhosWhoBundle\Doctrine\DefaultManager</parameter>
-        <parameter key="asbo_whoswho.repository.phone.class">Doctrine\Common\Persistence\ObjectRepository</parameter>
+        <parameter key="asbo_whoswho.manager.phone.class">Asbo\WhosWhoBundle\Doctrine\EntityManager</parameter>
+        <parameter key="asbo_whoswho.repository.phone.class">Asbo\WhosWhoBundle\Doctrine\EntityRepository</parameter>
     </parameters>
 
     <services>

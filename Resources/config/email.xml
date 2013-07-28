@@ -10,8 +10,8 @@
         <parameter key="asbo_whoswho.entity.email.class">Asbo\WhosWhoBundle\Entity\Email</parameter>
         <parameter key="asbo_whoswho.form.type.email.class">Asbo\WhosWhoBundle\Form\Type\EmailType</parameter>
         <parameter key="asbo_whoswho.form.factory.email.class">Asbo\WhosWhoBundle\Form\Factory\FormFactory</parameter>
-        <parameter key="asbo_whoswho.manager.email.class">Asbo\WhosWhoBundle\Doctrine\DefaultManager</parameter>
-        <parameter key="asbo_whoswho.repository.email.class">Doctrine\Common\Persistence\ObjectRepository</parameter>
+        <parameter key="asbo_whoswho.manager.email.class">Asbo\WhosWhoBundle\Doctrine\EntityManager</parameter>
+        <parameter key="asbo_whoswho.repository.email.class">Asbo\WhosWhoBundle\Doctrine\EntityRepository</parameter>
     </parameters>
 
     <services>
