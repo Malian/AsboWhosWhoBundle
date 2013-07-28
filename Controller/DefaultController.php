@@ -27,7 +27,28 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 class DefaultController extends ResourceController
 {
     /**
-     * Create an resource
+     * Get collection of resources.
+     */
+    public function listAction(Fra $fra, Request $request)
+    {
+        if (!$this->isGranted('ROLE_WHOSWHO_USER')) {
+            throw new AccessDeniedException();
+        }
+
+        $pluralName = $this->getConfiguration()->getPluralResourceName();
+
+        $objects = $this->getManager()->getRepository()->findBy(array('fra' => $fra));
+
+        return $this->renderResponse('list.html',
+            [
+                'fra'  => $fra,
+                $pluralName => $objects
+            ]
+        );
+    }
+
+    /**
+     * Create a resource
      */
     public function createAction(Fra $fra, Request $request)
     {

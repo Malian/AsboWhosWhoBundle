@@ -20,7 +20,7 @@
         <service id="asbo_whoswho.menu.fra"
                  class="Knp\Menu\MenuItem"
                  factory-service="asbo_whoswho.menu_builder"
-                 factory-method="factory"
+                 factory-method="fraMenu"
                  scope="request">
             <argument type="service" id="request" />
             <tag name="knp_menu.menu" alias="asbo_whoswho.fra" />
