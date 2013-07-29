@@ -48,5 +48,6 @@ class AsboWhosWhoExtension extends Extension
         $loader->load('rank.xml');
         $loader->load('email.xml');
         $loader->load('fraHasPost.xml');
+        $loader->load('fraHasUser.xml');
     }
 }

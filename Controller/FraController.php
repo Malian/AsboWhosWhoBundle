@@ -29,7 +29,7 @@ class FraController extends DefaultController
      *
      * @Secure(roles="ROLE_WHOSWHO_USER")
      */
-    public function listAction(Request $request)
+    public function indexAction(Request $request)
     {
         /** @var \Symfony\Component\Form\FormInterface $form */
         $form = $this->get('form.factory')->create(new FraFilterType());

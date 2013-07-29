@@ -19,6 +19,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Asbo\WhosWhoBundle\Entity\Fra;
 use Asbo\WhosWhoBundle\Util\AnnoManipulator;
+use Asbo\WhosWhoBundle\Form\EventListener\EditFraListener;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Doctrine\ORM\EntityRepository;
 
@@ -37,38 +38,43 @@ class FraAdmin extends Admin
         $fra = $this->getSubject();
 
         // Select only addresses of the fra
-        $query_builder = function (EntityRepository $er) use ($fra) {
+        $closure = function (EntityRepository $er) use ($fra) {
             return $er->createQueryBuilder('u')->where('u.fra = :fra')->setParameter('fra', $fra);
         };
 
         $formMapper
             ->with('Général')
-                ->add('firstname')
-                ->add('lastname')
-                ->add('nickname')
-                ->add('gender', 'choice', array('choices' => array('Homme', 'Femme')))
-                ->add('bornAt', 'birthday', array('required' => false))
-                ->add('bornIn')
-                ->add('principalAddress', null, array('query_builder' => $query_builder))
-                ->add('principalEmail', null, array('query_builder' => $query_builder))
-                ->add('principalPhone', null, array('query_builder' => $query_builder))
-            ->end()
+            ->add('firstname')
+            ->add('lastname')
+            ->add('nickname')
+            ->add('gender', 'choice', array('choices' => array('Homme', 'Femme')))
+            ->add('bornAt', 'birthday', array('required' => false))
+            ->add('bornIn');
 
-            ->with('ASBO')
-                ->add('anno', 'asbo_whoswho_anno', array('help' =>  'Date de rentrée à l\'ASBO'))
-                ->add('type', 'choice', array('choices' => Fra::getTypesList(), 'help' => 'Comment le membre est-il rentré à l\'ASBO ?'))
-                ->add('status', 'choice', array('choices' => Fra::getStatusList(), 'help' =>  'Quel est son status actuel ?'))
-                ->add('pontif', 'sonata_type_boolean', array('choices' => array('Non', 'Oui'), 'help' => 'Le Fra est/a-t\'il été pontif ?'))
+        if ($this->getRoute('edit')->getDefault('_sonata_name') === $this->getRequest()->get('_route')) {
+            $formMapper->add('principalAddress', null, array('query_builder' => $closure, 'empty_value' => false));
+            $formMapper->add('principalPhone', null, array('query_builder' => $closure, 'empty_value' => false));
+            $formMapper->add('principalEmail', null, array('query_builder' => $closure, 'empty_value' => false));
+        }
+
+        $formMapper->end();
+
+        $formMapper->with('ASBO')
+            ->add('anno', 'asbo_whoswho_anno', array('help' =>  'Date de rentrée à l\'ASBO'))
+            ->add('type', 'choice', array('choices' => Fra::getTypesList(), 'help' => 'Comment le membre est-il rentré à l\'ASBO ?'))
+            ->add('status', 'choice', array('choices' => Fra::getStatusList(), 'help' =>  'Quel est son status actuel ?'))
+            ->add('pontif', 'sonata_type_boolean', array('choices' => array('Non', 'Oui'), 'help' => 'Le Fra est/a-t\'il été pontif ?'))
             ->end()
 
             ->with('Autres', array('collapsed' => true))
-                ->add('diedAt', 'birthday', array('required' => false))
-                ->add('diedIn')
+            ->add('diedAt', 'birthday', array('required' => false))
+            ->add('diedIn')
             ->end()
 
             ->with('Settings', array('collapsed' => true))
-                ->add('settings', 'asbo_whoswho_fra_settings')
+            ->add('settings', 'asbo_whoswho_fra_settings')
             ->end();
+
     }
 
     /**
