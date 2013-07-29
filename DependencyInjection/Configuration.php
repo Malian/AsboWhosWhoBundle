@@ -40,15 +40,14 @@ class Configuration implements ConfigurationInterface
                                 ->cannotBeEmpty()
                                 ->defaultValue('sonata_user_profile_show')
                             ->end()
-                            ->scalarNode('new')
-                                ->cannotBeEmpty()
-                                ->defaultValue('asbo_whoswho_fra_show')
-                            ->end()
                             ->scalarNode('listener')
                                 ->cannotBeEmpty()
                                 ->defaultValue('Asbo\WhosWhoBundle\EventListener\ProfileListener')
                             ->end()
                         ->end()
+                    ->end()
+                    ->booleanNode('test')
+                        ->defaultValue(false)
                     ->end()
                 ->end();
 

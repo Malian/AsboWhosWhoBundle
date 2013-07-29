@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * External Post
  *
  * @ORM\Table(name="ww__externalPost")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Asbo\WhosWhoBundle\Doctrine\EntityRepository")
  */
 class ExternalPost
 {
@@ -178,7 +178,8 @@ class ExternalPost
     /**
      * Set fra
      *
-     * @param Asbo\WhosWhoBundle\Entity\Fra $fra
+     * @param Fra $fra
+     *
      * @return $this
      */
     public function setFra(Fra $fra)
@@ -191,7 +192,7 @@ class ExternalPost
     /**
      * Get fra
      *
-     * @return Asbo\WhosWhoBundle\Entity\Fra
+     * @return Fra
      */
     public function getFra()
     {

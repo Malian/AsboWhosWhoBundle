@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+                               http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="asbo_whoswho.controller.address.class">Asbo\WhosWhoBundle\Controller\DefaultController</parameter>
+        <parameter key="asbo_whoswho.entity.address.class">Asbo\WhosWhoBundle\Entity\Address</parameter>
+        <parameter key="asbo_whoswho.form.type.address.class">Asbo\WhosWhoBundle\Form\Type\AddressType</parameter>
+        <parameter key="asbo_whoswho.form.factory.address.class">Asbo\WhosWhoBundle\Form\Factory\FormFactory</parameter>
+        <parameter key="asbo_whoswho.manager.address.class">Asbo\WhosWhoBundle\Doctrine\EntityManager</parameter>
+        <parameter key="asbo_whoswho.repository.address.class">Asbo\WhosWhoBundle\Doctrine\EntityRepository</parameter>
+    </parameters>
+
+    <services>
+        <service id="asbo_whoswho.controller.address" class="%asbo_whoswho.controller.address.class%">
+            <argument>asbo_whoswho</argument>
+            <argument>address</argument>
+            <argument>AsboWhosWhoBundle:Address</argument>
+
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+
+        <service id="asbo_whoswho.form.type.address" class="%asbo_whoswho.form.type.address.class%">
+            <argument>%asbo_whoswho.entity.address.class%</argument>
+            <tag name="form.type" alias="asbo_whoswho_address" />
+        </service>
+
+        <service id="asbo_whoswho.form.factory.address" class="%asbo_whoswho.form.factory.address.class%">
+            <argument type="service" id="form.factory" />
+            <argument>asbo_whoswho_address</argument>
+            <argument>asbo_whoswho_address</argument>
+        </service>
+
+        <service id="asbo_whoswho.repository.address"
+                 factory-service="doctrine"
+                 factory-method="getRepository"
+                 class="%asbo_whoswho.repository.address.class%"
+                 public="false">
+            <argument>%asbo_whoswho.entity.address.class%</argument>
+        </service>
+
+        <service id="asbo_whoswho.manager.address" class="%asbo_whoswho.manager.address.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="asbo_whoswho.repository.address" />
+        </service>
+
+    </services>
+</container>

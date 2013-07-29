@@ -1,0 +1,21 @@
+<h1>Liste des Fras{% if fras %} ({{ fras|length }}){% endif %}</h1>
+<table class="table">
+    <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Surnom</th>
+    </tr>
+        {% for fra  in fras  %}
+        <tr>
+            <td>
+                <a href="{{ path('asbo_whoswho_fra_show', { 'slug': fra.slug } ) }}">{{ fra.lastname }}</a>
+            </td>
+            <td>
+                {{ fra.firstname }}
+            </td>
+            <td>
+                {{ fra.nickname }}
+            </td>
+        </tr>
+        {% endfor %}
+</table>

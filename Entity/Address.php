@@ -13,7 +13,6 @@ namespace Asbo\WhosWhoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Asbo\WhosWhoBundle\Model\AbstractGMap;
 use Asbo\WhosWhoBundle\Entity\Fra;
 
 /**
@@ -22,9 +21,9 @@ use Asbo\WhosWhoBundle\Entity\Fra;
  * @author De Ron Malian <deronmalian@gmail.com>
  *
  * @ORM\Table(name="ww__address")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Asbo\WhosWhoBundle\Doctrine\EntityRepository")
  */
-class Address extends AbstractGMap
+class Address
 {
 
     const TYPE_PRIVEE  = 0;
@@ -51,21 +50,51 @@ class Address extends AbstractGMap
     private $type;
 
     /**
-     * @var boolean $principal
-     *
-     * @ORM\Column(name="principal", type="boolean", nullable=true)
-     * @Assert\Type(type="bool")
-     */
-    private $principal;
-
-    /**
-     * @var Asbo\WhosWhoBundle\Entity\Fra
+     * @var Fra
      *
      * @ORM\ManyToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Fra", inversedBy="addresses")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $fra;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="string", length=255, nullable=true)
+     */
+    protected $address;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="locality", type="string", length=255, nullable=true)
+     */
+    protected $locality;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="country", type="string", length=255, nullable=true)
+     */
+    protected $country;
+
+    /**
+     * @var float Latitude of the position
+     *
+     * @ORM\Column(name="lat", type="float", nullable=true)
+     */
+    protected $lat;
+
+    /**
+     * @var float Longitude of the position
+     *
+     * @ORM\Column(name="lng", type="float", nullable=true)
+     */
+    protected $lng;
+
+    /**
+     * Construtor.
+     */
     public function __construct()
     {
         $this->setType(static::TYPE_AUTRE);
@@ -105,32 +134,9 @@ class Address extends AbstractGMap
     }
 
     /**
-     * Set principal
-     *
-     * @param boolean $principal
-     * @return $this
-     */
-    public function setPrincipal($principal)
-    {
-        $this->principal = $principal;
-
-        return $this;
-    }
-
-    /**
-     * Is Princpal Adress
-     *
-     * @return boolean
-     */
-    public function isPrincipal()
-    {
-        return true === $this->principal;
-    }
-
-    /**
      * Set fra
      *
-     * @param Asbo\WhosWhoBundle\Entity\Fra $fra
+     * @param Fra $fra
      * @return $this
      */
     public function setFra(Fra $fra)
@@ -143,11 +149,132 @@ class Address extends AbstractGMap
     /**
      * Get fra
      *
-     * @return Asbo\WhosWhoBundle\Entity\Fra
+     * @return Fra
      */
     public function getFra()
     {
         return $this->fra;
+    }
+
+    /**
+     * Sets the address
+     *
+     * @param string $address
+     * @return $this
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Returns the address
+     *
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Sets the locality
+     *
+     * @param string $locality
+     * @return $this
+     */
+    public function setLocality($locality)
+    {
+        $this->locality = $locality;
+
+        return $this;
+    }
+
+    /**
+     * Returns the locality
+     *
+     * @return string
+     */
+    public function getLocality()
+    {
+        return $this->locality;
+    }
+
+    /**
+     * Sets the country
+     *
+     * @param string $country
+     * @return $this
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Returns the country
+     *
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Returns the latitude
+     *
+     * @return float
+     */
+    public function getLat()
+    {
+        return $this->lat;
+    }
+
+    /**
+     * Sets the latitude
+     *
+     * @param string|float $lat
+     * @return $this
+     */
+    public function setLat($lat)
+    {
+        if (is_string($lat)) {
+            $lat = floatval($lat);
+        }
+        $this->lat = $lat;
+
+        return $this;
+    }
+
+    /**
+     * Returns the longitude
+     *
+     * @return float
+     */
+    public function getLng()
+    {
+        return $this->lng;
+    }
+
+    /**
+     * Sets the longitude
+     *
+     * @param string|float $lng
+     * @return $this
+     */
+    public function setLng($lng)
+    {
+        if (is_string($lng)) {
+            $lng = floatval($lng);
+        }
+        $this->lng = $lng;
+
+        return $this;
     }
 
     /**

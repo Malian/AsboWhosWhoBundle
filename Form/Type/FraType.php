@@ -15,6 +15,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Asbo\WhosWhoBundle\Util\AnnoManipulator;
+use Asbo\WhosWhoBundle\Form\EventListener\EditFraListener;
 
 // @Todo: Changer ici par une interface parce que normalement on devrait pas devoir utiliser directement la classe
 // puisqu'elle est contenue dans $this->class...
@@ -27,14 +28,24 @@ use Asbo\WhosWhoBundle\Entity\Fra;
  */
 class FraType extends AbstractType
 {
+    /**
+     * @var string $class
+     */
     private $class;
 
     /**
-     * @param string $class The Fra class name
+     * @var EditFraListener $editFraListener;
      */
-    public function __construct($class)
+    private $editFraListener;
+
+    /**
+     * @param string          $class           The Fra class name
+     * @param EditFraListener $editFraListener
+     */
+    public function __construct($class, EditFraListener $editFraListener)
     {
         $this->class = $class;
+        $this->editFraListener = $editFraListener;
     }
 
     /**
@@ -51,13 +62,9 @@ class FraType extends AbstractType
                 ->add('type', 'choice', array('choices' => Fra::getTypesList(), 'disabled' => true))
                 ->add('status', 'choice', array('choices' => Fra::getStatusList(), 'disabled' => true))
                 ->add('anno', 'choice', array('choices' => AnnoManipulator::getAnnos() ,'disabled' => true))
-                ->add('pontif', 'checkbox', array('required' => false, 'disabled' => true))
+                ->add('pontif', 'checkbox', array('required' => false, 'disabled' => true));
 
-                ->add('fraHasPosts', 'collection', array('by_reference' => false, 'type' => 'asbo_type_fraHasPost',  'allow_add' => true, 'allow_delete' => true, 'prototype' => true))
-                ->add('addresses', 'collection', array('by_reference' => false, 'type' => 'asbo_type_address', 'allow_add' => true, 'allow_delete' => true, 'prototype' => true))
-                ->add('emails', 'collection', array('by_reference' => false, 'type' => 'asbo_type_email', 'allow_add' => true, 'allow_delete' => true, 'prototype' => true))
-                ->add('phones', 'collection', array('by_reference' => false, 'type' => 'asbo_type_phone', 'allow_add' => true, 'allow_delete' => true, 'prototype' => true))
-                ->add('diplomas', 'collection', array('by_reference' => false, 'type' => 'asbo_type_diploma', 'allow_add' => true, 'allow_delete' => true, 'prototype' => true));
+        $builder->addEventSubscriber($this->editFraListener);
     }
 
     /**
@@ -78,6 +85,6 @@ class FraType extends AbstractType
      */
     public function getName()
     {
-        return 'asbo_type_fra';
+        return 'asbo_whoswho_fra';
     }
 }

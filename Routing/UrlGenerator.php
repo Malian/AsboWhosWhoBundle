@@ -42,6 +42,8 @@ class UrlGenerator
      * @param string $name
      * @param array  $parameters
      * @param bool   $absolute
+     *
+     * @return string
      */
     public function generate($name, $parameters = [], $absolute = false)
     {
@@ -51,7 +53,10 @@ class UrlGenerator
     /**
      * Generate an url to a fra
      *
-     * @param \Asbho\WhosWhoBundle\Entity\Fra $fra
+     * @param \Asbo\WhosWhoBundle\Entity\Fra $fra
+     * @param bool                           $absolute
+     *
+     * @return string
      */
     public function fra(Fra $fra, $absolute = false)
     {
@@ -61,7 +66,10 @@ class UrlGenerator
     /**
      * Generate an url to edit a fra
      *
-     * @param \Asbho\WhosWhoBundle\Entity\Fra $fra
+     * @param \Asbo\WhosWhoBundle\Entity\Fra $fra
+     * @param bool                           $absolute
+     *
+     * @return string
      */
     public function editFra(Fra $fra, $absolute = false)
     {

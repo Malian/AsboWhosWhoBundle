@@ -2,3 +2,4 @@
 composer.lock
 /vendor/
 .atoum.php
+behat.yml

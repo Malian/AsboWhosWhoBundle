@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Represent a Job entity
  *
  * @ORM\Table(name="ww__job")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Asbo\WhosWhoBundle\Doctrine\EntityRepository")
  */
 class Job
 {
@@ -50,7 +50,7 @@ class Job
     /**
      * @var string
      *
-     * @ORM\Column(name="position", type="string", length=50, nullable=false)
+     * @ORM\Column(name="position", type="string", length=150, nullable=false)
      * @Assert\NotBlank()
      * @Assert\NotNull()
      */
@@ -206,7 +206,7 @@ class Job
     /**
      * Set fra
      *
-     * @param Asbo\WhosWhoBundle\Entity\Fra $fra
+     * @param Fra $fra
      * @return $this
      */
     public function setFra(Fra $fra)
@@ -219,7 +219,7 @@ class Job
     /**
      * Get fra
      *
-     * @return Asbo\WhosWhoBundle\Entity\Fra
+     * @return Fra
      */
     public function getFra()
     {

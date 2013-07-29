@@ -17,7 +17,6 @@ Asbo\WhosWhoBundle\Entity\Email:
         email: <email()>
         type: <numberBetween(0, 3)>
         fra: @fra<current()>
-        principal: 1
 
 Asbo\WhosWhoBundle\Entity\Phone:
     phone{1..10}:
@@ -25,7 +24,6 @@ Asbo\WhosWhoBundle\Entity\Phone:
         type: <numberBetween(0, 5)>
         country: <countryCode()>
         fra: @fra<current()>
-        principal: 1
 
 Asbo\WhosWhoBundle\Entity\Address:
     address{1..10}:
@@ -36,11 +34,10 @@ Asbo\WhosWhoBundle\Entity\Address:
         country: <countryCode()>
         type: <numberBetween(0, 5)>
         fra: @fra<current()>
-        principal: 1
 
 Asbo\WhosWhoBundle\Entity\Diploma:
     diploma{1..10}:
-        name: <fr_FR:sentence()>
+        name: <fr_FR:word()>
         institution: <fr_FR:company()>
         specialty: <fr_FR:word()>
         graduatedAt: 50%? <dateTimeBetween('-25 years', 'now')>

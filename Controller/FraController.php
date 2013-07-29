@@ -13,62 +13,47 @@ namespace Asbo\WhosWhoBundle\Controller;
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Asbo\WhosWhoBundle\Entity\Fra;
-use Asbo\WhosWhoBundle\Filter\FraFilterType;
+use Asbo\WhosWhoBundle\Form\Filter\FraFilterType;
 use JMS\SecurityExtraBundle\Annotation\Secure;
-use FOS\UserBundle\Model\UserInterface;
-use Asbo\ResourceBundle\Controller\ResourceController;
 
 /**
  * Controller of fra page
  *
  * @author De Ron Malian <deronmalian@gmail.com>
  */
-class FraController extends ResourceController
+class FraController extends DefaultController
 {
     /**
+     * Show all the fra
+     *
      * @Secure(roles="ROLE_WHOSWHO_USER")
-     * @todo Injecter le filtre dans le manager
      */
-    public function listAction()
+    public function indexAction(Request $request)
     {
-
+        /** @var \Symfony\Component\Form\FormInterface $form */
         $form = $this->get('form.factory')->create(new FraFilterType());
 
-        if ($this->get('request')->query->has('submit-filter')) {
-            // bind values from the request
-            $form->bind($this->get('request'));
+        /** @var \Asbo\WhosWhoBundle\Doctrine\FraManager $manager */
+        $manager = $this->getManager();
 
-            // initliaze a query builder
-            $filterBuilder = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('AsboWhosWhoBundle:Fra')
-                ->createQueryBuilder('e');
+        if ($request->query->has('submit-filter')) {
 
-            // build the query from the given form object
-            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+            $form->submit($request);
 
-            // now look at the DQL =)
-            $fras = $filterBuilder->getQuery()->getResult();
+            $fras = $manager->findAllWithFormFilter($form);
 
         } else {
-            $fraManager = $this->container->get('asbo_whoswho.fra_manager');
-            $fras       = $fraManager->findAll();
+            $fras = $manager->findAll();
         }
 
-        return $this->renderResponse(
-            'list.html',
-            array(
-                'fras' => $fras,
-                'form' => $form->createView()
-            )
-        );
+        return $this->renderResponse('list.html', ['fras' => $fras, 'form' => $form->createView()]);
     }
 
     /**
+     * Show the fra
+     *
      * @Secure(roles="ROLE_WHOSWHO_USER")
-     * @ParamConverter("fra", class="AsboWhosWhoBundle:Fra")
      */
     public function showAction(Fra $fra)
     {
@@ -81,57 +66,36 @@ class FraController extends ResourceController
     }
 
     /**
-     * @Secure(roles="ROLE_WHOSWHO_USER")
+     * Edit the fra
      */
-    public function editAction(Fra $fra, Request $request)
+    public function updateAction(Fra $fra, Request $request)
     {
-        if (!$this->canEdit($fra) && !$this->container->get('security.context')->isGranted('ROLE_WHOSWHO_CHANCELIER')) {
-            throw new AccessDeniedException('This user does not have access to this section');
+        if (false === $this->isGranted('ROLE_WHOSWHO_FRA_EDIT', $fra)) {
+            throw new AccessDeniedException();
         }
 
-         /** @var $formFactory \Asbo\WhosWhoBundle\Form\Factory\FormFactory */
-        $form = $this->container->get('asbo_whoswho.fra.form.factory')->createForm();
-        $form->setData($fra);
+        $form = $this->getForm()->setData($fra)->handleRequest($request);
 
-        if ('POST' === $request->getMethod()) {
-            $form->bind($request);
+        if ($form->isValid()) {
 
-            if ($form->isValid()) {
+            $this->getManager()->update($fra);
 
-                /** @var $fraManager \Asbo\WhosWhoBundle\Entity\FraManager */
-                $userManager = $this->container->get('asbo_whoswho.fra_manager');
-                $userManager->save($fra);
-
-                $url = $this->container->get('router')->generate('asbo_whoswho_fra_edit', array('slug' => $fra->getSlug()));
-                $response = new RedirectResponse($url);
-
-                return $response;
-            }
+            return $this->redirect($this->getFraEditUrl($fra));
         }
 
-        return $this->renderResponse(
-            'edit.html',
-            array(
-                'fra'  => $fra,
-                'form' => $form->createView()
-            )
-        );
+        return $this->renderResponse('edit.html', ['fra'  => $fra, 'form' => $form->createView()]);
     }
 
-    protected function canEdit($fra)
+    /**
+     * Return the url to the edit page of a fra.
+     *
+     * @param Fra $fra
+     *
+     * @return string The url
+     */
+    public function getFraEditUrl(Fra $fra)
     {
-        $user = $this->container->get('security.context')->getToken()->getUser();
-
-        if (!is_object($user) || !$user instanceof UserInterface) {
-            throw new AccessDeniedException('This user does not have access to this section.');
-        }
-
-        foreach ($fra->getFraHasUsers() as $link) {
-            if ($link->getUser()->isUser($user)) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->get('router')->generate($this->getConfiguration()->getRouteName('update'), array('slug' => $fra->getSlug()));
     }
+
 }

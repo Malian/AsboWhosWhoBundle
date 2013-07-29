@@ -40,8 +40,7 @@ class PhoneType extends AbstractType
     {
         $builder->add('number')
                 ->add('type', 'choice', array('choices' => Phone::getTypes()))
-                ->add('country', 'country', array('preferred_choices' => array('BE', 'FR')))
-                ->add('principal');
+                ->add('country', 'country', array('preferred_choices' => array('BE', 'FR')));
     }
 
     /**
@@ -61,6 +60,6 @@ class PhoneType extends AbstractType
      */
     public function getName()
     {
-        return 'asbo_type_phone';
+        return 'asbo_whoswho_phone';
     }
 }

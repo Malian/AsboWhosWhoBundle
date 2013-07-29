@@ -14,7 +14,6 @@ namespace Asbo\WhosWhoBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
-use Asbo\WhosWhoBundle\Entity\Diploma;
 
 /**
  * Diploma type
@@ -61,6 +60,6 @@ class DiplomaType extends AbstractType
      */
     public function getName()
     {
-        return 'asbo_type_diploma';
+        return 'asbo_whoswho_diploma';
     }
 }

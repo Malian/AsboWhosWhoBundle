@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+                               http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="asbo_whoswho.controller.diploma.class">Asbo\WhosWhoBundle\Controller\DefaultController</parameter>
+        <parameter key="asbo_whoswho.entity.diploma.class">Asbo\WhosWhoBundle\Entity\Diploma</parameter>
+        <parameter key="asbo_whoswho.form.type.diploma.class">Asbo\WhosWhoBundle\Form\Type\DiplomaType</parameter>
+        <parameter key="asbo_whoswho.form.factory.diploma.class">Asbo\WhosWhoBundle\Form\Factory\FormFactory</parameter>
+        <parameter key="asbo_whoswho.manager.diploma.class">Asbo\WhosWhoBundle\Doctrine\EntityManager</parameter>
+        <parameter key="asbo_whoswho.repository.diploma.class">Asbo\WhosWhoBundle\Doctrine\EntityRepository</parameter>
+    </parameters>
+
+    <services>
+        <service id="asbo_whoswho.controller.diploma" class="%asbo_whoswho.controller.diploma.class%">
+            <argument>asbo_whoswho</argument>
+            <argument>diploma</argument>
+            <argument>AsboWhosWhoBundle:Diploma</argument>
+
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+
+        <service id="asbo_whoswho.form.type.diploma" class="%asbo_whoswho.form.type.diploma.class%">
+            <argument>%asbo_whoswho.entity.diploma.class%</argument>
+            <tag name="form.type" alias="asbo_whoswho_diploma" />
+        </service>
+
+        <service id="asbo_whoswho.form.factory.diploma" class="%asbo_whoswho.form.factory.diploma.class%">
+            <argument type="service" id="form.factory" />
+            <argument>asbo_whoswho_diploma</argument>
+            <argument>asbo_whoswho_diploma</argument>
+        </service>
+
+        <service id="asbo_whoswho.repository.diploma"
+                 factory-service="doctrine"
+                 factory-method="getRepository"
+                 class="%asbo_whoswho.repository.diploma.class%"
+                 public="false">
+            <argument>%asbo_whoswho.entity.diploma.class%</argument>
+        </service>
+
+        <service id="asbo_whoswho.manager.diploma" class="%asbo_whoswho.manager.diploma.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="asbo_whoswho.repository.diploma" />
+        </service>
+
+    </services>
+</container>

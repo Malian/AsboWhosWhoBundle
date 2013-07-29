@@ -11,40 +11,15 @@
 
 namespace Asbo\WhosWhoBundle\Twig;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAware;
 
 /**
  * Global variables for AsboWhosWho package.
  *
  * @author De Ron Malian <deronmalian@gmail.com>
  */
-class GlobalVariables
+class GlobalVariables extends ContainerAware
 {
-    /**
-     * Container
-     *
-     * @var \Symfony\Compopent\DependencyInjection\ContainerInterface
-     */
-    protected $container;
-
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     */
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
-
-    /**
-     * Return asbo.whoswho.version parameter
-     *
-     * @return string
-     */
-    public function getVersion()
-    {
-        return $this->container->getParameter('asbo.whoswho.version');
-    }
-
     /**
      * Return the url generator from Asbo WhosWho namespace
      *

@@ -29,7 +29,6 @@ class Address extends Units\Test
         $this->variable($address->getLat())->isNull();
         $this->variable($address->getFra())->isNull();
         $this->variable($address->getType())->isEqualTo(AddressTest::TYPE_AUTRE);
-        $this->boolean($address->isPrincipal())->isFalse();
     }
 
     public function testAddress()
@@ -97,17 +96,6 @@ class Address extends Units\Test
 
         $this->sizeOf($callback)->isEqualTo(count($types));
         $this->array($callback)->containsValues($types);
-    }
-
-    public function testPrincipal()
-    {
-        $address = new AddressTest;
-
-        $address->setPrincipal(true);
-        $this->boolean($address->isPrincipal())->isTrue();
-
-        $address->setPrincipal(false);
-        $this->boolean($address->isPrincipal())->isFalse();
     }
 
     public function testFra()

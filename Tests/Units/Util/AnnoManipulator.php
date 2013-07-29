@@ -19,19 +19,17 @@ class AnnoManipulator extends Units\Test
 
     public function testGetFondationDate()
     {
-        $util  = new AnnoManipulatorTested;
         $array = explode('-', AnnoManipulatorTested::FONDATION_DATE);
 
-        $this->datetime($util->getFondationDate())->hasDate($array[2], $array[1], $array[0]);
+        $this->datetime(AnnoManipulatorTested::getFondationDate())->hasDate($array[2], $array[1], $array[0]);
     }
 
     public function testIsValid()
     {
-        $util  = new AnnoManipulatorTested;
-        $annos = $util->getAnnos();
+        $annos = AnnoManipulatorTested::getAnnos();
 
         foreach ($annos as $anno) {
-            $this->boolean($util->isValid($anno));
+            $this->boolean(AnnoManipulatorTested::isValid($anno));
         }
 
     }
@@ -51,32 +49,27 @@ class AnnoManipulator extends Units\Test
 
     public function testGetDateByAnno()
     {
-        $util  = new AnnoManipulatorTested;
-        $annos = $util->getAnnos();
+        $annos = AnnoManipulatorTested::getAnnos();
 
         foreach ($annos as $anno) {
             $date = (new \Datetime(AnnoManipulatorTested::FONDATION_DATE))->add(new \DateInterval('P'.$anno.'Y'));
-            $this->datetime($util->getDateByAnno($anno))->isEqualTo($date);
+            $this->datetime(AnnoManipulatorTested::getDateByAnno($anno))->isEqualTo($date);
         }
     }
 
     public function testGetDateByInvalidAnno()
     {
-        $util = new AnnoManipulatorTested;
-
         $this->exception(
-            function () use ($util) {
-                $annos = $util->getAnnos();
-                $util->getDateByAnno(end($annos) + 1);
+            function () {
+                $annos = AnnoManipulatorTested::getAnnos();
+                AnnoManipulatorTested::getDateByAnno(end($annos) + 1);
             }
         )->isInstanceOf('\InvalidArgumentException');
     }
 
     public function testGetDateIntervalByValidAnno()
     {
-        $util = new AnnoManipulatorTested;
-
-        foreach ($util->getAnnos() as $anno) {
+        foreach (AnnoManipulatorTested::getAnnos() as $anno) {
 
             if (0 == $anno) {
                 continue;
@@ -86,7 +79,7 @@ class AnnoManipulator extends Units\Test
             $date2 = clone $date1;
             $date2->add(new \DateInterval('P1Y'))->sub(new \DateInterval('P1D'));
 
-            $array = $util->getDateIntervalByAnno($anno);
+            $array = AnnoManipulatorTested::getDateIntervalByAnno($anno);
             $this->array($array)->hasSize(2)->containsValues(array($date1, $date2));
             $this->boolean($array[0] < $array[1])->isTrue();
         }
@@ -94,7 +87,7 @@ class AnnoManipulator extends Units\Test
         $fondation = new \DateTime(AnnoManipulatorTested::FONDATION_DATE);
         $endAnno0  = new \DateTime(AnnoManipulatorTested::END_ANNO_0);
 
-        $this->array($util->getDateIntervalByAnno(0))->containsValues(array($fondation, $endAnno0));
+        $this->array(AnnoManipulatorTested::getDateIntervalByAnno(0))->containsValues(array($fondation, $endAnno0));
     }
 
     /**
@@ -102,11 +95,9 @@ class AnnoManipulator extends Units\Test
      */
     public function testGetDateIntervalByInvalidAnno($anno)
     {
-        $util = new AnnoManipulatorTested;
-
         $this->exception(
-            function () use ($util, $anno) {
-                $util->getDateIntervalByAnno($anno);
+            function () use ($anno) {
+                AnnoManipulatorTested::getDateIntervalByAnno($anno);
             }
         )->isInstanceOf('\InvalidArgumentException');
     }
@@ -124,11 +115,9 @@ class AnnoManipulator extends Units\Test
      */
     public function testGetAnnoByInvalidDate($invalid)
     {
-        $util = new AnnoManipulatorTested;
-
         $this->exception(
-            function () use ($util, $invalid) {
-                $util->getAnnoByDate($invalid);
+            function () use ($invalid) {
+                AnnoManipulatorTested::getAnnoByDate($invalid);
             }
         )->isInstanceOf('\InvalidArgumentException');
     }

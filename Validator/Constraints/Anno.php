@@ -23,7 +23,7 @@ class Anno extends Constraint
     /**
      * {@inheritDoc}
      */
-    public $message = 'L\'anno "%anno%" n\'est pas une anno valide de l\'ASBO';
+    public $message = 'anno.invalid';
 
     /**
      * {@inheritDoc}

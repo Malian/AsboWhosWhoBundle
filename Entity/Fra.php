@@ -17,10 +17,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Asbo\WhosWhoBundle\Entity\Email;
 use Asbo\WhosWhoBundle\Entity\Diploma;
-use Asbo\WhosWhoBundle\Entity\Post;
+use Asbo\WhosWhoBundle\Entity\FraHasPost;
+use Asbo\WhosWhoBundle\Entity\FraHasImage;
+use Asbo\WhosWhoBundle\Entity\FraHasUser;
 use Asbo\WhosWhoBundle\Entity\Phone;
 use Asbo\WhosWhoBundle\Entity\Address;
 use Asbo\WhosWhoBundle\Entity\Job;
+use Asbo\WhosWhoBundle\Entity\Rank;
 use Asbo\WhosWhoBundle\Entity\Family;
 use Asbo\WhosWhoBundle\Entity\ExternalPost;
 use Asbo\WhosWhoBundle\Validator\Constraints\Anno;
@@ -32,7 +35,7 @@ use Asbo\WhosWhoBundle\Util\AnnoManipulator;
  * @author De Ron Malian <deronmalian@gmail.com>
  *
  * @ORM\Table(name="ww__fra")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Asbo\WhosWhoBundle\Doctrine\FraRepository")
  */
 class Fra
 {
@@ -147,77 +150,101 @@ class Fra
     private $slug;
 
     /**
-     * @var Doctrine\Common\Collections\ArrayCollection $fraHasUsers
+     * @var FraHasUser[] $fraHasUsers
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\FraHasUser", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $fraHasUsers;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Post $fraHasPosts
+     * @var FrahasPost[] $fraHasPosts
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\FraHasPost", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $fraHasPosts;
 
     /**
-     * @var Asbo\MediaBundle\Entity\Media $fraHasImages
+     * @var FraHasImage[] $fraHasImages
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\FraHasImage", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $fraHasImages;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Email $emails
+     * @var Email[] $emails
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Email", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $emails;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Diploma $diplomas
+     * @var Email $principalEmail
+     *
+     * @ORM\OneToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Email")
+     * @ORM\JoinColumn(name="principalEmail_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $principalEmail;
+
+    /**
+     * @var Diploma[] $diplomas
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Diploma", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $diplomas;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Phone $phones
+     * @var Phone[] $phones
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Phone", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $phones;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Address $addresses
+     * @var Phone $principalPhone
+     *
+     * @ORM\OneToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Phone")
+     * @ORM\JoinColumn(name="principalPhone_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $principalPhone;
+
+    /**
+     * @var Address[] $addresses
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Address", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $addresses;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Address $address
+     * @var Address $principalAddress
      *
      * @ORM\OneToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Address")
+     * @ORM\JoinColumn(name="principalAddress_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $principalAddress;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Job $jobs
+     * @var Job[] $jobs
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Job", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $jobs;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Family $families
+     * @var Rank[] $ranks
+     *
+     * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Rank", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $ranks;
+
+    /**
+     * @var Family[] $families
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\Family", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $families;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\ExternalPost $externalPosts
+     * @var ExternalPost[] $externalPosts
      *
      * @ORM\OneToMany(targetEntity="Asbo\WhosWhoBundle\Entity\ExternalPost", mappedBy="fra", cascade={"persist", "remove"}, orphanRemoval=true)
      */
@@ -228,14 +255,7 @@ class Fra
      *
      * @ORM\Column(name="settings", type="array")
      */
-    private $settings = array();
-
-    /**
-     * @var  array $defaultsettings
-     *
-     * Default Settings
-     */
-    private $defaultsettings = array(
+    private $settings = array(
         'whoswho'               => true,
         'pereat'                => true,
         'convoc_externe'        => true,
@@ -326,6 +346,7 @@ class Fra
         $this->phones        = new ArrayCollection();
         $this->addresses     = new ArrayCollection();
         $this->jobs          = new ArrayCollection();
+        $this->ranks          = new ArrayCollection();
         $this->fraHasUsers   = new ArrayCollection();
         $this->fraHasPosts   = new ArrayCollection();
         $this->fraHasImages  = new ArrayCollection();
@@ -334,10 +355,13 @@ class Fra
 
         // Quand on rajoute un fra il y a de forte chance pour qu'il soit
         // Tyro et que ce soit un garçon
-        // De plus quand on rajoute un fra en général c'est pour l'anno en cours.
         $this->type   = self::TYPE_IMPETRANT;
         $this->status = self::STATUS_TYRO;
         $this->gender = 0;
+
+        // De plus quand on rajoute un fra en général c'est pour l'anno en cours.
+        // Cependant, on rajoute une dépendance.
+        // TODO : Faire un refactoring et définir la valeur de anno dans le manager
         $this->anno   = AnnoManipulator::getCurrentAnno();
     }
 
@@ -354,6 +378,8 @@ class Fra
     /**
      * Set id
      * This function is unused.
+     *
+     * @param integer $id
      *
      * @return $this
      */
@@ -679,6 +705,8 @@ class Fra
      * Remove a link between a fra and an user
      *
      * @param \Asbo\WhosWhoBundle\Entity\FraHasUser $fraHasUser
+     *
+     * @return $this
      */
     public function removeFraHasUser(FraHasUser $fraHasUser)
     {
@@ -719,6 +747,8 @@ class Fra
      * Remove a link between a fran and a post
      *
      * @param \Asbo\WhosWhoBundle\Entity\FraHasPost $fraHasPost
+     *
+     * @return $this
      */
     public function removeFraHasPost(FraHasPost $fraHasPost)
     {
@@ -751,6 +781,8 @@ class Fra
      * Remove a link between a fra and an image
      *
      * @param \Asbo\WhosWhoBundle\Entity\FraHasImage $fraHasImage
+     *
+     * @return $this
      */
     public function removeFraHasImage(FraHasImage $fraHasImage)
     {
@@ -763,12 +795,18 @@ class Fra
      * Add a email
      *
      * @param \Asbo\WhosWhoBundle\Entity\Email $email
+     *
+     * @return $this
      */
     public function addEmail(Email $email)
     {
         $email->setFra($this);
 
         $this->emails->add($email);
+
+        if (null === $this->getPrincipalEmail()) {
+            $this->setPrincipalEmail($email);
+        }
 
         return $this;
     }
@@ -777,6 +815,8 @@ class Fra
      * Remove an email
      *
      * @param \Asbo\WhosWhoBundle\Entity\Email $email
+     *
+     * @return $this
      */
     public function removeEmail(Email $email)
     {
@@ -796,9 +836,35 @@ class Fra
     }
 
     /**
+     * Set the principal email
+     *
+     * @param \Asbo\WhosWhoBundle\Entity\Email $email
+     *
+     * @return $this
+     */
+    public function setPrincipalEmail(Email $email = null)
+    {
+        $this->principalEmail = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get the principal email
+     *
+     * @return \Asbo\WhosWhoBundle\Entity\Email
+     */
+    public function getPrincipalEmail()
+    {
+        return $this->principalEmail;
+    }
+
+    /**
      * Add a job
      *
      * @param \Asbo\WhosWhoBundle\Entity\Job $job
+     *
+     * @return $this
      */
     public function addJob(Job $job)
     {
@@ -813,6 +879,8 @@ class Fra
      * Remove an job
      *
      * @param \Asbo\WhosWhoBundle\Entity\Job $job
+     *
+     * @return $this
      */
     public function removeJob(Job $job)
     {
@@ -824,17 +892,60 @@ class Fra
     /**
      * Get jobs
      *
-     * @return array $jobs
+     * @return \Doctrine\Common\Collections\ArrayCollection $jobs
      */
     public function getJobs()
     {
         return $this->jobs;
     }
 
+
+    /**
+     * Add a rank
+     *
+     * @param \Asbo\WhosWhoBundle\Entity\Rank $rank
+     *
+     * @return $this
+     */
+    public function addRank(Rank $rank)
+    {
+        $rank->setFra($this);
+
+        $this->ranks->add($rank);
+
+        return $this;
+    }
+
+    /**
+     * Remove a rank
+     *
+     * @param \Asbo\WhosWhoBundle\Entity\Rank $rank
+     *
+     * @return $this
+     */
+    public function removeRank(Rank $rank)
+    {
+        $this->ranks->removeElement($rank);
+
+        return $this;
+    }
+
+    /**
+     * Get ranks
+     *
+     * @return \Doctrine\Common\Collections\ArrayCollection $ranks
+     */
+    public function getRanks()
+    {
+        return $this->ranks;
+    }
+
     /**
      * Add a diploma
      *
      * @param \Asbo\WhosWhoBundle\Entity\Diploma $diploma
+     *
+     * @return $this
      */
     public function addDiploma(Diploma $diploma)
     {
@@ -849,6 +960,8 @@ class Fra
      * Remove a diploma
      *
      * @param \Asbo\WhosWhoBundle\Entity\Diploma $diploma
+     *
+     * @return $this
      */
     public function removeDiploma(Diploma $diploma)
     {
@@ -871,6 +984,8 @@ class Fra
      * Remove a member of family
      *
      * @param \Asbo\WhosWhoBundle\Entity\Family $family
+     *
+     * @return $this
      */
     public function removeFamily(Family $family)
     {
@@ -883,6 +998,8 @@ class Fra
      * Add a membre of family
      *
      * @param \Asbo\WhosWhoBundle\Entity\Family $family
+     *
+     * @return $this
      */
     public function addFamily(Family $family)
     {
@@ -907,6 +1024,8 @@ class Fra
      * Add external posts
      *
      * @param \Asbo\WhosWhoBundle\Entity\ExternalPost $externalPost
+     *
+     * @return $this
      */
     public function addExternalPost(ExternalPost $externalPost)
     {
@@ -920,7 +1039,9 @@ class Fra
     /**
      * Remove an external post
      *
-     * @param \Asbo\WhosWhoBundle\Entity\ExternPost $externalPost
+     * @param \Asbo\WhosWhoBundle\Entity\ExternalPost $externalPost
+     *
+     * @return $this
      */
     public function removeExternalPost(ExternalPost $externalPost)
     {
@@ -943,6 +1064,8 @@ class Fra
      * Add an address
      *
      * @param \Asbo\WhosWhoBundle\Entity\Address $address
+     *
+     * @return $this
      */
     public function addAddress(Address $address)
     {
@@ -971,6 +1094,8 @@ class Fra
      * Remove an address
      *
      * @param \Asbo\WhosWhoBundle\Entity\Address $address
+     *
+     * @return $this
      */
     public function removeAddress(Address $address)
     {
@@ -983,6 +1108,8 @@ class Fra
      * Set the principal address
      *
      * @param \Asbo\WhosWhoBundle\Entity\Address $address
+     *
+     * @return $this
      */
     public function setPrincipalAddress(Address $address = null)
     {
@@ -994,7 +1121,7 @@ class Fra
     /**
      * Get the principal address
      *
-     * @return \Asbo\WhosWhoBundle\Entity\Address $address
+     * @return \Asbo\WhosWhoBundle\Entity\Address
      */
     public function getPrincipalAddress()
     {
@@ -1005,11 +1132,17 @@ class Fra
      * Add a phone
      *
      * @param \Asbo\WhosWhoBundle\Entity\Phone $phone
+     *
+     * @return $this
      */
     public function addPhone(Phone $phone)
     {
         $phone->setFra($this);
         $this->phones[] = $phone;
+
+        if (null === $this->getPrincipalPhone()) {
+            $this->setPrincipalPhone($phone);
+        }
 
         return $this;
     }
@@ -1018,6 +1151,8 @@ class Fra
      * Remove a phone number
      *
      * @param \Asbo\WhosWhoBundle\Entity\Phone $phone
+     *
+     * @return $this
      */
     public function removePhone(Phone $phone)
     {
@@ -1037,14 +1172,39 @@ class Fra
     }
 
     /**
+     * Set the principal phone
+     *
+     * @param \Asbo\WhosWhoBundle\Entity\Phone $phone
+     *
+     * @return $this
+     */
+    public function setPrincipalPhone(Phone $phone = null)
+    {
+        $this->principalPhone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get the principal phone
+     *
+     * @return \Asbo\WhosWhoBundle\Entity\Phone
+     */
+    public function getPrincipalPhone()
+    {
+        return $this->principalPhone;
+    }
+
+    /**
      * Set settings
      *
-     * @param  array $settings
-     * @return array
+     * @param array $settings
+     *
+     * @return $this
      */
     public function setSettings($settings)
     {
-        $this->settings = array_merge($this->defaultsettings, $settings);
+        $this->settings = array_replace($this->settings, $settings);
 
         return $this;
     }
@@ -1056,32 +1216,31 @@ class Fra
      */
     public function getSettings()
     {
-        return array_merge($this->defaultsettings, $this->settings);
+        return $this->settings;
     }
 
     /**
      * Get setting by key
      *
-     * @return string
-     * @throws InvalidArgumentException If the settings doesn't exist
+     * @param $key
+     * @param  null  $default
+     * @return mixed
      */
-    public function getSetting($key)
+    public function getSetting($key, $default = null)
     {
-        if ($this->isSetting($key)) {
-            return $this->getSettings()[$key];
-        } else {
-            throw new \InvalidArgumentException('Unknow settings as "'.$key.'"');
-        }
+        return array_key_exists($key, $this->settings) ? $this->settings[$key] : $default;
     }
 
     /**
      * Return if the settings exist
      *
+     * @param string $key The key
+     *
      * @return boolean
      */
-    public function isSetting($key)
+    public function hasSetting($key)
     {
-        return isset($this->getSettings()[$key]);
+        return array_key_exists($key, $this->settings);
     }
 
     /**
@@ -1156,6 +1315,7 @@ class Fra
 
         // Rajout des deniers en fonction des posts occupés
         foreach ($this->getFraHasPosts() as $post) {
+            /** @var $post \Asbo\WhosWhoBundle\Entity\FraHasPost */
             $total += $post->getPost()->getDenier();
         }
 

@@ -1,16 +1,15 @@
 <?xml version="1.0" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services/services-1.0.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="asbo_whoswho.listener.profile" class="%asbo_whoswho.profile.listener.class%">
+        <service id="asbo_whoswho.listener.profile" class="Asbo\WhosWhoBundle\EventListener\ProfileListener">
             <argument type="service" id="asbo_whoswho.routing.urlGenerator" />
             <argument type="service" id="security.context" />
-            <argument type="service" id="asbo_whoswho.fra_has_user_manager" />
-            <argument>%asbo_whoswho.profile.listener.route%</argument>
-            <argument>%asbo_whoswho.profile.listener.new%</argument>
+            <argument type="service" id="asbo_whoswho.manager.frahaspost" />
+            <argument>sonata_profile_edit</argument>
             <tag name="kernel.event_listener" event="kernel.request" method="onCoreController" />
         </service>
     </services>

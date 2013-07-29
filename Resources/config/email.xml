@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+                               http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="asbo_whoswho.controller.email.class">Asbo\WhosWhoBundle\Controller\DefaultController</parameter>
+        <parameter key="asbo_whoswho.entity.email.class">Asbo\WhosWhoBundle\Entity\Email</parameter>
+        <parameter key="asbo_whoswho.form.type.email.class">Asbo\WhosWhoBundle\Form\Type\EmailType</parameter>
+        <parameter key="asbo_whoswho.form.factory.email.class">Asbo\WhosWhoBundle\Form\Factory\FormFactory</parameter>
+        <parameter key="asbo_whoswho.manager.email.class">Asbo\WhosWhoBundle\Doctrine\EntityManager</parameter>
+        <parameter key="asbo_whoswho.repository.email.class">Asbo\WhosWhoBundle\Doctrine\EntityRepository</parameter>
+    </parameters>
+
+    <services>
+        <service id="asbo_whoswho.controller.email" class="%asbo_whoswho.controller.email.class%">
+            <argument>asbo_whoswho</argument>
+            <argument>email</argument>
+            <argument>AsboWhosWhoBundle:Email</argument>
+
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+
+        <service id="asbo_whoswho.form.type.email" class="%asbo_whoswho.form.type.email.class%">
+            <argument>%asbo_whoswho.entity.email.class%</argument>
+            <tag name="form.type" alias="asbo_whoswho_email" />
+        </service>
+
+        <service id="asbo_whoswho.form.factory.email" class="%asbo_whoswho.form.factory.email.class%">
+            <argument type="service" id="form.factory" />
+            <argument>asbo_whoswho_email</argument>
+            <argument>asbo_whoswho_email</argument>
+        </service>
+
+        <service id="asbo_whoswho.repository.email"
+                 factory-service="doctrine"
+                 factory-method="getRepository"
+                 class="%asbo_whoswho.repository.email.class%"
+                 public="false">
+            <argument>%asbo_whoswho.entity.email.class%</argument>
+        </service>
+
+        <service id="asbo_whoswho.manager.email" class="%asbo_whoswho.manager.email.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="asbo_whoswho.repository.email" />
+        </service>
+
+    </services>
+</container>

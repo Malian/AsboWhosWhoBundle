@@ -39,8 +39,7 @@ class EmailType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('email', 'email')
-                ->add('type', 'choice', array('choices' => Email::getTypes()))
-                ->add('principal');
+                ->add('type', 'choice', array('choices' => Email::getTypes()));
     }
 
     /**
@@ -60,6 +59,6 @@ class EmailType extends AbstractType
      */
     public function getName()
     {
-        return 'asbo_type_email';
+        return 'asbo_whoswho_email';
     }
 }

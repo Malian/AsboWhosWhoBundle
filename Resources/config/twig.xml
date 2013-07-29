@@ -5,8 +5,10 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="asbo.whoswho.twig.global" class="Asbo\WhosWhoBundle\Twig\GlobalVariables" >
-            <argument type="service" id="service_container" />
+        <service id="asbo_whoswho.whoswho.twig.global" class="Asbo\WhosWhoBundle\Twig\GlobalVariables">
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
         </service>
     </services>
 </container>

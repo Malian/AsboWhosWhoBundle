@@ -15,26 +15,45 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 class FormFactory
 {
+    /**
+     * @var FormFactoryInterface $formFactory
+     */
     private $formFactory;
-    private $name;
-    private $type;
-    private $validationGroups;
 
-    public function __construct(FormFactoryInterface $formFactory, $name, $type, array $validationGroups = null)
+    /**
+     * @var string $name
+     */
+    private $name;
+
+    /**
+     * @var string $type
+     */
+    private $type;
+
+    /**
+     * Constructor.
+     *
+     * @param FormFactoryInterface $formFactory
+     * @param string               $name
+     * @param string               $type
+     */
+    public function __construct(FormFactoryInterface $formFactory, $name, $type)
     {
         $this->formFactory      = $formFactory;
         $this->name             = $name;
         $this->type             = $type;
-        $this->validationGroups = $validationGroups;
     }
 
+    /**
+     * Create the form
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
     public function createForm()
     {
         return $this->formFactory->createNamed(
             $this->name,
-            $this->type,
-            null,
-            array('validation_groups' => $this->validationGroups)
+            $this->type
         );
     }
 }

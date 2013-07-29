@@ -37,6 +37,6 @@ class AnnoTextType extends AbstractType
      */
     public function getName()
     {
-        return 'asbo_type_annotext';
+        return 'asbo_whoswho_anno_text';
     }
 }

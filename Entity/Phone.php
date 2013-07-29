@@ -13,7 +13,7 @@ namespace Asbo\WhosWhoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Locale\Locale;
+use Symfony\Component\Intl\Intl;
 use Asbo\WhosWhoBundle\Entity\Fra;
 
 /**
@@ -22,7 +22,7 @@ use Asbo\WhosWhoBundle\Entity\Fra;
  * @author De Ron Malian <deronmalian@gmail.com>
  *
  * @ORM\Table(name="ww__phone")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Asbo\WhosWhoBundle\Doctrine\EntityRepository")
  */
 class Phone
 {
@@ -71,18 +71,14 @@ class Phone
     private $country;
 
     /**
-     * @var boolean $principal
-     *
-     * @ORM\Column(name="principal", type="boolean", nullable=true)
-     */
-    private $principal;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Fra", inversedBy="phones")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $fra;
 
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         $this->setType(static::TYPE_PRIVEE);
@@ -170,7 +166,10 @@ class Phone
     /**
      * Get Country Code
      *
+     * @param null|string $locale
+     *
      * @return string
+     * @todo: Je suis pas fan de cette manière de faire
      */
     public function getCountryCode($locale = null)
     {
@@ -178,7 +177,7 @@ class Phone
             $locale = \Locale::getDefault();
         }
 
-        $countries = Locale::getDisplayCountries($locale);
+        $countries = Intl::getRegionBundle()->getCountryNames($locale);
 
         return $countries[$this->getCountry()];
     }
@@ -186,7 +185,7 @@ class Phone
     /**
      * Set fra
      *
-     * @param Asbo\WhosWhoBundle\Entity\Fra $fra
+     * @param Fra $fra
      * @return $this
      */
     public function setFra(Fra $fra)
@@ -199,34 +198,11 @@ class Phone
     /**
      * Get fra
      *
-     * @return Asbo\WhosWhoBundle\Entity\Fra
+     * @return Fra
      */
     public function getFra()
     {
         return $this->fra;
-    }
-
-    /**
-     * Set principal
-     *
-     * @param boolean $principal
-     * @return $this
-     */
-    public function setPrincipal($principal)
-    {
-        $this->principal = $principal;
-
-        return $this;
-    }
-
-    /**
-     * Is Princpal number
-     *
-     * @return boolean
-     */
-    public function isPrincipal()
-    {
-        return true === $this->principal;
     }
 
     /**

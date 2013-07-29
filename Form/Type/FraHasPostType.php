@@ -38,7 +38,7 @@ class FraHasPostType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('post', 'entity', array('class' => 'AsboWhosWhoBundle:Post'))
-                ->add('date', 'asbo_type_annotext');
+                ->add('date', 'asbo_whoswho_anno_text');
     }
 
     /**
@@ -58,6 +58,6 @@ class FraHasPostType extends AbstractType
      */
     public function getName()
     {
-        return 'asbo_type_fraHasPost';
+        return 'asbo_whoswho_frahaspost';
     }
 }

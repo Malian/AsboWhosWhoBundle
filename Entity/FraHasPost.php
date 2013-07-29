@@ -23,7 +23,7 @@ use Asbo\WhosWhoBundle\Validator\Constraints\Anno;
  * @author De Ron Malian <deronmalian@gmail.com>
  *
  * @ORM\Table(name="ww__fra_post")
- * @ORM\Entity(repositoryClass="Asbo\WhosWhoBundle\Entity\FraHasPostRepository")
+ * @ORM\Entity(repositoryClass="Asbo\WhosWhoBundle\Doctrine\FraHasPostRepository")
  */
 class FraHasPost
 {
@@ -46,7 +46,7 @@ class FraHasPost
     private $anno;
 
     /**
-     * @var date $civilyear
+     * @var \Datetime $civilyear
      *
      * @ORM\Column(name="civilyear", type="date", nullable=true)
      * @Assert\Type(type="datetime")
@@ -139,7 +139,7 @@ class FraHasPost
     /**
      * Set civilyear
      *
-     * @param date $civilyear
+     * @param \Datetime $civilyear
      * @return $this
      */
     public function setCivilYear(\Datetime $civilyear = null)
@@ -153,7 +153,7 @@ class FraHasPost
     /**
      * Get civilyear
      *
-     * @return date
+     * @return \Datetime
      */
     public function getCivilYear()
     {
@@ -163,7 +163,9 @@ class FraHasPost
     /**
      * Set post
      *
-     * @param Asbo\WhosWhoBundle\Entity\Post $post
+     * @param \Asbo\WhosWhoBundle\Entity\Post $post
+     *
+     * @return $this
      */
     public function setPost(Post $post)
     {
@@ -175,7 +177,7 @@ class FraHasPost
     /**
      * Get post
      *
-     * @return Asbo\WhosWhoBundle\Entity\Post
+     * @return \Asbo\WhosWhoBundle\Entity\Post
      */
     public function getPost()
     {
@@ -185,7 +187,7 @@ class FraHasPost
     /**
      * Set fra
      *
-     * @param Asbo\WhosWhoBundle\Entity\Fra $fra
+     * @param \Asbo\WhosWhoBundle\Entity\Fra $fra
      * @return $this
      */
     public function setFra(Fra $fra)
@@ -198,7 +200,7 @@ class FraHasPost
     /**
      * Get fra
      *
-     * @return Asbo\WhosWhoBundle\Entity\Fra
+     * @return \Asbo\WhosWhoBundle\Entity\Fra
      */
     public function getFra()
     {

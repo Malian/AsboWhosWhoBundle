@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Asbo\WhosWhoBundle\Routing\UrlGenerator;
-use Asbo\WhosWhoBundle\Entity\FraHasUserManager;
+use Asbo\WhosWhoBundle\Doctrine\EntityManager;
 
 /**
  * Profile event listener
@@ -26,17 +26,17 @@ use Asbo\WhosWhoBundle\Entity\FraHasUserManager;
 class ProfileListener
 {
     /**
-     * @var Asbo\WhosWhoBundle\Routing\UrlGenerator
+     * @var UrlGenerator $generator
      */
     public $generator;
 
     /**
-     * @var Symfony\Component\Security\Core\SecurityContext $securityContext
+     * @var SecurityContextInterface $securityContext
      */
     public $securityContext;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\FraHasUserManager  $fraHasUserManager
+     * @var EntityManager  $fraHasUserManager
      */
     public $fraHasUserManager;
 
@@ -46,15 +46,15 @@ class ProfileListener
     public $route;
 
     /**
-     * @param \Asbo\WhosWhoBundle\Routing\UrlGenerator                  $generator
-     * @param \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
-     * @param \Asbo\WhosWhoBundle\Entity\FraUserManager                 $fraHasUserManager
-     * @param string                                                    $route
+     * @param UrlGenerator             $generator
+     * @param SecurityContextInterface $securityContext
+     * @param EntityManager           $fraHasUserManager
+     * @param string                   $route
      */
     public function __construct(
         UrlGenerator $generator,
         SecurityContextInterface $securityContext,
-        FraHasUserManager $fraHasUserManager,
+        EntityManager $fraHasUserManager,
         $route
     ) {
         $this->generator         = $generator;
@@ -66,7 +66,7 @@ class ProfileListener
     /**
      * Event called when a user going to his profile and if he is en ROLE_WHOSWHO_USER
      *
-     * @param FilterControllerEvent $event
+     * @param GetResponseEvent $event
      */
     public function onCoreController(GetResponseEvent $event)
     {
@@ -75,10 +75,10 @@ class ProfileListener
 
             if ($routeName === $this->route && $this->securityContext->isGranted('ROLE_WHOSWHO_USER')) {
 
-                $user       = $this->securityContext->getToken()->getuser();
-                $fraHasUser = $this->fraHasUserManager->findByUserAndOwner($user);
+                $user = $this->securityContext->getToken()->getuser();
+                $fraHasUser = $this->fraHasUserManager->getRepository()->findOneBy(array('user' => $user, 'owner' => true));
 
-                if (count($fraHasUser) > 0) {
+                if (null !== $fraHasUser) {
                     $url = $this->generator->fra($fraHasUser->getFra());
                     $event->setResponse(new RedirectResponse($url));
                 }

@@ -21,7 +21,7 @@ use Asbo\WhosWhoBundle\Entity\Fra;
  * @author De Ron Malian <deronmalian@gmail.com>
  *
  * @ORM\Table(name="ww__email")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Asbo\WhosWhoBundle\Doctrine\EntityRepository")
  */
 class Email
 {
@@ -60,20 +60,16 @@ class Email
     private $type;
 
     /**
-     * @var boolean $principal
-     *
-     * @ORM\Column(name="principal", type="boolean", nullable=true)
-     */
-    private $principal;
-
-    /**
-     * @var Asbo\WhosWhoBundle\Entity\Fra
+     * @var Fra
      *
      * @ORM\ManyToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Fra", inversedBy="emails")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $fra;
 
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         $this->setType(Email::TYPE_AUTRE);
@@ -136,32 +132,10 @@ class Email
     }
 
     /**
-     * Set principal
-     *
-     * @param  boolean $principal
-     * @return Email
-     */
-    public function setPrincipal($principal)
-    {
-        $this->principal = $principal;
-
-        return $this;
-    }
-
-    /**
-     * Is the principal Email
-     *
-     * @return Boolean
-     */
-    public function isPrincipal()
-    {
-        return $this->principal == true;
-    }
-
-    /**
      * Set fra
      *
-     * @param  Asbo\WhosWhoBundle\Entity\Fra $fra
+     * @param Fra $fra
+     *
      * @return Email
      */
     public function setFra(Fra $fra)
@@ -174,7 +148,7 @@ class Email
     /**
      * Get fra
      *
-     * @return Asbo\WhosWhoBundle\Entity\Fra
+     * @return Fra
      */
     public function getFra()
     {

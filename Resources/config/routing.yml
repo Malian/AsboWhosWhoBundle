@@ -1,0 +1,59 @@
+asbo_whoswho_list:
+    pattern: /
+    defaults:
+        _controller: asbo.controller.fra:listAction
+        _method: GET|POST
+
+asbo_whoswho_fra_show:
+    pattern: /fra/{slug}
+    defaults:
+        _controller: asbo.controller.fra:showAction
+        _method: GET
+
+asbo_whoswho_fra_edit:
+    pattern: /fra/{slug}/edit
+    defaults:
+        _controller: asbo.controller.fra:editAction
+        _method: GET|POST
+
+asbo_whoswho_comites:
+    pattern: /comites
+    defaults:
+        _controller: asbo.controller.comite:listAction
+        _method: GET
+
+asbo_whoswho_comite_anno:
+    pattern: /comite/{anno}
+    requirements:
+        anno: \d+
+    defaults:
+        _controller: asbo.controller.comite:annoAction
+        _method: GET
+
+asbo_whoswho_comite_last:
+    pattern: /comite/
+    defaults:
+        _controller: asbo.controller.comite:lastAction
+        _method: GET
+
+asbo_whoswho_address_create:
+    pattern:  /fra/{slug}/address/new
+    defaults:
+        _controller: asbo.controller.address:createAction
+        _method: GET|POST
+
+asbo_whoswho_address_update:
+    pattern:  /fra/{slug}/address/{address_id}
+    requirements:
+        address_id: \d+
+    defaults:
+        _controller: asbo.controller.address:updateAction
+        _method: GET|POST
+
+asbo_whoswho_address_delete:
+    pattern:  /fra/{slug}/address/{address_id}/delete
+    requirements:
+        address_id: \d+
+    defaults:
+        _controller: asbo.controller.address:deleteAction
+        _method: GET|POST

@@ -21,7 +21,7 @@ use Asbo\WhosWhoBundle\Entity\Fra;
  * @author De Ron Malian <deronmalian@gmail.com>
  *
  * @ORM\Table(name="ww__family")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Asbo\WhosWhoBundle\Doctrine\EntityRepository")
  * @todo : Refactoriser tout ça. Si untel est le fil d'un autre alors l'autre est aussi le père...
  */
 class Family
@@ -59,7 +59,7 @@ class Family
     private $firstname;
 
     /**
-     * @var date $date
+     * @var \Datetime $date
      *
      * @ORM\Column(name="date", type="date")
      */
@@ -74,7 +74,7 @@ class Family
     private $type;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Fra
+     * @var \Asbo\WhosWhoBundle\Entity\Fra
      *
      * @ORM\ManyToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Fra", inversedBy="families")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
@@ -82,7 +82,7 @@ class Family
     private $fra;
 
     /**
-     * @var Asbo\WhosWhoBundle\Entity\Fra
+     * @var \Asbo\WhosWhoBundle\Entity\Fra
      *
      * @ORM\ManyToOne(targetEntity="Asbo\WhosWhoBundle\Entity\Fra")
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
@@ -156,7 +156,7 @@ class Family
     /**
      * Set date
      *
-     * @param date $date
+     * @param \Datetime $date
      * @return $this
      */
     public function setDate($date)
@@ -169,7 +169,7 @@ class Family
     /**
      * Get date
      *
-     * @return date
+     * @return \Datetime
      */
     public function getDate()
     {
@@ -202,7 +202,7 @@ class Family
     /**
      * Set fra
      *
-     * @param Asbo\WhosWhoBundle\Entity\Fra $fra
+     * @param \Asbo\WhosWhoBundle\Entity\Fra $fra
      * @return $this
      */
     public function setFra(Fra $fra)
@@ -215,7 +215,7 @@ class Family
     /**
      * Get fra
      *
-     * @return Asbo\WhosWhoBundle\Entity\Fra
+     * @return \Asbo\WhosWhoBundle\Entity\Fra
      */
     public function getFra()
     {
@@ -225,7 +225,7 @@ class Family
     /**
      * Get link
      *
-     * @return Asbo\WhosWhoBundle\Entity\Fra
+     * @return \Asbo\WhosWhoBundle\Entity\Fra
      */
     public function getLink()
     {
@@ -235,10 +235,10 @@ class Family
     /**
      * Get fra
      *
-     * @return Asbo\WhosWhoBundle\Entity\Fra
+     * @param null|Fra $link
      * @return $this
      */
-    public function setLink(\Asbo\WhosWhoBundle\Entity\Fra $link = null)
+    public function setLink(Fra $link = null)
     {
         $this->link = $link;
 
