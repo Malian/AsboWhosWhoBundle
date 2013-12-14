@@ -20,5 +20,5 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class AsboWhosWhoBundle extends Bundle
 {
-    const VERSION =  'v1.0';
+    const VERSION =  'v1.1';
 }
